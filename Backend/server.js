@@ -4,6 +4,7 @@ const dotenv = require("dotenv");
 const connection = require("./database");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
+const errorMiddleware = require("./middleware/error");
 const product = require("./routes/productRoute");
 // const user = require("./routes/userRoute");
 
@@ -18,13 +19,21 @@ const server = app.listen(port, () =>
 connection();
 
 //middlewares
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(cors());
+app.use(
+  cors({
+    option: "*",
+  })
+);
 app.use(cookieParser());
 
 //routes
 // app.use("/api/v1", user);
 app.use("/api/v1", product);
+
+//Middleware for Errors
+app.use(errorMiddleware);
 
 // unhandled promise rejection
 process.on("unhandledRejection", (err) => {
