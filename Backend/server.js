@@ -6,7 +6,7 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const errorMiddleware = require("./middleware/error");
 const product = require("./routes/productRoute");
-// const user = require("./routes/userRoute");
+const user = require("./routes/userRoute");
 
 //Handling Uncaught Exception
 process.on("uncaughtException", (err) => {
@@ -38,7 +38,7 @@ app.use(
 app.use(cookieParser());
 
 //routes
-// app.use("/api/v1", user);
+app.use("/api/v1", user);
 app.use("/api/v1", product);
 
 //Middleware for Errors
