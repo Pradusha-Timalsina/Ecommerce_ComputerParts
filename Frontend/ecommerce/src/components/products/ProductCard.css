@@ -1,0 +1,49 @@
+.productCard {
+  width: 200px;
+  height: 300px;
+  padding: 10px;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  border-radius: 2px;
+  margin: 20px 10px;
+  text-decoration: none;
+  color: rgb(48, 48, 48);
+  transition: all 0.5s;
+  box-shadow: 0 0 5px rgba(15, 15, 15, 0.26);
+}
+
+.productCardImageContainer {
+  flex: 4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background-color: #ffffff;
+}
+
+.productCardImage {
+  height: 100%;
+  width: 120%;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  transform: scale(0.8);
+  border-radius: 2px;
+}
+.productCardImage:hover {
+  transform: scale(1);
+}
+.productCard > p {
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  font-weight: bold;
+  font-size: 1.5vmax;
+  margin: 1vmax 0.5vmax;
+  margin-bottom: 0;
+}
+.star {
+  margin-left: 7px;
+}
+.starr {
+  margin-left: 7px;
+  font-weight: 600;
+}

@@ -1,0 +1,56 @@
+.Hero-container {
+  display: flex;
+  align-items: center;
+  background-color: #f7f7f7;
+  height: 620px;
+}
+
+.first-half {
+  flex: 1;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.first-half h1 {
+  color: #c81912;
+  font-size: 30px;
+  margin-right: 250px;
+  margin-bottom: 10px;
+}
+
+.first-half p {
+  font-size: 16px;
+  margin-right: 260px;
+}
+
+.first-half button {
+  margin-top: 20px;
+  margin-right: 295px;
+  background-color: #f64b3c;
+  color: #fff;
+  padding: 13px 50px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+.first-half button:hover {
+  background-color: #c81912;
+  color: #fff;
+  transition: 1s;
+}
+
+.second-half {
+  flex: 1;
+  text-align: center;
+}
+
+.second-half img {
+  max-width: 100%;
+  max-height: 500px;
+  margin-top: 50px;
+  border-radius: 10%;
+}
