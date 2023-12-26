@@ -14,12 +14,14 @@ const Navbar = () => {
   return (
     <nav className="main-nav">
       <div className="logo">
-        <img
-          src={logoImage}
-          style={{
-            width: "120px",
-          }}
-        />
+        <Link to="/">
+          <img
+            src={logoImage}
+            style={{
+              width: "120px",
+            }}
+          />
+        </Link>
       </div>
       <div className="menu">
         <ul>
@@ -46,7 +48,12 @@ const Navbar = () => {
         <AiOutlineShoppingCart style={{ fontSize: "28px" }} />{" "}
         {/* Add the cart icon */}
         <div className="icon-gap" /> {/* Add another div for spacing */}
-        <CgProfile style={{ fontSize: "28px" }} onClick={handleProfileClick} />
+        <Link to="/login">
+          <CgProfile
+            style={{ fontSize: "28px" }}
+            onClick={handleProfileClick}
+          />
+        </Link>
       </div>
     </nav>
   );
