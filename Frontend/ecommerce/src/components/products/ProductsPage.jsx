@@ -1,16 +1,10 @@
-import React, { Fragment } from "react";
-
+import React from "react";
 import Navbar from "../homepage/Navbar";
-import Heropage from "../homepage/HeroPage";
-import ProductCard from "../products/ProductCard";
-import "./home.css";
-import { Link } from "react-router-dom";
 
-const Home = () => {
+const ProductsPage = () => {
   return (
     <Fragment>
       <Navbar />
-      <Heropage />
       <h2 className="h2">Products</h2>
       <div className="container">
         <ProductCard />
@@ -27,4 +21,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default ProductsPage;

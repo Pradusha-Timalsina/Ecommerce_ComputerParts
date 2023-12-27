@@ -20,3 +20,18 @@ h2 {
   margin-top: 20px;
   margin-bottom: 20px;
 }
+
+.view_more {
+  border: none;
+  outline: none;
+  padding: 12px 0;
+  background-color: #c81912;
+  border-radius: 20px;
+  width: 180px;
+  font-weight: bold;
+  font-size: 14px;
+  cursor: pointer;
+  color: white; /* Set text color to white */
+  display: block; /* Make it a block-level element */
+  margin: 0 auto; /* Center the button horizontally */
+}
