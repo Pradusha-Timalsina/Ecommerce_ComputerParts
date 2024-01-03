@@ -1,6 +1,7 @@
-import React, { Fragment } from "react";
-import "./login.css";
+import { Fragment } from "react";
 import { Link } from "react-router-dom";
+import "./login.css";
+import PasswordInput from "./PasswordInput";
 
 const Login = () => {
   return (
@@ -8,43 +9,53 @@ const Login = () => {
       <div className="login_container">
         <div className="login_form_container">
           <div className="left">
-            {/* <p className="verified_message">
+            {/* {verified && (
+                <p className={styles.verified_message}>
                   Email verified. You can now login.
-                </p> */}
-
+                </p>
+              )} */}
             <form className="form_container">
-              <h1>Login to Your Account</h1>
-              <input
-                type="email"
-                placeholder="Email"
-                name="email"
-                required
-                className="input"
-              />
-              <input
-                type="password"
-                placeholder="Password"
-                name="password"
-                required
-                className="input"
-              />
-
-              <Link to="/password/forgot" style={{ alignSelf: "flex-start" }}>
+              <div>
+                <h1>Login</h1>
+                <input
+                  type="email"
+                  placeholder="Email"
+                  required
+                  className="input"
+                />
+              </div>
+              <div>
+                <PasswordInput
+                  type="password"
+                  placeholder="Password"
+                  required
+                  className="input"
+                />
+              </div>
+              <Link
+                to="/forgot/password"
+                style={{ alignSelf: "flex-start", textDecoration: "none" }}
+              >
                 <p style={{ padding: "0 12px" }}>Forgot Password ?</p>
               </Link>
 
               <button type="submit" className="green_btn">
-                Sign In
+                Login
               </button>
+
+              <div className="aregister">
+                <span className="aregister_span">
+                  New Here?{" "}
+                  <Link
+                    className="alogin"
+                    to="/signup"
+                    style={{ textDecoration: "none" }}
+                  >
+                    SignUp
+                  </Link>
+                </span>
+              </div>
             </form>
-          </div>
-          <div className="right">
-            <h1>New Here ?</h1>
-            <Link to="/signup">
-              <button type="button" className="white_btn">
-                Sign Up
-              </button>
-            </Link>
           </div>
         </div>
       </div>

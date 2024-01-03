@@ -1,0 +1,43 @@
+.password_input {
+  position: relative;
+}
+
+.password_input input {
+  padding-right: 2.5rem;
+}
+
+.password_input button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+  background: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+.passinput {
+  outline: none;
+  border: none;
+  width: 345px;
+  padding: 15px;
+  border-radius: 10px;
+  background-color: #edf5f3;
+  margin: 5px 0;
+  font-size: 14px;
+}
+
+@media only screen and (max-width: 600px) {
+  .password_input button {
+    padding: 0.25rem;
+    font-size: 0.75rem;
+    right: 10px;
+  }
+  .passinput {
+    width: 70%;
+    font-size: 12px;
+  }
+}
