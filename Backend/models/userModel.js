@@ -27,6 +27,15 @@ const userSchema = new mongoose.Schema({
     select: false, //find method use garerw call garda pw bahek sabai dekhaoss vanerw select false rakheko
   },
 
+  address: {
+    type: String,
+    required: [true, "Please enter your Address"],
+  },
+  contact: {
+    type: Number,
+    required: [true, "Please enter your Contact"],
+  },
+
   avatar: {
     public_id: {
       type: String,
@@ -41,6 +50,11 @@ const userSchema = new mongoose.Schema({
   role: {
     type: String,
     default: "user",
+  },
+
+  isVerified: {
+    type: Boolean,
+    default: false,
   },
 
   resetPasswordToken: String,

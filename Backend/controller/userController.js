@@ -4,26 +4,73 @@ const User = require("../models/userModel");
 const sendToken = require("../utils/jwtToken");
 const sendEmail = require("../utils/sendEmail.js");
 const crypto = require("crypto");
+const jwt = require("jsonwebtoken");
 
-//Register a User
+//Registration and User verification
 exports.registerUser = catchAsyncErrors(async (req, res, next) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, address, contact } = req.body;
 
   const user = await User.create({
     name,
     email,
     password,
+    address,
+    contact,
     avatar: {
       public_id: "this is a sample id",
       url: "profilepicUrl",
     },
   });
 
-  if (req.body.password !== req.body.confirmPassword) {
-    return next(new ErrorHandler("Password does not match", 404));
+  //user ko id liyerw tyo id lai private key diyerw token generate gardeko ho
+  const token = jwt.sign({ id: user._id }, process.env.JWT_PRIVATEKEY, {
+    expiresIn: "1d",
+  });
+
+  const verifyLink = `${req.protocol}://${req.get("host")}/api/verify/${token}`; //yeshle chai URL verification link banaideko ho
+
+  const message = `Please click the following link to verify your email: \n\n ${verifyLink}`;
+  try {
+    await sendEmail({
+      email: user.email,
+      subject: `Email Verification`,
+      message,
+    });
+    res.status(200).json({
+      sucess: true,
+      message: `Email sent to ${user.email} sucessfully`,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      success: false,
+      message: "Error sending verification email. Please try again later",
+    });
   }
-  sendToken(user, 201, res);
 });
+
+exports.verifyUser = async (req, res) => {
+  const { token } = req.params;
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_PRIVATEKEY);
+    const user = await User.findByIdAndUpdate(
+      decoded.id,
+      { isVerified: true },
+      { new: true, runValidators: true }
+    );
+    if (!user) {
+      return res.status(404).json({
+        status: "fail",
+        message: "User not found",
+      });
+    }
+  } catch (error) {
+    res.status(400).json({
+      status: "fail",
+      message: "Invalid token",
+    });
+  }
+};
 
 //Login User
 exports.loginUser = catchAsyncErrors(async (req, res, next) => {

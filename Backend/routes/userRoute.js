@@ -13,10 +13,13 @@ const {
   getSingleUser,
   updateUserRole,
   deleteUser,
+  verifyUser,
 } = require("../controller/userController");
 const { isAuthenticatedUser, authorizeRoles } = require("../middleware/auth");
 
 router.route("/register").post(registerUser);
+
+router.route("/verify/:token").get(verifyUser);
 
 router.route("/login").post(loginUser);
 
