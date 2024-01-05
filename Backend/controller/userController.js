@@ -19,6 +19,9 @@ exports.registerUser = catchAsyncErrors(async (req, res, next) => {
     },
   });
 
+  if (req.body.password !== req.body.confirmPassword) {
+    return next(new ErrorHandler("Password does not match", 404));
+  }
   sendToken(user, 201, res);
 });
 
