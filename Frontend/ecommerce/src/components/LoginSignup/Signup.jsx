@@ -1,40 +1,11 @@
 import { Fragment, useState } from "react";
 import { Link } from "react-router-dom";
 import PasswordInput from "./PasswordInput";
-import MailOutlineIcon from "@mui/icons-material/MailOutline";
-import LocationCityIcon from "@mui/icons-material/LocationCity";
-import SmartphoneIcon from "@mui/icons-material/Smartphone";
-import FaceIcon from "@mui/icons-material/Face";
 import "./signup.css";
 
 const Signup = () => {
   const [avatarPreview, setAvatarPreview] = useState("/Profile.png");
   const [passwordError, setPasswordError] = useState("");
-  // const [data, setData] = useState({
-  //   firstName: "",
-  //   lastName: "",
-  //   email: "",
-  //   password: "",
-  //   confirmPassword: "",
-  //   address: "",
-  //   contact: "",
-  //   avatar: "",
-  //   avatarPreview: null,
-  // });
-
-  // const {
-  //   firstName,
-  //   lastName,
-  //   email,
-  //   password,
-  //   confirmPassword,
-  //   address,
-  //   contact,
-  // } = data;
-
-  // const [avatar, setAvatar] = useState("/profile.png");
-  // const [avatarPreview, setAvatarPreview] = useState("/profile.png");
-  // const [passwordError, setPasswordError] = useState("");
 
   return (
     <Fragment>
@@ -45,7 +16,6 @@ const Signup = () => {
               <h2>Create Account</h2>
               <div className="nameInRow">
                 <div className="signUpName">
-                  <FaceIcon className="icon" />
                   <input
                     type="text"
                     placeholder="First Name"
@@ -62,11 +32,9 @@ const Signup = () => {
                     required
                     className="nameinput"
                   />
-                  <FaceIcon className="icon" />
                 </div>
               </div>
               <div className="signUpName">
-                <MailOutlineIcon className="icon" />
                 <input
                   type="email"
                   placeholder="Email "
@@ -76,7 +44,6 @@ const Signup = () => {
                 />
               </div>
               <div className="signUpName">
-                <LocationCityIcon className="icon" />
                 <input
                   type="text"
                   placeholder="Address"
@@ -86,7 +53,6 @@ const Signup = () => {
                 />
               </div>
               <div className="signUpName">
-                <SmartphoneIcon className="icon" />
                 <input
                   type="Number"
                   placeholder="Contacts"

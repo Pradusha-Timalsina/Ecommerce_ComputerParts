@@ -1,0 +1,112 @@
+.Container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.Heading {
+  text-align: center;
+  font-size: 3vmax;
+  font-weight: 350;
+}
+
+.Content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.ProductDisplay {
+  display: flex;
+  justify-content: flex-start;
+  gap: 75px;
+}
+
+.ProductDisplay p {
+  font-size: 18px;
+}
+
+.Separator {
+  width: 47%;
+  margin: 15px auto;
+  border: 1px solid #ccc;
+}
+
+.ProductColumn {
+  flex: 1;
+  text-align: center;
+  padding: 8px;
+}
+
+.cartshop {
+  display: flex;
+  /* justify-content: space-between; */
+  /* align-items: center; */
+  padding: 15px;
+  margin-bottom: 10px;
+}
+
+.cartshop img {
+  max-width: 100px;
+  margin-right: 20px;
+}
+
+.productcart {
+  margin-left: 20vh;
+}
+
+.addDelete {
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+}
+
+.addDelete button {
+  font-size: 16px;
+  padding: 10px;
+  border: none;
+  background-color: #ddd;
+  color: #1a1919;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.addDelete button:hover {
+  background-color: #333;
+  color: #fff;
+}
+
+.addDelete input[type="number"] {
+  font-size: 16px;
+  padding: 7px 1px;
+  border: none;
+  background-color: #ddd;
+  border-radius: 5px;
+  text-align: center;
+  width: 40px;
+  margin: 0 10px;
+}
+
+.cartsubtotal {
+  font-size: 18px;
+  font-weight: bold;
+}
+.productcart {
+  margin-left: -50%;
+}
+.price {
+  margin-left: 15%;
+  margin-top: 10%;
+}
+.increase {
+  margin-left: 25%;
+  margin-top: 10%;
+}
+.subprice {
+  margin-left: 15%;
+  margin-top: 8%;
+}
+.cartdeleteButton {
+  margin-left: 32%;
+  margin-top: 13%;
+}

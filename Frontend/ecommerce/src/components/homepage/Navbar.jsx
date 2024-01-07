@@ -43,14 +43,13 @@ const Navbar = () => {
         </ul>
       </div>
       <div className="profile">
-        <BiSearchAlt2 style={{ fontSize: "30px" }} />
-        <div className="icon-gap" /> {/* Add a div for spacing */}
-        <AiOutlineShoppingCart style={{ fontSize: "28px" }} />{" "}
-        {/* Add the cart icon */}
-        <div className="icon-gap" /> {/* Add another div for spacing */}
+        <BiSearchAlt2 style={{ fontSize: "25px" }} />
+        {/* <div className="icon-gap" /> */}
+        <AiOutlineShoppingCart style={{ fontSize: "25px" }} />{" "}
+        {/* <div className="icon-gap" />  */}
         <Link to="/login">
           <CgProfile
-            style={{ fontSize: "28px" }}
+            style={{ fontSize: "25px" }}
             onClick={handleProfileClick}
           />
         </Link>

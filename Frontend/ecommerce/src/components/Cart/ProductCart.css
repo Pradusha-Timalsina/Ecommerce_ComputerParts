@@ -1,0 +1,30 @@
+.bottom {
+  display: flex;
+  height: 8vmax;
+  padding: 1vmax;
+  align-items: flex-start;
+  box-sizing: border-box;
+  flex-direction: column;
+}
+
+.productimage {
+  width: 5vmax;
+  height: 5vmax;
+}
+
+.productCartdetails {
+  display: flex;
+  flex-direction: column;
+  margin-left: 4%;
+}
+
+.productName {
+  font: 300 0.9vmax;
+  color: black;
+  text-decoration: none;
+}
+
+.productPrice {
+  font: 300 0.9vmax;
+  color: black;
+}

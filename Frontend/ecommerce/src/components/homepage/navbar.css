@@ -43,12 +43,15 @@
 }
 
 .profile {
-  gap: 5px;
-  height: 7rem;
+  gap: 19px;
+  height: 5rem;
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  margin-right: 50px; /* Adjust the margin to move the icons to the left */
+  margin-right: 50px;
+  width: 150px;
+  margin-top: 10px;
+  /* background-color: #c81912; */
 }
 
 .icon-gap {
