@@ -3,6 +3,7 @@ const Errorhandler = require("../utils/errorhandler");
 const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 const { ratingClasses } = require("@mui/material");
 const ErrorHandler = require("../utils/errorhandler");
+const ApiFeatures = require("../utils/apifeatures");
 
 //Create Product --Admin
 exports.createProducts = catchAsyncErrors(async (req, res, next) => {
@@ -18,7 +19,13 @@ exports.createProducts = catchAsyncErrors(async (req, res, next) => {
 //Get All Product
 
 exports.getAllProducts = catchAsyncErrors(async (req, res) => {
-  const products = await Product.find();
+  const resultPerPage = 5;
+  const productCount = await Product.countDocuments();
+  const ApiFeature = new ApiFeatures(Product.find(), req.query)
+    .search()
+    .filter()
+    .pagination(resultPerPage);
+  const products = await ApiFeature.query;
 
   res.status(200).json({
     success: true,
@@ -37,6 +44,7 @@ exports.getProductDetails = catchAsyncErrors(async (req, res, next) => {
   res.status(200).json({
     success: true,
     product,
+    productCount,
   });
 });
 

@@ -70,6 +70,15 @@ class ProductDetails extends Component {
                   tab={this.handleTab}
                   myRef={this.myRef}
                 />
+
+                <div className="increase_button">
+                  <div className="add_and_Delete">
+                    <button>-</button>
+                    <input type="number" value="1" readOnly />
+                    <button>+</button>
+                  </div>
+                </div>
+
                 <button className="cart">Add to cart</button>
               </div>
             </div>

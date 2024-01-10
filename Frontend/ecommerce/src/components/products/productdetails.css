@@ -77,13 +77,49 @@
   border: 1px solid lightseagreen;
 }
 .box .cart {
-  background: #333;
+  background: #f64b3c;
   color: white;
   outline: none;
   border: none;
   cursor: pointer;
   padding: 10px 25px;
   margin-top: 15px;
+}
+.box .cart:hover {
+  background-color: #c81912;
+  color: #fff;
+  transition: 1s;
+}
+.add_and_Delete {
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+}
+
+.add_and_Delete button {
+  font-size: 16px;
+  padding: 10px;
+  border: none;
+  background-color: #ddd;
+  color: #1a1919;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.add_and_Delete button:hover {
+  background-color: #333;
+  color: #fff;
+}
+
+.add_and_Delete input[type="number"] {
+  font-size: 16px;
+  padding: 7px 1px;
+  border: none;
+  background-color: #ddd;
+  border-radius: 5px;
+  text-align: center;
+  width: 40px;
+  margin: 0 10px;
 }
 
 @media (max-width: 500px) {
