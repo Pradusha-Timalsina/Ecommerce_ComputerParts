@@ -8,7 +8,11 @@ const jwt = require("jsonwebtoken");
 
 //Registration and User verification
 exports.registerUser = catchAsyncErrors(async (req, res, next) => {
-  const { name, email, password, address, contact } = req.body;
+  const { name, email, password, address, contact, confirmPassword } = req.body;
+
+  if (password !== confirmPassword) {
+    return next(new ErrorHandler("Password does not match", 404));
+  }
 
   const user = await User.create({
     name,
@@ -22,12 +26,18 @@ exports.registerUser = catchAsyncErrors(async (req, res, next) => {
     },
   });
 
+  // if (req.body.password !== req.body.confirmPassword) {
+  //   return next(new ErrorHandler("Password does not match", 404));
+  // }
+
   //user ko id liyerw tyo id lai private key diyerw token generate gardeko ho
   const token = jwt.sign({ id: user._id }, process.env.JWT_PRIVATEKEY, {
     expiresIn: "1d",
   });
 
-  const verifyLink = `${req.protocol}://${req.get("host")}/api/verify/${token}`; //yeshle chai URL verification link banaideko ho
+  const verifyLink = `${req.protocol}://${req.get(
+    "host"
+  )}/api/v1/verify/${token}`; //yeshle chai URL verification link banaideko ho
 
   const message = `Please click the following link to verify your email: \n\n ${verifyLink}`;
   try {

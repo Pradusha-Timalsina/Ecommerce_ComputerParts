@@ -1,11 +1,23 @@
 import { Fragment, useState } from "react";
 import { Link } from "react-router-dom";
 import PasswordInput from "./PasswordInput";
+import UploadIcon from "@mui/icons-material/Upload";
 import "./signup.css";
 
 const Signup = () => {
   const [avatarPreview, setAvatarPreview] = useState("/Profile.png");
   const [passwordError, setPasswordError] = useState("");
+
+  const [selectedFile, setSelectedFile] = useState(null);
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    setSelectedFile(file);
+  };
+
+  const handleBrowseClick = () => {
+    document.getElementById("fileInput").click();
+  };
 
   return (
     <Fragment>
@@ -103,9 +115,42 @@ const Signup = () => {
                 </div>
               )}
 
-              <div id="registerImage">
+              {/* <div id="registerImage">
                 <img src={avatarPreview} alt="Avatar Preview" />
                 <input type="file" name="avatar" accept="image/*" />
+              </div> */}
+
+              <div
+                id="registerImage"
+                style={{ position: "relative", display: "inline-block" }}
+              >
+                <input
+                  type="text"
+                  placeholder="Choose a file..."
+                  value={selectedFile ? selectedFile.name : ""}
+                  readOnly
+                  className="inputImg"
+                  // style={{ paddingRight: "30px" }}
+                />
+                <UploadIcon
+                  onClick={handleBrowseClick}
+                  style={{
+                    position: "absolute",
+                    top: "50%",
+                    right: "25px",
+                    cursor: "pointer",
+                    backgroundColor: "#dee3e2",
+                    transform: "translateY(-50%)",
+                  }}
+                />
+                <input
+                  type="file"
+                  id="fileInput"
+                  name="avatar"
+                  accept="image/*"
+                  style={{ display: "none" }}
+                  onChange={handleFileChange}
+                />
               </div>
 
               <button type="submit" className="green_btn">
