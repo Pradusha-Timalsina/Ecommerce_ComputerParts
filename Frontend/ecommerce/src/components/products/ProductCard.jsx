@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 import { Rating } from "@material-ui/lab";
 import "./ProductCard.css";
 
-const ProductCard = () => {
+const ProductCard = ({ product }) => {
   const options = {
-    value: 4.5,
+    value: product.ratings,
     readOnly: true,
     precision: 0.5,
   };
@@ -13,18 +13,26 @@ const ProductCard = () => {
   return (
     <Link className="productCard" to={`/product/details`}>
       <div className="productCardImageContainer">
-        <img
+        {/* <img
           src="https://perixx.com/cdn/shop/files/PB-835-WEB-banner-mobile_1_x800.jpg?v=1689597157"
           alt=""
           className="productCardImage"
+        /> */}
+        <img
+          className="productCardImage"
+          src={product?.images[0]?.url}
+          alt={product.name}
         />
       </div>
-      <p>Keyboard</p>
+      <p>{product.name}</p>
       <div className="star">
         <Rating {...options} />{" "}
-        <span className="productCardSpan"> (Reviews)</span>
+        <span className="productCardSpan">
+          {" "}
+          {product.numOfReviews} Reviews{" "}
+        </span>
       </div>
-      <span className="starr">Rs.5000</span>
+      <span className="starr">{`Rs.${product.price}`}</span>
     </Link>
   );
 };
