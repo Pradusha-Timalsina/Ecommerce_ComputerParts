@@ -48,7 +48,6 @@ class ProductDetails extends Component {
     const { products, index } = this.state;
     return (
       <Fragment>
-        <Navbar />
         <div className="app">
           {products.map((item) => (
             <div className="details" key={item._id}>

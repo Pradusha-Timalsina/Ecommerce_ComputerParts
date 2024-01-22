@@ -6,7 +6,6 @@ import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 const ShoppingCart = () => {
   return (
     <Fragment>
-      <Navbar />
       <div className="Container">
         <h1 className="Heading">Your Cart</h1>
         <div className="Content">

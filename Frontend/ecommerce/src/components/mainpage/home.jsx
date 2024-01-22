@@ -25,7 +25,6 @@ const Home = () => {
         <Loader />
       ) : (
         <Fragment>
-          <Navbar />
           <Heropage />
           <h2 className="h2">Products</h2>
           <div className="container">

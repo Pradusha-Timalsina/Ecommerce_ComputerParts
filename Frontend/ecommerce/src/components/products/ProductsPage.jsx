@@ -17,7 +17,6 @@ const ProductsPage = () => {
 
   return (
     <Fragment>
-      <Navbar />
       {/* <h2 className="h2">Products</h2> */}
       <div className="container">
         {products &&
