@@ -10,6 +10,10 @@ import ShoppingCart from "./components/Cart/ShoppingCart";
 import { Main } from "./components/Admin/Main";
 
 import Userdetails from "./components/User/Userdetails";
+import CreateProduct from "./components/Admin/CreateProduct";
+import ProductList from "./components/Admin/ProductList";
+import { OrderList } from "./components/Admin/OrderList";
+import { UserList } from "./components/Admin/UserList";
 function App() {
   return (
     <Router>
@@ -23,6 +27,10 @@ function App() {
         <Route path="/productsPage" element={<ProductsPage />} />
         <Route path="/shoppingCart" element={<ShoppingCart />} />
         <Route path="/admin/dashboard" element={<Main />} />
+        <Route path="/admin/products" element={<ProductList />} />
+        <Route path="/admin/orders" element={<OrderList />} />
+        <Route path="/admin/users" element={<UserList />} />
+        <Route path="/admin/create/product" element={<CreateProduct />} />
         <Route path="/user/profile" element={<Userdetails />} />
       </Routes>
     </Router>

@@ -2,6 +2,7 @@
 #sidebar {
   grid-area: sidebar;
   height: 100%;
+
   background-color: #eaeaea;
   overflow-y: auto;
   transition: all 0.5s;
@@ -77,6 +78,40 @@
   margin-left: 30px;
   margin-top: 10px;
   cursor: pointer;
+}
+
+/* styles.css */
+
+.treeViewContainer {
+  width: 240px;
+  padding: 16px;
+}
+
+.treeView {
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.treeItemLabel {
+  font-weight: bolder;
+}
+
+.treeItemContent {
+  padding: 8px;
+}
+
+.treeItemContent:hover {
+  background-color: #f0f0f0;
+}
+
+.treeItemLink {
+  text-decoration: none;
+  color: #000000;
+  transition: color 0.3s ease;
+}
+
+.treeItemLink:hover {
+  color: #000000;
 }
 
 /* End Sidebar  */
