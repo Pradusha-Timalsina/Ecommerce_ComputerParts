@@ -48,11 +48,11 @@
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  margin-right: 50px;
+
+  margin-right: 5rem;
   width: 150px;
   margin-top: 10px;
   text-decoration: none;
-  /* background-color: #c81912; */
 }
 
 .icon-gap {

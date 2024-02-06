@@ -6,8 +6,16 @@ import EmailIcon from "@mui/icons-material/Email";
 import { Avatar } from "@mui/material";
 import LocationCityIcon from "@mui/icons-material/LocationCity";
 import SmartphoneIcon from "@mui/icons-material/Smartphone";
+import moment from "moment";
+import { useSelector } from "react-redux";
 
 const Userdetails = () => {
+  const { loading, isAuthenticated, user } = useSelector((state) => state.user);
+  const date = moment(user?.createdAt);
+  const formattedDate = date.format("MMM D, YYYY");
+
+  const fullName = `${user && user.name} `;
+
   return (
     <Fragment>
       <div className="accountContainer">
@@ -24,7 +32,7 @@ const Userdetails = () => {
               style={{ width: "190px", height: "190px" }}
             />
             <div className="userWappper">
-              <span className="username">fullName </span>
+              <span className="username">{fullName} </span>
               <VerifiedIcon className="verified-icon" color="primary" />
             </div>
 
@@ -32,19 +40,19 @@ const Userdetails = () => {
               <span className="item-title">Account Details</span>
               <div className="item">
                 <EmailIcon className="iconE" />
-                <span className="data">email</span>
+                <span className="data">{user?.email}</span>
               </div>
 
               <div className="item">
                 <LocationCityIcon className="iconE" />
-                <span className="data">address</span>
+                <span className="data">{user?.address}</span>
               </div>
               <div className="item">
                 <SmartphoneIcon className="iconE" />
-                <span className="data">contact</span>
+                <span className="data">{user?.contact}</span>
               </div>
 
-              <span className="item-title">Joined date:</span>
+              <span className="item-title">Joined date: {formattedDate}</span>
             </div>
           </div>
 
@@ -54,10 +62,8 @@ const Userdetails = () => {
         <div className="second">
           <h3>Manage My Account</h3>
           <div className="personalProfile">
-            <h5>fullName</h5>
-            <h5>email</h5>
             <Link to="/update/profile" style={{ textDecoration: "none" }}>
-              <button className="editButton">Edit</button>
+              <button className="editButton">Edit Profile</button>
             </Link>
             <div className="buttons">
               <Link to="/myorder">My Orders</Link>
