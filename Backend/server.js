@@ -8,6 +8,7 @@ const errorMiddleware = require("./middleware/error");
 const product = require("./routes/productRoute");
 const user = require("./routes/userRoute");
 const order = require("./routes/orderRoute");
+const cloudinary = require("cloudinary");
 
 //Handling Uncaught Exception
 process.on("uncaughtException", (err) => {
@@ -27,6 +28,12 @@ dotenv.config({ path: "Backend/.env" }); //Backend vanne folder bata .env vanne 
 
 //database connection
 connection();
+//coludinary
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.API_KEY,
+  api_secret: process.env.API_SECRET_KEY,
+});
 
 //middlewares
 app.use(express.urlencoded({ extended: true }));

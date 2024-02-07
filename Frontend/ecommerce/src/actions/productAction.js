@@ -9,7 +9,6 @@ import {
   ADMIN_PRODUCT_FAIL,
   NEW_PRODUCT_REQUEST,
   NEW_PRODUCT_SUCCESS,
-  NEW_PRODUCT_RESET,
   NEW_PRODUCT_FAIL,
   CLEAR_ERRORS,
 } from "../constants/productConstants";
@@ -57,13 +56,11 @@ export const createProduct = (productData) => async (dispatch) => {
   try {
     dispatch({ type: NEW_PRODUCT_REQUEST });
 
-    const config = {
-      headers: { "Content-Type": "application/json" },
-    };
-    const { data } = await axios.put(
+    const env = { headers: { "Content-Type": "multipart/form-data" } };
+    const { data } = await axios.post(
       `/api/v1/admin/product/new`,
       productData,
-      config
+      env
     );
 
     dispatch({

@@ -90,9 +90,9 @@ function Sidebar({ openSidebarToggle, OpenSidebar }) {
         </div>
 
         <li className="sidebar-list-item">
-          <a href="">
+          <Link to="/admin/categories">
             <BsFillGrid3X3GapFill /> Categories
-          </a>
+          </Link>
         </li>
         <li className="sidebar-list-item">
           <Link to="/admin/users">

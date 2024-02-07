@@ -4,16 +4,103 @@ const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 const { ratingClasses } = require("@mui/material");
 const ErrorHandler = require("../utils/errorhandler");
 const ApiFeatures = require("../utils/apifeatures");
+const cloudinary = require("cloudinary");
+const DataUriParser = require("datauri/parser.js");
+const path = require("path");
 
-//Create Product --Admin
+const getDataUri = (file) => {
+  const parser = new DataUriParser();
+  const extName = path.extname(file.originalname);
+  const uri = parser.format(extName, file.buffer);
+  return uri;
+};
+
+// //Create Product --Admin
+// exports.createProducts = catchAsyncErrors(async (req, res, next) => {
+//   let pImages = [];
+
+//   if (typeof req.body.images === "string") {
+//     pImages.push(req.body.images);
+//   } else {
+//     pImages = req.body.images;
+//   }
+
+//   const productImages = [];
+
+//   for (let i = 0; i < pImages.length; i++) {
+//     const element = await cloudinary.v2.uploader.upload(pImages[i], {
+//       folder: "products",
+//     });
+//     productImages.push({
+//       public_id: element.public_id,
+//       url: element.secure_url,
+//     });
+//   }
+
+//   req.body.images = productImages;
+//   req.body.user = req.user.id;
+
+//   const { name, price, description, stock, category, images } = req.body;
+
+//   const product = new Product({
+//     name,
+
+//     price,
+//     description,
+//     category,
+//     stock,
+//     images,
+//     user: req.body.user,
+//   });
+
+//   try {
+//     const result = await product.save();
+//     res.status(201).json({
+//       success: true,
+//       product: result,
+//     });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(400).json({
+//       message: "Product creation failed",
+//       error: error,
+//     });
+//   }
+// });
+
 exports.createProducts = catchAsyncErrors(async (req, res, next) => {
-  req.body.user = req.user.id;
-  const product = await Product.create(req.body);
+  try {
+    let images = req.files;
+    console.log(images);
+    //const imageData = getDataUri(image);
 
-  res.status(201).json({
-    success: true,
-    product,
-  });
+    const imagesLinks = [];
+
+    for (let i = 0; i < images.length; i++) {
+      const imageData = getDataUri(images[i]);
+      const result = await cloudinary.v2.uploader.upload(imageData.content, {
+        folder: "products",
+      });
+
+      imagesLinks.push({
+        public_id: result.public_id,
+        url: result.secure_url,
+      });
+    }
+
+    req.body.images = imagesLinks;
+    req.body.user = req.user.id;
+
+    const product = await Product.create(req.body);
+    res.status(201).json({
+      success: true,
+      product,
+    });
+  } catch (error) {
+    // Handle errors
+    console.error(error);
+    res.status(500).json({ success: false, message: "Internal Server Error" });
+  }
 });
 
 //Get All Product

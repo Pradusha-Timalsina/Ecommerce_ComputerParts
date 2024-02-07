@@ -11,11 +11,12 @@ import { Main } from "./components/Admin/Main";
 import { loadUser } from "./actions/userAction";
 import Userdetails from "./components/User/Userdetails";
 import CreateProduct from "./components/Admin/CreateProduct";
-import ProductList from "./components/Admin/ProductList";
+
 import { OrderList } from "./components/Admin/OrderList";
 import { UserList } from "./components/Admin/UserList";
 import { useDispatch } from "react-redux";
 import store from "./store";
+import { ProductList } from "./components/Admin/ProductList";
 function App() {
   React.useEffect(() => {
     store.dispatch(loadUser());

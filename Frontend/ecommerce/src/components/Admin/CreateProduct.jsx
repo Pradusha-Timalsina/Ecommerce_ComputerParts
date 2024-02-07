@@ -1,73 +1,64 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React from "react";
+import { Fragment, useState, useEffect } from "react";
 import "./createproduct.css";
-import { useSelector, useDispatch } from "react-redux";
-import { clearErrors, createProduct } from "../../actions/productAction";
 import { Button } from "@material-ui/core";
+import Sidebar from "./Sidebar";
 import StorageIcon from "@mui/icons-material/Storage";
 import AccountTreeIcon from "@mui/icons-material/AccountTree";
 import DescriptionIcon from "@mui/icons-material/Description";
 import SpellcheckIcon from "@mui/icons-material/Spellcheck";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
+import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import Sidebar from "./Sidebar";
+import { clearErrors, createProduct } from "../../actions/productAction";
 import { NEW_PRODUCT_RESET } from "../../constants/productConstants";
 
 const CreateProduct = () => {
   const dispatch = useDispatch();
+
   const navigate = useNavigate();
 
   const { loading, error, success } = useSelector((state) => state.newProduct);
 
   const [name, setName] = useState("");
   const [price, setPrice] = useState(0);
-  const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
-  const [Stock, setStock] = useState(0);
+  const [stock, setStock] = useState(0);
+  const [description, setDescription] = useState("");
   const [images, setImages] = useState([]);
   const [imagesPreview, setImagesPreview] = useState([]);
 
-  const categories = [
-    "Laptop",
-    "Keyboard",
-    "Mouse",
-    "Headphone",
-    "Hard drive",
-    "Monitor",
-  ];
-
   useEffect(() => {
     if (error) {
-      alert.error(error);
       dispatch(clearErrors());
     }
+
     if (success) {
-      alert.success("Product Created Successfully");
       navigate("/admin/dashboard");
       dispatch({ type: NEW_PRODUCT_RESET });
     }
-  }, [dispatch, alert, error, success]);
+  }, [dispatch, error, navigate, success]);
 
-  const createProductSubmitHandler = (e) => {
+  const productSummitHandler = (e) => {
     e.preventDefault();
+    const formData = new FormData();
 
-    const myForm = new FormData();
-
-    myForm.set("name", name);
-    myForm.set("price", price);
-    myForm.set("description", description);
-    myForm.set("category", category);
-    myForm.set("Stock", Stock);
-
+    formData.set("name", name);
+    formData.set("price", price);
     images.forEach((image) => {
-      myForm.append("images", image);
+      formData.append("images", image);
     });
-    dispatch(createProduct(myForm));
+    formData.set("description", description);
+    formData.set("category", category);
+    formData.set("stock", stock);
+
+    dispatch(createProduct(formData));
   };
 
-  const createProductImagesChange = (e) => {
+  const productImageChange = (e) => {
     const files = Array.from(e.target.files);
 
-    setImages([]);
+    setImages(files);
     setImagesPreview([]);
 
     files.forEach((file) => {
@@ -79,6 +70,7 @@ const CreateProduct = () => {
           setImages((old) => [...old, reader.result]);
         }
       };
+
       reader.readAsDataURL(file);
     });
   };
@@ -87,22 +79,43 @@ const CreateProduct = () => {
     <Fragment>
       <div className="grid-view">
         <Sidebar />
-
         <div className="newProductContainer">
           <h1 className="headingProd">Create Product</h1>
-          <form className="newProductForm" encType="multipart/form-data">
+          <form
+            className="newProductForm"
+            encType="multipart/form-data"
+            onSubmit={productSummitHandler}
+          >
             <div>
               <SpellcheckIcon />
-              <input type="text" placeholder="Product Name" />
+              <input
+                type="text"
+                placeholder="Product Name"
+                value={name}
+                onChange={(e) => {
+                  if (e.target.value.length > 100) {
+                    alert.error("Product name cannot exceed 100 characters");
+                  } else {
+                    setName(e.target.value);
+                  }
+                }}
+              />
             </div>
             <div>
               <AttachMoneyIcon />
-              <input type="number" placeholder="Price" required />
+              <input
+                type="number"
+                placeholder="Price"
+                required
+                onChange={(e) => setPrice(e.target.value)}
+              />
             </div>
             <div>
               <DescriptionIcon />
               <textarea
                 type="number"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
                 placeholder="Product Description"
                 cols="30"
                 rows="1"
@@ -110,6 +123,13 @@ const CreateProduct = () => {
             </div>
             <div>
               <AccountTreeIcon />
+              <select
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
+              >
+                <option>Choose Category</option>
+                <option>Gaming</option>
+              </select>
             </div>
 
             <div>
@@ -122,15 +142,17 @@ const CreateProduct = () => {
               />
             </div>
 
-            <div id="productformfile">
+            <label id="productformfile" htmlFor="fileInput">
+              Select File
               <input
+                id="fileInput"
                 type="file"
                 name="avatar"
                 accept="image/*"
-                onChange={createProductImagesChange}
+                onChange={productImageChange}
                 multiple
               />
-            </div>
+            </label>
 
             <div id="createProductFormImage">
               {imagesPreview.map((image, index) => (
@@ -138,7 +160,11 @@ const CreateProduct = () => {
               ))}
             </div>
 
-            <Button id="createProductBtn" type="submit">
+            <Button
+              id="createProductBtn"
+              type="submit"
+              disabled={loading ? true : false}
+            >
               Create
             </Button>
           </form>

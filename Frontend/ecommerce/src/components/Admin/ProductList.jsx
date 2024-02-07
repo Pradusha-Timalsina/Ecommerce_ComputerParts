@@ -1,58 +1,78 @@
-import React, { Fragment, useEffect } from "react";
-import { DataGrid } from "@mui/x-data-grid";
-import "./productList.css";
-import { useSelector, useDispatch } from "react-redux";
-import { clearErrors, getAdminProduct } from "../../actions/productAction";
-// import { useAlert } from "react-alert";
-import Sidebar from "./Sidebar";
+import React from "react";
 import { Link } from "react-router-dom";
+import Sidebar from "./Sidebar";
+import { DataGrid } from "@mui/x-data-grid";
 import { Button } from "@material-ui/core";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { clearErrors, getAdminProduct } from "../../actions/productAction";
+import { useSelector, useDispatch } from "react-redux";
+import "./productList.css";
+import { useEffect } from "react";
+import { Fragment } from "react";
 
-const ProductList = () => {
+import { useNavigate } from "react-router-dom";
+
+export const ProductList = () => {
   const dispatch = useDispatch();
 
-  // const alert = useAlert();
+  const navigate = useNavigate();
 
   const { error, products } = useSelector((state) => state.products);
 
   useEffect(() => {
     if (error) {
-      alert.error(error);
+      // alert.error(error);
       dispatch(clearErrors());
     }
+
     dispatch(getAdminProduct());
   }, [dispatch, error]);
 
   const columns = [
+    {
+      field: "id",
+      headerName: "S. N.",
+      minWidth: 190,
+      flex: 0.3,
+    },
     {
       field: "name",
       headerName: "Name",
       minWidth: 350,
       flex: 0.5,
     },
+    {
+      field: "stock",
+      headerName: "Stock",
+      type: "number",
+      minWidth: 150,
+      flex: 0.2,
+    },
 
     {
       field: "price",
       headerName: "Price",
       type: "number",
-      minWidth: 270,
+      minWidth: 200,
       flex: 0.3,
     },
+
     {
       field: "actions",
+      flex: 0.3,
       headerName: "Actions",
       minWidth: 150,
-      flex: 0.2,
       type: "number",
       sortable: false,
       renderCell: (params) => {
+        const productId = params.getValue(params.id, "productId");
         return (
           <Fragment>
-            <Link to={`/admin/product/${params.getValue(params.id, "id")}`}>
+            <Link to={`/admin/product/${productId}`}>
               <EditIcon />
             </Link>
+
             <Button>
               <DeleteIcon />
             </Button>
@@ -61,28 +81,36 @@ const ProductList = () => {
       },
     },
   ];
+
+  let counter = 1;
   const rows = [];
 
   products &&
-    products.forEach((item) => {
-      rows.push({
-        id: item._id,
-        stock: item.Stock,
-        price: item.price,
-        name: item.name,
+    products
+      .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+      .forEach((prod) => {
+        rows.push({
+          id: counter++,
+          stock: prod.stock,
+          price: prod.price,
+          name: prod.name,
+          productId: prod._id,
+        });
       });
-    });
+
   return (
     <Fragment>
       <div className="dashboard_product_list">
         <Sidebar />
-        <div className="productListContainer">
-          <h1 id="productListHeading">ALL PRODUCTS</h1>
+        <div className="productcontainer">
+          <h1 className="heading">All Products</h1>
+
           <DataGrid
             rows={rows}
             columns={columns}
+            pageSize={10}
             disableSelectionOnClick
-            className="productListTable"
+            className="productTable"
             autoHeight
           />
         </div>
@@ -90,5 +118,3 @@ const ProductList = () => {
     </Fragment>
   );
 };
-
-export default ProductList;

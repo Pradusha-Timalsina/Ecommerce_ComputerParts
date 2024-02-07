@@ -10,16 +10,22 @@ import Sidebar from "./Sidebar";
 export const UserList = () => {
   const columns = [
     {
+      field: "id",
+      headerName: "User Id",
+      minWidth: 250,
+      flex: 0.3,
+    },
+    {
       field: "email",
       headerName: "Email",
       minWidth: 200,
-      flex: 1,
+      flex: 0.3,
     },
     {
       field: "name",
       headerName: "Name",
       minWidth: 150,
-      flex: 0.5,
+      flex: 0.2,
     },
 
     {
@@ -27,7 +33,7 @@ export const UserList = () => {
       headerName: "Role",
       type: "number",
       minWidth: 150,
-      flex: 0.3,
+      flex: 0.2,
       cellClassName: (params) => {
         return params.getValue(params.id, "role") === "admin"
           ? "greenColor"
@@ -64,15 +70,15 @@ export const UserList = () => {
     <Fragment>
       <div className="dashboard_user_list">
         <Sidebar />
-        <div className="productListContainer">
-          <h1 id="productListHeading">ALL USERS</h1>
+        <div className="productcontainer">
+          <h1 id="heading">ALL USERS</h1>
 
           <DataGrid
             rows={rows}
             columns={columns}
             pageSize={10}
             disableSelectionOnClick
-            className="productListTable"
+            className="productTable"
             autoHeight
           />
         </div>
