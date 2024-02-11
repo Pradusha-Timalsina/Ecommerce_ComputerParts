@@ -91,6 +91,7 @@ const CreateProduct = () => {
               <input
                 type="text"
                 placeholder="Product Name"
+                required
                 value={name}
                 onChange={(e) => {
                   if (e.target.value.length > 100) {
@@ -128,7 +129,9 @@ const CreateProduct = () => {
                 onChange={(e) => setCategory(e.target.value)}
               >
                 <option>Choose Category</option>
-                <option>Gaming</option>
+                <option>Laptop</option>
+                <option>Mouse</option>
+                <option>Headphone</option>
               </select>
             </div>
 

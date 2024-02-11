@@ -16,8 +16,19 @@ const {
   verifyUser,
 } = require("../controller/userController");
 const { isAuthenticatedUser, authorizeRoles } = require("../middleware/auth");
+const multer = require("multer");
+const upload = multer({
+  fileFilter(req, file, callback) {
+    if (!file.originalname.match(/.(jpg|jpeg|png)$/)) {
+      return;
+    }
+    callback(undefined, true);
+  },
+});
 
-router.route("/register").post(registerUser);
+// router.post("/register", upload.single("image"), registerUser);
+
+router.route("/register").post(upload.single("image"), registerUser);
 
 router.route("/verify/:token").get(verifyUser);
 

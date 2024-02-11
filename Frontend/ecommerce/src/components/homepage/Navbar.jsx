@@ -24,7 +24,7 @@ import { logout } from "../../actions/userAction";
 const Navbar = () => {
   const dispatch = useDispatch();
   const { user, loading } = useSelector((state) => state.user);
-
+  const { cartItems } = useSelector((state) => state.cart);
   const fullName = `${user && user.name}`;
 
   const logoutHandler = () => {
@@ -56,8 +56,8 @@ const Navbar = () => {
             </Link>
           </li>
           <li>
-            <Link className="link" to="/electronics">
-              Electronics
+            <Link className="link" to="/comparison/page">
+              Comparison
             </Link>
           </li>
           <li>
@@ -70,7 +70,14 @@ const Navbar = () => {
       <div className="profile">
         <BiSearchAlt2 style={{ fontSize: "25px" }} />
         {/* <div className="icon-gap" /> */}
-        <AiOutlineShoppingCart style={{ fontSize: "25px" }} />{" "}
+        <Link
+          to="/shopping/cart"
+          style={{ textDecoration: "none", color: "black" }}
+        >
+          <Badge badgeContent={`${cartItems.length}`} color="primary">
+            <AiOutlineShoppingCart style={{ fontSize: "25px" }} />{" "}
+          </Badge>
+        </Link>
         {/* <div className="icon-gap" />  */}
         <FormControl variant="standard">
           {user ? (

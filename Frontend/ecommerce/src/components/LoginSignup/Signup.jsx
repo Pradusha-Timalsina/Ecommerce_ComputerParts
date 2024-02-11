@@ -1,12 +1,82 @@
-import { Fragment, useState } from "react";
-import { Link } from "react-router-dom";
+import { Fragment, useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import PasswordInput from "./PasswordInput";
 import UploadIcon from "@mui/icons-material/Upload";
 import "./signup.css";
-
+import { useDispatch, useSelector } from "react-redux";
+import { register, clearErrors } from "../../actions/userAction";
 const Signup = () => {
+  const dispatch = useDispatch();
+  const [ss, setss] = useState();
+  const navigate = useNavigate();
+  const [user, setUser] = useState({
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    address: "",
+    contact: "",
+    avatar: "",
+    avatarPreview: null,
+  });
+  const { error, loading, isAuthenticated } = useSelector(
+    (state) => state.user
+  );
+
+  const { name, email, password, confirmPassword, address, contact } = user;
+  const [avatar, setAvatar] = useState("/Profile.png");
   const [avatarPreview, setAvatarPreview] = useState("/Profile.png");
   const [passwordError, setPasswordError] = useState("");
+  const registerSubmit = (e) => {
+    e.preventDefault();
+    if (password.length < 8) {
+      setPasswordError(" Password should be at least 8 Characters");
+    }
+    if (password !== confirmPassword) {
+      setPasswordError("Password does not match");
+      return;
+    }
+    const myForm = new FormData();
+
+    myForm.set("name", name);
+    myForm.set("email", email);
+    myForm.set("password", password);
+    myForm.set("confirmPassword", confirmPassword);
+    myForm.set("address", address);
+    myForm.set("contact", contact);
+    myForm.set("image", ss);
+
+    // for (let key of myForm.keys()) {
+    //   console.log(key + ': ' + myForm.get(key));
+    // }
+    dispatch(register(myForm));
+  };
+  const registerDataChange = (e) => {
+    if (e.target.name === "avatar") {
+      setss(e.target.files[0]);
+      const reader = new FileReader();
+
+      reader.onload = () => {
+        if (reader.readyState === 2) {
+          setAvatarPreview(reader.result);
+          setAvatar(reader.result);
+        }
+      };
+
+      reader.readAsDataURL(e.target.files[0]);
+    } else {
+      setUser({ ...user, [e.target.name]: e.target.value });
+    }
+  };
+
+  useEffect(() => {
+    if (error) {
+      dispatch(clearErrors());
+    }
+    if (isAuthenticated) {
+      navigate("/login");
+    }
+  }, [dispatch, error, isAuthenticated]);
 
   const [selectedFile, setSelectedFile] = useState(null);
 
@@ -24,33 +94,32 @@ const Signup = () => {
       <div className="signup_container">
         <div className="signup_form_container">
           <div className="right">
-            <form className="form_container">
+            <form
+              className="form_container"
+              onSubmit={registerSubmit}
+              encType="multipart/form-data"
+            >
               <h2>Create Account</h2>
-              <div className="nameInRow">
-                <div className="signUpName">
-                  <input
-                    type="text"
-                    placeholder="First Name"
-                    name="firstName"
-                    required
-                    className="nameinput"
-                  />
-                </div>
-                <div className="signUpName">
-                  <input
-                    type="text"
-                    placeholder="Last Name"
-                    name="lastName"
-                    required
-                    className="nameinput"
-                  />
-                </div>
+
+              <div className="signUpName">
+                <input
+                  type="text"
+                  placeholder="Name"
+                  name="name"
+                  onChange={registerDataChange}
+                  value={name}
+                  required
+                  className="nameinput"
+                />
               </div>
+
               <div className="signUpName">
                 <input
                   type="email"
                   placeholder="Email "
                   name="email"
+                  onChange={registerDataChange}
+                  value={email}
                   required
                   className="input"
                 />
@@ -60,6 +129,8 @@ const Signup = () => {
                   type="text"
                   placeholder="Address"
                   name="address"
+                  onChange={registerDataChange}
+                  value={address}
                   required
                   className="input"
                 />
@@ -69,6 +140,8 @@ const Signup = () => {
                   type="Number"
                   placeholder="Contacts"
                   name="contact"
+                  onChange={registerDataChange}
+                  value={contact}
                   required
                   className="input"
                   size="10"
@@ -79,6 +152,8 @@ const Signup = () => {
                 <PasswordInput
                   placeholder="Password"
                   name="password"
+                  onChange={registerDataChange}
+                  value={password}
                   required
                 />
               </div>
@@ -99,6 +174,8 @@ const Signup = () => {
                 <PasswordInput
                   placeholder="Confirm Password"
                   name="confirmPassword"
+                  onChange={registerDataChange}
+                  value={confirmPassword}
                   required
                 />
               </div>
@@ -149,7 +226,7 @@ const Signup = () => {
                   name="avatar"
                   accept="image/*"
                   style={{ display: "none" }}
-                  onChange={handleFileChange}
+                  onChange={registerDataChange}
                 />
               </div>
 

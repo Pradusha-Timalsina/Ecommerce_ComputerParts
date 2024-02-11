@@ -1,91 +1,86 @@
-import React, { Component, Fragment } from "react";
-
-import DetailsThumb from "../Utils/DetailsThumb";
+import React, { useState, useRef, useEffect, Fragment } from "react";
+import Carousel from "react-material-ui-carousel";
 import "./productdetails.css";
 import Navbar from "../homepage/Navbar";
+import { getProductDetails } from "../../actions/productAction";
+import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { addItemsToCart } from "../../actions/cartAction";
+const ProductDetails = () => {
+  const dispatch = useDispatch();
 
-class ProductDetails extends Component {
-  state = {
-    products: [
-      {
-        _id: "1",
-        title: "KeyBoard",
-        src: [
-          "https://images.unsplash.com/photo-1555532538-dcdbd01d373d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1928&q=80",
-          "https://images.pexels.com/photos/1714205/pexels-photo-1714205.jpeg?cs=srgb&dl=pexels-josh-sorenson-1714205.jpg&fm=jpg",
-          "https://images.unsplash.com/photo-1587829741301-dc798b83add3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2065&q=80",
-          "https://images.unsplash.com/photo-1560762484-813fc97650a0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80",
-        ],
-        description:
-          "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-        content:
-          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-        price: 23,
+  const { product, loading, error } = useSelector(
+    (state) => state.productDetails
+  );
 
-        count: 1,
-      },
-    ],
-    index: 0,
+  const params = useParams();
+
+  const [quantity, setQuantity] = useState(1);
+
+  const increaseQuantity = () => {
+    if (product.stock <= quantity) return;
+
+    const qty = quantity + 1;
+    setQuantity(qty);
   };
 
-  myRef = React.createRef();
+  const decreaseQuantity = () => {
+    if (1 >= quantity) return;
 
-  handleTab = (index) => {
-    this.setState({ index: index });
-    const images = this.myRef.current.children;
-    for (let i = 0; i < images.length; i++) {
-      images[i].className = images[i].className.replace("active", "");
-    }
-    images[index].className = "active";
+    const qty = quantity - 1;
+    setQuantity(qty);
   };
 
-  componentDidMount() {
-    const { index } = this.state;
-    this.myRef.current.children[index].className = "active";
-  }
+  const addToCartHandler = () => {
+    dispatch(addItemsToCart(params.id));
+  };
+  useEffect(() => {
+    dispatch(getProductDetails(params.id));
+  }, [dispatch, params.id]);
 
-  render() {
-    const { products, index } = this.state;
-    return (
-      <Fragment>
-        <div className="app">
-          {products.map((item) => (
-            <div className="details" key={item._id}>
-              <div className="big-img">
-                <img src={item.src[index]} alt="" />
-              </div>
+  return (
+    <Fragment>
+      <div className="app">
+        <div className="details" key={product._id}>
+          <div className="big-img">
+            <Carousel>
+              {product.images &&
+                product.images.map((item, i) => (
+                  <img
+                    key={item.url}
+                    className="carousel-image"
+                    src={item.url}
+                    alt={`${i} Slide`}
+                  />
+                ))}
+            </Carousel>
+          </div>
+          <div className="box">
+            <div className="row">
+              <h2>{product?.name}</h2>
+              <span>Rs.{product?.price}</span>
+            </div>
+            <p>{product?.description}</p>
 
-              <div className="box">
-                <div className="row">
-                  <h2>{item.title}</h2>
-                  <span>Rs.{item.price}</span>
-                </div>
-
-                <p>{item.description}</p>
-                <p>{item.content}</p>
-
-                <DetailsThumb
-                  images={item.src}
-                  tab={this.handleTab}
-                  myRef={this.myRef}
-                />
-
-                <div className="increase_button">
-                  <div className="add_and_Delete">
-                    <button>-</button>
-                    <input type="number" value="1" readOnly />
-                    <button>+</button>
-                  </div>
-                </div>
-
-                <button className="cart">Add to cart</button>
+            <div className="increase_button">
+              <div className="add_and_Delete">
+                <button onClick={decreaseQuantity}>-</button>
+                <input readOnly type="number" value={quantity} />
+                <button onClick={increaseQuantity}>+</button>
               </div>
             </div>
-          ))}
+            <button
+              className="cart"
+              disabled={product.Stock < 1 ? true : false}
+              onClick={addToCartHandler}
+            >
+              Add to cart
+            </button>
+          </div>
         </div>
-      </Fragment>
-    );
-  }
-}
+      </div>
+    </Fragment>
+  );
+};
 
 export default ProductDetails;

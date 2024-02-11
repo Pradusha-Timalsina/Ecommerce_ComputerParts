@@ -2,19 +2,15 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./ProductCart.css";
 
-const ProductCart = ({}) => {
+const ProductCart = ({ item, deleteCartItems }) => {
   return (
     <div className="bottom">
       <div>
-        <img
-          className="productimage"
-          src="https://perixx.com/cdn/shop/files/PB-835-WEB-banner-mobile_1_x800.jpg?v=1689597157"
-          alt="ssa"
-        />
+        <img className="productimage" src={item.image} alt="sp" />
       </div>
       <div className="productCartdetails">
-        <Link to="/" className="productName">
-          Keyboard
+        <Link to={`/product/${item.product}`} className="productName">
+          {item.name}
         </Link>
       </div>
     </div>

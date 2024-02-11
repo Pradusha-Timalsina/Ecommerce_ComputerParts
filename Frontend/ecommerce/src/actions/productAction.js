@@ -7,6 +7,9 @@ import {
   ADMIN_PRODUCT_REQUEST,
   ADMIN_PRODUCT_SUCCESS,
   ADMIN_PRODUCT_FAIL,
+  PRODUCT_DETAILS_REQUEST,
+  PRODUCT_DETAILS_SUCCESS,
+  PRODUCT_DETAILS_FAIL,
   NEW_PRODUCT_REQUEST,
   NEW_PRODUCT_SUCCESS,
   NEW_PRODUCT_FAIL,
@@ -70,6 +73,26 @@ export const createProduct = (productData) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: NEW_PRODUCT_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+//product details
+export const getProductDetails = (id) => async (dispatch) => {
+  try {
+    dispatch({
+      type: PRODUCT_DETAILS_REQUEST,
+    });
+    const { data } = await axios.get(`/api/v1/product/${id}`);
+
+    dispatch({
+      type: PRODUCT_DETAILS_SUCCESS,
+      payload: data.product,
+    });
+  } catch (error) {
+    dispatch({
+      type: PRODUCT_DETAILS_FAIL,
       payload: error.response.data.message,
     });
   }

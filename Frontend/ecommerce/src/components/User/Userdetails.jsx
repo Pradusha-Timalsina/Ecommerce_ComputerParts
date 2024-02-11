@@ -67,7 +67,7 @@ const Userdetails = () => {
             </Link>
             <div className="buttons">
               <Link to="/myorder">My Orders</Link>
-              <Link to="/update/password">Change Password</Link>
+              <Link to="/password/update">Change Password</Link>
             </div>
           </div>
         </div>

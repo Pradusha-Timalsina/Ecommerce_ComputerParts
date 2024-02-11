@@ -15,58 +15,7 @@ const getDataUri = (file) => {
   return uri;
 };
 
-// //Create Product --Admin
-// exports.createProducts = catchAsyncErrors(async (req, res, next) => {
-//   let pImages = [];
-
-//   if (typeof req.body.images === "string") {
-//     pImages.push(req.body.images);
-//   } else {
-//     pImages = req.body.images;
-//   }
-
-//   const productImages = [];
-
-//   for (let i = 0; i < pImages.length; i++) {
-//     const element = await cloudinary.v2.uploader.upload(pImages[i], {
-//       folder: "products",
-//     });
-//     productImages.push({
-//       public_id: element.public_id,
-//       url: element.secure_url,
-//     });
-//   }
-
-//   req.body.images = productImages;
-//   req.body.user = req.user.id;
-
-//   const { name, price, description, stock, category, images } = req.body;
-
-//   const product = new Product({
-//     name,
-
-//     price,
-//     description,
-//     category,
-//     stock,
-//     images,
-//     user: req.body.user,
-//   });
-
-//   try {
-//     const result = await product.save();
-//     res.status(201).json({
-//       success: true,
-//       product: result,
-//     });
-//   } catch (error) {
-//     console.error(error);
-//     res.status(400).json({
-//       message: "Product creation failed",
-//       error: error,
-//     });
-//   }
-// });
+// Create Product --Admin
 
 exports.createProducts = catchAsyncErrors(async (req, res, next) => {
   try {
@@ -143,7 +92,6 @@ exports.getProductDetails = catchAsyncErrors(async (req, res, next) => {
   res.status(200).json({
     success: true,
     product,
-    productCount,
   });
 });
 

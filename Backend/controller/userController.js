@@ -5,14 +5,47 @@ const sendToken = require("../utils/jwtToken");
 const sendEmail = require("../utils/sendEmail.js");
 const crypto = require("crypto");
 const jwt = require("jsonwebtoken");
+const DataUriParser = require("datauri/parser.js");
+const path = require("path");
+const cloudinary = require("cloudinary");
+const getDataUri = (file) => {
+  const parser = new DataUriParser();
+  const extName = path.extname(file.originalname);
+  const uri = parser.format(extName, file.buffer);
+  return uri;
+};
 
 //Registration and User verification
 exports.registerUser = catchAsyncErrors(async (req, res, next) => {
-  const { name, email, password, address, contact, confirmPassword } = req.body;
+  const image = req.file;
 
-  if (password !== confirmPassword) {
-    return next(new ErrorHandler("Password does not match", 404));
+  console.log(image);
+  if (!image) {
+    console.error("Error: no avatar image provided");
+    return res.status(400).json({ message: "No avatar image provided" });
   }
+
+  const imageData = getDataUri(image);
+
+  const result = await cloudinary.v2.uploader.upload(imageData.content, {
+    folder: "register",
+    width: 150,
+    crop: "scale",
+  });
+  console.log(result);
+
+  if (!result) {
+    console.error("Error: failed to upload image to Cloudinary");
+    return res
+      .status(500)
+      .json({ message: "Error uploading image to Cloudinary" });
+  }
+
+  const { name, email, password, address, contact } = req.body;
+
+  // if (password !== confirmPassword) {
+  //   return next(new ErrorHandler("Password does not match", 404));
+  // }
 
   const user = await User.create({
     name,
@@ -21,14 +54,12 @@ exports.registerUser = catchAsyncErrors(async (req, res, next) => {
     address,
     contact,
     avatar: {
-      public_id: "this is a sample id",
-      url: "profilepicUrl",
+      public_id: result.public_id,
+      url: result.secure_url,
+      // public_id: 'sample Id',
+      // url: 'dpUrl',
     },
   });
-
-  // if (req.body.password !== req.body.confirmPassword) {
-  //   return next(new ErrorHandler("Password does not match", 404));
-  // }
 
   //user ko id liyerw tyo id lai private key diyerw token generate gardeko ho
   const token = jwt.sign({ id: user._id }, process.env.JWT_PRIVATEKEY, {
@@ -59,8 +90,10 @@ exports.registerUser = catchAsyncErrors(async (req, res, next) => {
   }
 });
 
+//verify user
 exports.verifyUser = async (req, res) => {
   const { token } = req.params;
+
   try {
     const decoded = jwt.verify(token, process.env.JWT_PRIVATEKEY);
     const user = await User.findByIdAndUpdate(
@@ -74,6 +107,8 @@ exports.verifyUser = async (req, res) => {
         message: "User not found",
       });
     }
+
+    res.redirect("http://localhost:3000/login?verified=true");
   } catch (error) {
     res.status(400).json({
       status: "fail",

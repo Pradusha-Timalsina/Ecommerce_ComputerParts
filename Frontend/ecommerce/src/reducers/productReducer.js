@@ -5,6 +5,9 @@ import {
   ADMIN_PRODUCT_REQUEST,
   ADMIN_PRODUCT_SUCCESS,
   ADMIN_PRODUCT_FAIL,
+  PRODUCT_DETAILS_REQUEST,
+  PRODUCT_DETAILS_SUCCESS,
+  PRODUCT_DETAILS_FAIL,
   NEW_PRODUCT_REQUEST,
   NEW_PRODUCT_SUCCESS,
   NEW_PRODUCT_RESET,
@@ -45,6 +48,38 @@ export const productReducer = (state = { products: [] }, action) => {
         ...state,
         error: null,
       };
+    default:
+      return state;
+  }
+};
+
+//Product Details
+export const productDetailsReducer = (state = { product: {} }, action) => {
+  switch (action.type) {
+    case PRODUCT_DETAILS_REQUEST:
+      return {
+        loading: true,
+        ...state,
+      };
+
+    case PRODUCT_DETAILS_SUCCESS:
+      return {
+        loading: false,
+        product: action.payload,
+      };
+
+    case PRODUCT_DETAILS_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+
     default:
       return state;
   }

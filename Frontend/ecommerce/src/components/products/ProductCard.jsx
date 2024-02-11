@@ -11,7 +11,7 @@ const ProductCard = ({ product }) => {
   };
 
   return (
-    <Link className="productCard" to={`/product/details`}>
+    <Link className="productCard" to={`/product/${product._id}`}>
       <div className="productCardImageContainer">
         {/* <img
           src="https://perixx.com/cdn/shop/files/PB-835-WEB-banner-mobile_1_x800.jpg?v=1689597157"

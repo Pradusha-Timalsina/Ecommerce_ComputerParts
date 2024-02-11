@@ -6,6 +6,7 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const errorMiddleware = require("./middleware/error");
 const product = require("./routes/productRoute");
+const category = require("./routes/categoryRoute");
 const user = require("./routes/userRoute");
 const order = require("./routes/orderRoute");
 const cloudinary = require("cloudinary");
@@ -49,7 +50,7 @@ app.use(cookieParser());
 app.use("/api/v1", user);
 app.use("/api/v1", product);
 app.use("/api/v1", order);
-
+app.use("/api/v1", category);
 //Middleware for Errors
 app.use(errorMiddleware);
 
