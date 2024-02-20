@@ -2,10 +2,10 @@ import {
   LOGIN_REQUEST,
   LOGIN_FAIL,
   LOGIN_SUCCESS,
-  LOGOUT_SUCCESS,
   REGISTER_USER_REQUEST,
   REGISTER_USER_SUCCESS,
   REGISTER_USER_FAIL,
+  LOGOUT_SUCCESS,
   LOGOUT_FAIL,
   LOAD_USER_REQUEST,
   LOAD_USER_FAIL,
@@ -13,10 +13,17 @@ import {
   UPDATE_PASSWORD_REQUEST,
   UPDATE_PASSWORD_SUCCESS,
   UPDATE_PASSWORD_FAIL,
+  FORGOT_PASSWORD_REQUEST,
+  FORGOT_PASSWORD_SUCCESS,
+  FORGOT_PASSWORD_FAIL,
+  RESET_PASSWORD_REQUEST,
+  RESET_PASSWORD_SUCCESS,
+  RESET_PASSWORD_FAIL,
   CLEAR_ERRORS,
 } from "../constants/userConstants";
 import axios from "axios";
 
+//Login
 export const login = (email, password) => async (dispatch) => {
   try {
     dispatch({ type: LOGIN_REQUEST });
@@ -86,12 +93,65 @@ export const updatePassword = (passwords) => async (dispatch) => {
   }
 };
 
-//logout user
-export const logout = () => async (dispatch) => {
+//Forgot Password
+export const forgotPassword = (email) => async (dispatch) => {
   try {
-    await axios.get(`/api/v1/logout`);
+    dispatch({ type: FORGOT_PASSWORD_REQUEST });
+
+    const config = { headers: { "Content-Type": "application/json" } };
+
+    const { data } = await axios.post(`/api/v1/password/forgot`, email, config); //ya ko route chai backend ko route sanga milna parxa
+
+    dispatch({ type: FORGOT_PASSWORD_SUCCESS, payload: data.message });
+  } catch (error) {
+    dispatch({
+      type: FORGOT_PASSWORD_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+//Reset Password
+export const resetPassword = (token, passwords) => async (dispatch) => {
+  try {
+    dispatch({ type: RESET_PASSWORD_REQUEST });
+
+    const config = { headers: { "Content-Type": "application/json" } };
+
+    const { data } = await axios.put(
+      `/api/v1/password/reset/${token}`,
+      passwords,
+      config
+    ); //ya ko route chai backend ko route sanga milna parxa
+
+    dispatch({ type: RESET_PASSWORD_SUCCESS, payload: data.success });
+  } catch (error) {
+    dispatch({
+      type: RESET_PASSWORD_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+//logout user
+// export const logOut = () => async (dispatch) => {
+//   console.log("error");
+//   try {
+//     await axios.get(`/api/v1/logout`);
+
+//     dispatch({ type: LOGOUT_SUCCESS });
+//   } catch (error) {
+//     dispatch({ type: LOGOUT_FAIL, payload: error.response.data.message });
+//   }
+// };
+export const logOut = () => async (dispatch) => {
+  try {
+    console.log("Attempting to logout...");
+    await axios.get("/api/v1/logout");
+    console.log("Logout successful.");
     dispatch({ type: LOGOUT_SUCCESS });
   } catch (error) {
+    console.error("Logout failed:", error);
     dispatch({ type: LOGOUT_FAIL, payload: error.response.data.message });
   }
 };

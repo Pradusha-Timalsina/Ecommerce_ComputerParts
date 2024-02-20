@@ -5,20 +5,29 @@ import {
   newProductReducer,
   productReducer,
   productDetailsReducer,
+  productsReducer,
 } from "./reducers/productReducer";
-import { userReducer } from "./reducers/userReducer";
+import { forgotPasswordReducer, userReducer } from "./reducers/userReducer";
 import { cartReducer } from "./reducers/cartReducer";
 import { profileReducer } from "./reducers/userReducer";
-import { categoryReducer } from "./reducers/categoryReducer";
+import {
+  categoryReducers,
+  categoryUDReducer,
+  createCategoryReducer,
+} from "./reducers/categoryReducer";
 
 const reducer = combineReducers({
-  products: productReducer,
+  products: productsReducer,
   productDetails: productDetailsReducer,
   user: userReducer,
   cart: cartReducer,
   newProduct: newProductReducer,
+  product: productReducer,
   profile: profileReducer,
-  categories: categoryReducer,
+  forgotPassword: forgotPasswordReducer,
+  categories: categoryReducers,
+  createCategory: createCategoryReducer,
+  category: categoryUDReducer,
 });
 
 let initialState = {
@@ -29,12 +38,12 @@ let initialState = {
   },
 };
 
-const Middleware = [thunk];
+const middleware = [thunk];
 
 const store = createStore(
   reducer,
   initialState,
-  composeWithDevTools(applyMiddleware(...Middleware))
+  composeWithDevTools(applyMiddleware(...middleware))
 );
 
 export default store;

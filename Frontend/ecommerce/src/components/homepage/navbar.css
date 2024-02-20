@@ -42,6 +42,21 @@
   color: black;
 }
 
+.search-popup {
+  position: absolute;
+  top: 0;
+  left: -20px; /* Initially positioned slightly to the left */
+  width: 250px;
+  background-color: white;
+  transition: left 0.3s ease; /* Transition for sliding animation */
+  padding: 10px;
+  border: 1px solid #ccc;
+}
+
+.search-popup.active {
+  left: 0; /* Slide to the left when active */
+}
+
 .profile {
   gap: 19px;
   height: 5rem;

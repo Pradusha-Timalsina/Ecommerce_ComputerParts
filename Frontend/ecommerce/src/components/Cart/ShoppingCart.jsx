@@ -1,22 +1,26 @@
 import React, { Fragment } from "react";
 import "./ShoppingCart.css";
 
-import ProductCart from "./ProductCart";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { Typography } from "@material-ui/core";
 import RemoveShoppingCartIcon from "@mui/icons-material/RemoveShoppingCart";
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { removeItemsFromCart, addItemsToCart } from "../../actions/cartAction";
+import ProductCart from "./ProductCart";
 const ShoppingCart = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const { cartItems } = useSelector((state) => state.cart);
+
   const { user } = useSelector((state) => state.user);
-  const deleteFromCart = (id) => {
+
+  const deleteCartItems = (id) => {
     dispatch(removeItemsFromCart(id));
   };
-  const increaseQuantity = (id, quantity, stock) => {
+
+  const increaseQty = (id, quantity, stock) => {
     const newQty = quantity + 1;
     if (stock <= quantity) {
       return;
@@ -24,7 +28,7 @@ const ShoppingCart = () => {
     dispatch(addItemsToCart(id, newQty));
   };
 
-  const decreaseQuantity = (id, quantity) => {
+  const decreaseQty = (id, quantity) => {
     const newQty = quantity - 1;
     if (1 >= quantity) {
       return;
@@ -32,10 +36,10 @@ const ShoppingCart = () => {
     dispatch(addItemsToCart(id, newQty));
   };
 
-  const checkoutHandler = () => {
+  const checkOutHandler = () => {
     if (user) {
       if (user.role === "admin") {
-        alert.error("You are not authorized to order items.");
+        // alert.error("You are not authorized to order items.");
         return;
       }
       navigate("/shipping");
@@ -46,87 +50,74 @@ const ShoppingCart = () => {
   };
   return (
     <Fragment>
-      {" "}
       {cartItems.length === 0 ? (
-        <div className="emptyCart">
+        <div className="noItemInCart">
           <RemoveShoppingCartIcon />
-          <Typography>No Product in Your Cart</Typography>
-          <Link to="/productspage">View Products</Link>
+
+          <p>No Product in Your Cart</p>
+          <Link to="/allProducts">View Products</Link>
         </div>
       ) : (
         <Fragment>
-          <div className="Container">
-            <h1 className="Heading">Your Cart</h1>
-            {/* <div className="Content"> */}
-            <div className="ProductDisplay">
-              {/* Product details go here */}
-              <p className="ProductColumn">Item</p>
-              <p className="ProductColumn">Price(Rs)</p>
-              <p className="ProductColumn">Quantity</p>
-
-              <p className="ProductColumn">Remove</p>
+          <div className="top">
+            <Link to="/">
+              <ArrowBackIosIcon />
+              <button className="shopbutton">More Shopping</button>
+            </Link>
+          </div>
+          <div className="cartContainer">
+            <div className="cartheading">
+              <p>Product</p>
+              <p>Quantity</p>
             </div>
 
-            {/* <div className="OrderSummary">
-            <h2>Order Summary</h2>
-          </div> */}
-            {/* </div> */}
-            <hr className="Separator" />
-            {/* <div></div> */}
-            <div className="cartshop">
-              {cartItems &&
-                cartItems.map((item) => (
-                  <div className="productcart" key={item.product}>
-                    <ProductCart item={item} />
+            {cartItems &&
+              cartItems.map((item) => (
+                <div className="cartshop" key={item.product}>
+                  <ProductCart item={item} deleteCartItems={deleteCartItems} />
+                  <div className="addDelete">
+                    <button
+                      onClick={() => decreaseQty(item.product, item.quantity)}
+                    >
+                      -
+                    </button>
+                    <input type="number" value={item.quantity} readOnly />
+                    <button
+                      onClick={() =>
+                        increaseQty(item.product, item.quantity, item.stock)
+                      }
+                    >
+                      +
+                    </button>
                   </div>
-                ))}
+                  <p className="cartsubtotal">
+                    {`Rs ${item.quantity * item.price}`}{" "}
+                  </p>
+                  <p
+                    onClick={() => deleteCartItems(item.product)}
+                    className="cartdeleteButton"
+                  >
+                    <DeleteOutlineIcon sx={{ color: "red", width: "50px" }} />
+                  </p>
+                </div>
+              ))}
 
-              <div className="price">
-                {cartItems &&
-                  cartItems.map((item) => (
-                    <p className="cartsubtotal">{item.price}</p>
-                  ))}
+            <div className="cartTotalGross">
+              <div></div>
+              <div className="cartTotalGrossBox">
+                <p>Gross Total</p>
+                <p>{`Rs.${cartItems.reduce(
+                  (tot, item) => tot + item.quantity * item.price,
+                  0
+                )}`}</p>
               </div>
-              <div className="increase">
-                {cartItems &&
-                  cartItems.map((item) => (
-                    <div className="addDelete">
-                      <button
-                        onClick={() =>
-                          decreaseQuantity(item.product, item.quantity)
-                        }
-                      >
-                        -
-                      </button>
-                      <input type="number" value={item.quantity} readOnly />
-                      <button
-                        onClick={() =>
-                          increaseQuantity(
-                            item.product,
-                            item.quantity,
-                            item.stock
-                          )
-                        }
-                      >
-                        +
-                      </button>
-                    </div>
-                  ))}
+              <div></div>
+
+              <div className="checkoutBTN">
+                <button onClick={checkOutHandler}>CheckOut</button>
               </div>
-              {cartItems &&
-                cartItems.map((item) => (
-                  <div className="cartdeleteButton">
-                    <DeleteOutlineIcon
-                      sx={{ color: "red", width: "50px" }}
-                      style={{ cursor: "pointer" }}
-                      onClick={() => deleteFromCart(item.product)}
-                    />
-                  </div>
-                ))}
             </div>
           </div>
-
-          <hr className="Separator" />
         </Fragment>
       )}
     </Fragment>

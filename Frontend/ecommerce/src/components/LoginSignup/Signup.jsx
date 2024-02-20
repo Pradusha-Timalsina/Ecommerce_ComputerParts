@@ -19,9 +19,7 @@ const Signup = () => {
     avatar: "",
     avatarPreview: null,
   });
-  const { error, loading, isAuthenticated } = useSelector(
-    (state) => state.user
-  );
+  const { error, isAuthenticated } = useSelector((state) => state.user);
 
   const { name, email, password, confirmPassword, address, contact } = user;
   const [avatar, setAvatar] = useState("/Profile.png");
@@ -76,7 +74,7 @@ const Signup = () => {
     if (isAuthenticated) {
       navigate("/login");
     }
-  }, [dispatch, error, isAuthenticated]);
+  }, [dispatch, error, navigate, isAuthenticated]);
 
   const [selectedFile, setSelectedFile] = useState(null);
 
@@ -109,7 +107,7 @@ const Signup = () => {
                   onChange={registerDataChange}
                   value={name}
                   required
-                  className="nameinput"
+                  className="input"
                 />
               </div>
 

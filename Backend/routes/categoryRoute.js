@@ -3,6 +3,8 @@ const {
   createCategory,
   deleteCategory,
   getAllCategory,
+  getOneCategory,
+  getCategoryProduct,
 } = require("../controller/categoryController");
 const { isAuthenticatedUser, authorizeRoles } = require("../middleware/auth");
 const router = express.Router();
@@ -26,4 +28,10 @@ router
 
 // Get all categories
 router.route("/category/all").get(getAllCategory);
+
+// Get a single category by ID
+router.route("/category/:id").get(getOneCategory);
+
+router.route("/category/products/:cat").get(getCategoryProduct);
+
 module.exports = router;

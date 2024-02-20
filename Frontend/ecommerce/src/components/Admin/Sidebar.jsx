@@ -89,11 +89,51 @@ function Sidebar({ openSidebarToggle, OpenSidebar }) {
           </TreeView>
         </div>
 
-        <li className="sidebar-list-item">
-          <Link to="/admin/categories">
-            <BsFillGrid3X3GapFill /> Categories
-          </Link>
-        </li>
+        <div className="treeViewContainer">
+          <TreeView
+            defaultCollapseIcon={<ExpandMoreIcon />}
+            defaultExpandIcon={<ImportExportIcon />}
+            className="treeView"
+          >
+            <TreeItem
+              nodeId="1"
+              label="Category"
+              classes={{ label: "treeItemLabel" }}
+            >
+              <Link
+                to="/admin/category/all"
+                className="treeItemLink"
+                style={{ textDecoration: "none" }}
+              >
+                <TreeItem
+                  nodeId="2"
+                  label="All Categories"
+                  icon={<PostAddIcon />}
+                  classes={{
+                    label: "treeItemLabel",
+                    content: "treeItemContent",
+                  }}
+                />
+              </Link>
+
+              <Link
+                to="/admin/create/category"
+                className="treeItemLink"
+                style={{ textDecoration: "none" }}
+              >
+                <TreeItem
+                  nodeId="3"
+                  label="Create category"
+                  icon={<AddIcon />}
+                  classes={{
+                    label: "treeItemLabel",
+                    content: "treeItemContent",
+                  }}
+                />
+              </Link>
+            </TreeItem>
+          </TreeView>
+        </div>
         <li className="sidebar-list-item">
           <Link to="/admin/users">
             <BsPeopleFill /> Customers

@@ -25,7 +25,7 @@ h2 {
   border: none;
   outline: none;
   padding: 12px 0;
-  background-color: #c81912;
+  background-color: #f64b3c;
   border-radius: 20px;
   width: 180px;
   font-weight: bold;
@@ -34,4 +34,10 @@ h2 {
   color: white; /* Set text color to white */
   display: block; /* Make it a block-level element */
   margin: 0 auto; /* Center the button horizontally */
+}
+
+.view_more button:hover {
+  background-color: #c81912;
+  color: #fff;
+  transition: 1s;
 }

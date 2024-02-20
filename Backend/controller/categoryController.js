@@ -5,6 +5,7 @@ const slugify = require("slugify");
 const cloudinary = require("cloudinary");
 const DataUriParser = require("datauri/parser.js");
 const path = require("path");
+const Product = require("../models/productModel");
 
 const getDataUri = (file) => {
   const parser = new DataUriParser();
@@ -72,6 +73,34 @@ exports.getAllCategory = catchAsyncErrors(async (req, res, next) => {
   try {
     const categories = await Category.find();
     res.send(categories);
+  } catch (error) {
+    res.status(500).send({ message: error.message });
+  }
+});
+
+//single category
+exports.getOneCategory = catchAsyncErrors(async (req, res, next) => {
+  try {
+    const category = await Category.findById(req.params.id);
+    if (category == null) {
+      return res.status(404).send({ message: "Category not found" });
+    }
+    res.send(category);
+  } catch (error) {
+    res.status(500).send({ message: error.message });
+  }
+});
+
+exports.getCategoryProduct = catchAsyncErrors(async (req, res, next) => {
+  try {
+    const category = new RegExp(req.params.cat, "i");
+    const product = await Product.find({ category: category });
+
+    if (product == null) {
+      return res.status(404).send({ message: "Category not found" });
+    }
+
+    return res.send(product);
   } catch (error) {
     res.status(500).send({ message: error.message });
   }

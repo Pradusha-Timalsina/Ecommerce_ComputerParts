@@ -41,8 +41,12 @@ router
 
 router
   .route("/admin/product/:id")
-  .put(isAuthenticatedUser, authorizeRoles("admin"), updateProduct)
+  .put(isAuthenticatedUser, authorizeRoles("admin"), updateProduct);
+
+router
+  .route("/admin/delete/:id")
   .delete(isAuthenticatedUser, authorizeRoles("admin"), deleteProduct);
+
 router.route("/product/:id").get(getProductDetails);
 
 router.route("/review").put(isAuthenticatedUser, createProductReview);

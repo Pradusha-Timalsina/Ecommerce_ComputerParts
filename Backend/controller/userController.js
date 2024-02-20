@@ -143,15 +143,29 @@ exports.loginUser = catchAsyncErrors(async (req, res, next) => {
 
 //Logout User
 exports.logout = catchAsyncErrors(async (req, res, next) => {
-  res.cookie("token", null, {
+  res.clearCookie("token", null, {
     expires: new Date(Date.now()),
     httpOnly: true,
   });
+
   res.status(200).json({
     success: true,
-    message: "Logged Out",
+    message: "logged out",
   });
 });
+
+// // Logout User
+// exports.logout = catchAsyncErrors(async (req, res, next) => {
+//   res.cookies.set("token", {
+//     expires: new Date(Date.now()),
+//     httpOnly: true,
+//   });
+
+//   res.status(200).json({
+//     success: true,
+//     message: "logged out",
+//   });
+// });
 
 //Forget Password
 exports.forgetPassword = catchAsyncErrors(async (req, res, next) => {
@@ -166,11 +180,9 @@ exports.forgetPassword = catchAsyncErrors(async (req, res, next) => {
 
   await user.save({ validateBeforeSave: false });
 
-  const resetPasswordUrl = `${req.protocol}://${req.get(
-    "host"
-  )}/api/v1/password/reset/${resetToken}`; //yo token vaneko chai mathi generate gareko token ho
+  const resetPasswordUrl = `${process.env.FRONTEND_URL}/password/reset/${resetToken}`; //yo token vaneko chai mathi generate gareko token ho
 
-  const message = `Your password reset token is :- \n\n ${resetPasswordUrl} \n\nIf you have not requested this email then please ignore it`;
+  const message = `Your password reset token is :- \n\n ${resetPasswordUrl} \n\nIf you have not requested this email then please ignore it.`;
 
   try {
     await sendEmail({

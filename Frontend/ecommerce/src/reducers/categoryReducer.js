@@ -44,29 +44,25 @@ export const createCategoryReducer = (state = { categories: {} }, action) => {
       return state;
   }
 };
+
 const initialState = {
-  loading: false,
   categories: [],
-  error: null,
 };
-export const categoryReducer = (state = initialState, action) => {
+
+export const categoryReducers = (state = initialState, action) => {
   switch (action.type) {
     case CATEGORY_ALL_REQUEST:
       return {
-        ...state,
         loading: true,
       };
 
     case CATEGORY_ALL_SUCCESS:
-      // console.log(action.payload);
       return {
-        ...state,
         loading: false,
         categories: action.payload,
       };
     case CATEGORY_ALL_FAIL: //admin
       return {
-        ...state,
         loading: false,
         error: action.payload,
       };

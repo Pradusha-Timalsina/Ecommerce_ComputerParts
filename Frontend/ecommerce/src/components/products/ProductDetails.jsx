@@ -32,8 +32,9 @@ const ProductDetails = () => {
   };
 
   const addToCartHandler = () => {
-    dispatch(addItemsToCart(params.id));
+    dispatch(addItemsToCart(params.id, quantity));
   };
+
   useEffect(() => {
     dispatch(getProductDetails(params.id));
   }, [dispatch, params.id]);
@@ -71,7 +72,7 @@ const ProductDetails = () => {
             </div>
             <button
               className="cart"
-              disabled={product.Stock < 1 ? true : false}
+              disabled={product.stock < 1 ? true : false}
               onClick={addToCartHandler}
             >
               Add to cart

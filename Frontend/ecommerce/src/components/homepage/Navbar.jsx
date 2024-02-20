@@ -1,47 +1,86 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { CgProfile } from "react-icons/cg";
 import { BiSearchAlt2 } from "react-icons/bi";
 import { AiOutlineShoppingCart } from "react-icons/ai"; // Imported the cart icon
 import "./navbar.css";
 import logoImage from "../../components/LogoImage/logo.png";
 import { useSelector, useDispatch } from "react-redux";
 import {
-  Box,
-  IconButton,
-  InputBase,
   Select,
   MenuItem,
   FormControl,
-  useMediaQuery,
   Button,
   Badge,
+  IconButton,
 } from "@mui/material";
-
 import Login from "@mui/icons-material/Login";
-import { logout } from "../../actions/userAction";
+import { Search } from "@mui/icons-material";
+import { logOut } from "../../actions/userAction";
+import Alertbar from "../Alert/Alert";
 
 const Navbar = () => {
   const dispatch = useDispatch();
   const { user, loading } = useSelector((state) => state.user);
   const { cartItems } = useSelector((state) => state.cart);
   const fullName = `${user && user.name}`;
-
-  const logoutHandler = () => {
-    dispatch(logout());
-    // alert.success("Logged out SuccessFully");
-  };
-
   const navigate = useNavigate();
-  const handleProfileClick = () => {
-    navigate("/login");
+
+  const [message, setMessage] = useState("");
+  const [status, setStatus] = useState("");
+  const [open, setOpen] = useState(false);
+
+  // for Alertbar of Snackbar
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
   };
+
+  const logoutHand = async () => {
+    const data = await fetch("/api/v1/logout");
+    let result = await data.json();
+    setMessage("Logout Successfully");
+    setStatus("success");
+    setOpen(true);
+    navigate("/");
+    dispatch(logOut());
+  };
+
+  const [keyword, setKeyword] = useState("");
+
+  const [showSearch, setShowSearch] = useState(false);
+  const [iconPosition, setIconPosition] = useState({ x: 0, y: 0 });
+
+  const toggleSearch = () => {
+    setShowSearch(!showSearch);
+  };
+
+  const handleIconClick = (e) => {
+    // Get icon position
+    const rect = e.target.getBoundingClientRect();
+    setIconPosition({ x: rect.x, y: rect.y });
+    toggleSearch();
+  };
+
+  const searchSubmitHandler = (e) => {
+    e.preventDefault();
+    if (keyword.trim()) {
+      navigate(`/allProducts/${keyword}`);
+    } else {
+      navigate("/allProducts");
+    }
+  };
+
   return (
     <nav className="main-nav">
       <div className="logo">
         <Link to="/">
           <img
             src={logoImage}
+            alt="logo"
             style={{
               width: "120px",
             }}
@@ -68,7 +107,25 @@ const Navbar = () => {
         </ul>
       </div>
       <div className="profile">
-        <BiSearchAlt2 style={{ fontSize: "25px" }} />
+        {/* <BiSearchAlt2 style={{ fontSize: "25px" }} /> */}
+        <BiSearchAlt2
+          style={{ fontSize: "25px", cursor: "pointer" }}
+          onClick={handleIconClick}
+        />
+        <div
+          className={`search-popup ${showSearch ? "active" : ""}`}
+          style={{ left: iconPosition.x + "px", top: iconPosition.y + "px" }}
+        >
+          <input type="text" placeholder="Search..." />
+          {/* You can add additional elements or styling for your search popup */}
+        </div>
+        {showSearch && (
+          <div className="search-popup">
+            <input type="text" placeholder="Search..." />
+            {/* You can add additional elements or styling for your search popup */}
+          </div>
+        )}
+
         {/* <div className="icon-gap" /> */}
         <Link
           to="/shopping/cart"
@@ -124,11 +181,11 @@ const Navbar = () => {
                 <MenuItem> My Account</MenuItem>
               </Link>
               <Link
-                to="/login"
+                to="/"
                 style={{ textDecoration: "none", color: "red" }}
-                onClick={logoutHandler}
+                // onClick={logoutHand}
               >
-                <MenuItem> Logout</MenuItem>
+                <MenuItem onClick={logoutHand}> Logout</MenuItem>
               </Link>
             </Select>
           ) : (
@@ -145,6 +202,12 @@ const Navbar = () => {
           )}
         </FormControl>
       </div>
+      <Alertbar
+        message={message}
+        status={status}
+        open={open}
+        handleClose={handleClose}
+      />
     </nav>
   );
 };

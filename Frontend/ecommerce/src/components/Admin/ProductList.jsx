@@ -5,13 +5,18 @@ import { DataGrid } from "@mui/x-data-grid";
 import { Button } from "@material-ui/core";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { clearErrors, getAdminProduct } from "../../actions/productAction";
+import {
+  clearErrors,
+  getAdminProduct,
+  deleteProduct,
+} from "../../actions/productAction";
 import { useSelector, useDispatch } from "react-redux";
 import "./productList.css";
 import { useEffect } from "react";
 import { Fragment } from "react";
 
 import { useNavigate } from "react-router-dom";
+import { DELETE_PRODUCT_RESET } from "../../constants/productConstants";
 
 export const ProductList = () => {
   const dispatch = useDispatch();
@@ -20,14 +25,37 @@ export const ProductList = () => {
 
   const { error, products } = useSelector((state) => state.products);
 
+  const { error: deleteError, isDeleted } = useSelector(
+    (state) => state.product
+  );
+
+  const deleteProductHandler = (id) => {
+    dispatch(deleteProduct(id));
+  };
+
   useEffect(() => {
     if (error) {
       // alert.error(error);
       dispatch(clearErrors());
     }
 
+    if (deleteError) {
+      // alert.error(deleteError);
+      dispatch(clearErrors());
+    }
+
+    if (isDeleted) {
+      // alert.success("Product Deleted Successfully");
+      navigate("/admin/dashboard");
+      dispatch({ type: DELETE_PRODUCT_RESET });
+    }
+
     dispatch(getAdminProduct());
-  }, [dispatch, error]);
+  }, [dispatch, error, deleteError, navigate, isDeleted]);
+
+  // const deleteProductHandler = (id) => {
+  //   dispatch(deleteProduct(id));
+  // };
 
   const columns = [
     {
@@ -73,7 +101,7 @@ export const ProductList = () => {
               <EditIcon />
             </Link>
 
-            <Button>
+            <Button onClick={() => deleteProductHandler(productId)}>
               <DeleteIcon />
             </Button>
           </Fragment>

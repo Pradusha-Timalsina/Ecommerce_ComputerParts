@@ -9,18 +9,25 @@ import DescriptionIcon from "@mui/icons-material/Description";
 import SpellcheckIcon from "@mui/icons-material/Spellcheck";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { clearErrors, createProduct } from "../../actions/productAction";
-import { NEW_PRODUCT_RESET } from "../../constants/productConstants";
+import { useNavigate, useParams } from "react-router-dom";
+import {
+  clearErrors,
+  updateProduct,
+  getProductDetails,
+} from "../../actions/productAction";
+import { UPDATE_PRODUCT_RESET } from "../../constants/productConstants";
 
-const CreateProduct = () => {
+const UpdateProduct = ({ navigate }) => {
+  const params = useParams();
   const dispatch = useDispatch();
 
-  const navigate = useNavigate();
+  const { error, product } = useSelector((state) => state.productDetails);
 
-  const { loading, error, success } = useSelector((state) => state.newProduct);
-
-  const { categories } = useSelector((state) => state.categories);
+  const {
+    loading,
+    error: updateError,
+    isUpdated,
+  } = useSelector((state) => state.product);
 
   const [name, setName] = useState("");
   const [price, setPrice] = useState(0);
@@ -28,18 +35,36 @@ const CreateProduct = () => {
   const [stock, setStock] = useState(0);
   const [description, setDescription] = useState("");
   const [images, setImages] = useState([]);
+  const [oldImages, setOldImages] = useState([]);
   const [imagesPreview, setImagesPreview] = useState([]);
 
+  const productId = params.id;
+
   useEffect(() => {
+    if (product && product._id !== productId) {
+      dispatch(getProductDetails(productId));
+    } else {
+      setName(product.name);
+      setDescription(product.description);
+      setPrice(product?.price);
+      setCategory(product.category);
+      setStock(product?.stock);
+      setOldImages(product.images);
+    }
+
     if (error) {
       dispatch(clearErrors());
     }
 
-    if (success) {
-      navigate("/admin/dashboard");
-      dispatch({ type: NEW_PRODUCT_RESET });
+    if (updateError) {
+      dispatch(clearErrors());
     }
-  }, [dispatch, error, navigate, success]);
+
+    if (isUpdated) {
+      navigate("/admin/products");
+      dispatch({ type: UPDATE_PRODUCT_RESET });
+    }
+  }, [dispatch, error, navigate, isUpdated, productId, product, updateError]);
 
   const productSummitHandler = (e) => {
     e.preventDefault();
@@ -54,7 +79,7 @@ const CreateProduct = () => {
     formData.set("category", category);
     formData.set("stock", stock);
 
-    dispatch(createProduct(formData));
+    dispatch(updateProduct(productId, formData)); // Use formData instead of myForm
   };
 
   const productImageChange = (e) => {
@@ -82,7 +107,7 @@ const CreateProduct = () => {
       <div className="grid-view">
         <Sidebar />
         <div className="newProductContainer">
-          <h1 className="headingProd">Create Product</h1>
+          <h1 className="headingProd">Update Product</h1>
           <form
             className="newProductForm"
             encType="multipart/form-data"
@@ -109,6 +134,7 @@ const CreateProduct = () => {
               <input
                 type="number"
                 placeholder="Price"
+                value={price}
                 required
                 onChange={(e) => setPrice(e.target.value)}
               />
@@ -131,12 +157,9 @@ const CreateProduct = () => {
                 onChange={(e) => setCategory(e.target.value)}
               >
                 <option>Choose Category</option>
-                {categories &&
-                  categories.map((option) => (
-                    <option key={option._id} value={option.title}>
-                      {option.title}
-                    </option>
-                  ))}
+                <option>Laptop</option>
+                <option>Mouse</option>
+                <option>Headphone</option>
               </select>
             </div>
 
@@ -146,6 +169,7 @@ const CreateProduct = () => {
                 type="number"
                 placeholder="Stock"
                 required
+                value={stock}
                 onChange={(e) => setStock(e.target.value)}
               />
             </div>
@@ -183,4 +207,4 @@ const CreateProduct = () => {
   );
 };
 
-export default CreateProduct;
+export default UpdateProduct;

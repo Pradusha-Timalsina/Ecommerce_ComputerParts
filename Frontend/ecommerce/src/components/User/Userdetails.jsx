@@ -8,6 +8,7 @@ import LocationCityIcon from "@mui/icons-material/LocationCity";
 import SmartphoneIcon from "@mui/icons-material/Smartphone";
 import moment from "moment";
 import { useSelector } from "react-redux";
+import UserOrder from "../Orders/UserOrder";
 
 const Userdetails = () => {
   const { loading, isAuthenticated, user } = useSelector((state) => state.user);
@@ -29,7 +30,7 @@ const Userdetails = () => {
             <Avatar
               className="profileAvatar"
               src="https://images.nvidia.com/aem-dam/Solutions/geforce/news/geforce-rtx-graphics-cards/geforce-rtx-2080-technical-photography-angled-003.png"
-              style={{ width: "190px", height: "190px" }}
+              style={{ width: "150px", height: "150px" }}
             />
             <div className="userWappper">
               <span className="username">{fullName} </span>
@@ -38,6 +39,12 @@ const Userdetails = () => {
 
             <div className="userDetails">
               <span className="item-title">Account Details</span>
+              <Link
+                to="/user/update/profile"
+                style={{ textDecoration: "none" }}
+              >
+                <button>Edit</button>
+              </Link>
               <div className="item">
                 <EmailIcon className="iconE" />
                 <span className="data">{user?.email}</span>
@@ -53,6 +60,9 @@ const Userdetails = () => {
               </div>
 
               <span className="item-title">Joined date: {formattedDate}</span>
+              <div className="buttons">
+                <Link to="/password/update">Change Password</Link>
+              </div>
             </div>
           </div>
 
@@ -60,16 +70,7 @@ const Userdetails = () => {
         </div>
 
         <div className="second">
-          <h3>Manage My Account</h3>
-          <div className="personalProfile">
-            <Link to="/update/profile" style={{ textDecoration: "none" }}>
-              <button className="editButton">Edit Profile</button>
-            </Link>
-            <div className="buttons">
-              <Link to="/myorder">My Orders</Link>
-              <Link to="/password/update">Change Password</Link>
-            </div>
-          </div>
+          <UserOrder />
         </div>
       </div>
     </Fragment>
