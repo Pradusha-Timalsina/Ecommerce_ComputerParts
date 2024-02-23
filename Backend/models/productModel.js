@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const stockHistoryItemSchema = require("./stockHistoryItemSchema");
 
 const productSchema = new mongoose.Schema({
   name: {
@@ -37,10 +38,13 @@ const productSchema = new mongoose.Schema({
   },
   stock: {
     type: Number,
-    required: [true, "Please Enter product Stock"],
-
+    required: [true, "Please enter product stock"],
+    maxLength: [5, "Product name cannot exeed 5 characters"],
     default: 0,
   },
+
+  stock_history: [stockHistoryItemSchema],
+
   numOfReviews: {
     type: Number,
     default: 0,

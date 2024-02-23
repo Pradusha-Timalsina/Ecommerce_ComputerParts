@@ -18,7 +18,7 @@ const ProductsPage = () => {
   return (
     <Fragment>
       {/* <h2 className="h2">Products</h2> */}
-      <div className="container">
+      <div className="product_page_container">
         {products &&
           products.map((product) => <ProductCard product={product} />)}
       </div>

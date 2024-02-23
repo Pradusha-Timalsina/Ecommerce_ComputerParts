@@ -15,10 +15,12 @@ import {
   categoryUDReducer,
   createCategoryReducer,
 } from "./reducers/categoryReducer";
+import { productStockReducer } from "./reducers/stockReducer";
 
 const reducer = combineReducers({
   products: productsReducer,
   productDetails: productDetailsReducer,
+  stock: productStockReducer,
   user: userReducer,
   cart: cartReducer,
   newProduct: newProductReducer,

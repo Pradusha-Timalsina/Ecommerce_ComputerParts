@@ -55,7 +55,7 @@ const ShoppingCart = () => {
           <RemoveShoppingCartIcon />
 
           <p>No Product in Your Cart</p>
-          <Link to="/allProducts">View Products</Link>
+          <Link to="/products/page">View Products</Link>
         </div>
       ) : (
         <Fragment>

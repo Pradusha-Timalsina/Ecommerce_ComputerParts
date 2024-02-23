@@ -33,13 +33,13 @@ const UserOrder = () => {
       headerName: "Product Name",
       type: "text",
       minWidth: 150,
-      flex: 0.1,
+      flex: 0.5,
     },
     {
       field: "status",
       headerName: "Status",
       minWidth: 150,
-      flex: 0.1,
+      flex: 0.5,
       type: "text",
       cellClassName: (params) => {
         return params.getValue(params.id, "status") === "Delivered"
@@ -52,7 +52,7 @@ const UserOrder = () => {
       headerName: "Items Qty",
       type: "number",
       minWidth: 150,
-      flex: 0.1,
+      flex: 0.5,
     },
 
     {
@@ -60,12 +60,12 @@ const UserOrder = () => {
       headerName: "Amount",
       type: "number",
       minWidth: 270,
-      flex: 0.1,
+      flex: 0.7,
     },
 
     {
       field: "actions",
-      flex: 0.3,
+      flex: 0.5,
       headerName: "Actions",
       minWidth: 150,
       type: "number",
@@ -145,6 +145,7 @@ const UserOrder = () => {
           disableSelectionOnClick
           className="userOrdersTable"
           autoHeight
+          autoWidth
         />
       </div>
     </Fragment>

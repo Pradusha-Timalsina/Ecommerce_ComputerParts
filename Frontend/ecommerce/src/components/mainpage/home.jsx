@@ -84,10 +84,10 @@ const Home = () => {
           <Promotions />
           <StyledContainer>
             <h2 className="h2" style={styles.h2}>
-              Main Features
+              Categories
             </h2>
             <div
-              className="container"
+              className="home_container"
               id="container"
               style={styles.categoryContainer}
             >
@@ -98,7 +98,7 @@ const Home = () => {
             </div>
           </StyledContainer>
           <h2 className="h2">Products</h2>
-          <div className="container">
+          <div className="home_container">
             {products &&
               products.map((product) => <ProductCard product={product} />)}
           </div>

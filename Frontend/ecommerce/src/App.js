@@ -18,7 +18,7 @@ import { UserList } from "./components/Admin/UserList";
 import { useDispatch } from "react-redux";
 import store from "./store";
 import { ProductList } from "./components/Admin/ProductList";
-import ProductComparisonPage from "./components/mainpage/ProductComparisonPage";
+// import ProductComparisonPage from "./components/mainpage/ProductComparisonPage";
 import { ForgetPassword } from "./components/User/ForgetPassword";
 import ResetPassword from "./components/User/ResetPassword";
 import Category from "./components/Admin/Category";
@@ -26,6 +26,9 @@ import UpdateProduct from "./components/Admin/UpdateProduct";
 import { CategoryList } from "./components/Admin/CategoryList";
 import { getAllCategory } from "./actions/categoryAction";
 import UpdateProfile from "./components/User/UpdateProfile";
+import ComparePage from "./components/homepage/ComparePage/ComparePage";
+import AddStock from "./components/Admin/Stock/AddStock";
+import Shipping from "./components/Cart/Shipping/Shipping";
 
 function App() {
   const dispatch = useDispatch();
@@ -43,10 +46,11 @@ function App() {
         <Route path="/product/:id" element={<ProductDetails />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/productspage" element={<ProductsPage />} />
+        <Route path="/products/page" element={<ProductsPage />} />
         <Route path="/shopping/cart" element={<ShoppingCart />} />
         <Route path="/admin/dashboard" element={<Main />} />
         <Route path="/admin/products" element={<ProductList />} />
+        <Route path="/admin/stock/:id" element={<AddStock />} />
         <Route path="/admin/orders" element={<OrderList />} />
         <Route path="/admin/users" element={<UserList />} />
         <Route path="/admin/create/product" element={<CreateProduct />} />
@@ -56,11 +60,11 @@ function App() {
         <Route path="/password/update" element={<UpdatePassword />} />
         <Route path="/user/profile" element={<Userdetails />} />
         <Route path="/user/update/profile" element={<UpdateProfile />} />
-        <Route path="/comparison/page" element={<ProductComparisonPage />} />
+        <Route path="/comparison/page" element={<ComparePage />} />
         <Route path="/forget/password" element={<ForgetPassword />} />
         <Route path="/password/reset/:token" element={<ResetPassword />} />
+        <Route path="/shipping" element={<Shipping />} />
       </Routes>
-      <Footer />;
     </Router>
   );
 }

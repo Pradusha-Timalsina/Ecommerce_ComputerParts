@@ -1,0 +1,71 @@
+.grid_view_stock {
+  display: grid;
+  grid-template-columns: 260px 1fr 1fr 1fr;
+  grid-template-rows: 0.2fr 3fr;
+  grid-template-areas:
+    "sidebar header header header"
+    "sidebar main main main";
+  height: 100vh;
+}
+
+.stockContainer {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.stockContainer h1 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.stockForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 2rem 0;
+  padding: 2rem;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.inputContainer {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  background-color: #f5f5f5;
+  border-radius: 5px;
+}
+
+.inputIcon {
+  margin-right: 0.5rem;
+  color: #333;
+}
+
+.inputContainer input[type="text"],
+.inputContainer input[type="number"] {
+  font-size: 1.1rem;
+  padding: 0.5rem;
+  border: none;
+  background-color: transparent;
+}
+
+.stockForm button[type="submit"] {
+  margin-top: 1rem;
+  padding: 0.5rem 1.5rem;
+  font-size: 1.1rem;
+  color: #fff;
+  background-color: #000000;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.stockForm button[type="submit"]:hover {
+  background-color: #424343;
+}

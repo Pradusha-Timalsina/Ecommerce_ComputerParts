@@ -232,3 +232,49 @@ exports.deleteReview = catchAsyncErrors(async (req, res, next) => {
     success: true,
   });
 });
+
+//add stock of a product
+exports.updateProductStock = catchAsyncErrors(async (req, res, next) => {
+  try {
+    const product = await Product.findById(req.params.id);
+
+    // Update stock
+    const stock = req.body.stock;
+
+    if (isNaN(stock)) {
+      return res.status(400).json({ error: "Invalid stock value" });
+    }
+
+    const oldStock = product.stock;
+    product.stock = product.stock + stock;
+
+    // Add stock record to history
+    product.stock_history.push({
+      quantity: req.body.stock,
+      date: Date.now(),
+    });
+
+    const stockUpdateHistory = product.stock_history.filter(
+      (record) => record.quantity === stock
+    );
+
+    // Set the user field to the ID of the currently authenticated user
+    product.user = req.user._id;
+
+    await product.save();
+
+    // Construct the response object
+    const response = {
+      id: product._id,
+      name: product.name,
+      stock: product.stock,
+      oldStock: oldStock,
+      stockUpdateHistory: stockUpdateHistory,
+    };
+
+    res.json(response);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server error");
+  }
+});

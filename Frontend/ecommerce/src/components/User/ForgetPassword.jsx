@@ -35,25 +35,23 @@ export const ForgetPassword = () => {
 
   return (
     <Fragment>
-      <h1 className="forgotpass">Forgot Password</h1>
-      <div className="forgotMainPassword">
-        <div className="forgotPassword">
-          <form className="forgotPasswordForm" onSubmit={forgotPasswordSubmit}>
-            <div className="forgotPasswordEmail">
-              <MailOutlineIcon />
-              <input
-                type="email"
-                placeholder="Email"
-                name="email"
-                value={email}
-                required
-                className="inputs"
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </div>
-            <input type="submit" value="Send" className="forgotPasswordBtn" />
-          </form>
-        </div>
+      <div className="forPassContainer">
+        <form className="forgotPasswordForm" onSubmit={forgotPasswordSubmit}>
+          <h1>Forgot Password</h1>
+          <div className="forgotPasswordEmail">
+            <MailOutlineIcon />
+            <input
+              type="email"
+              placeholder="Email"
+              name="email"
+              value={email}
+              required
+              className="inputs"
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
+          <input type="submit" value="Send" className="forgotPasswordBtn" />
+        </form>
       </div>
     </Fragment>
   );

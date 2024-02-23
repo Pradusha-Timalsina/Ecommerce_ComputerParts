@@ -11,12 +11,52 @@ import {
   FormControl,
   Button,
   Badge,
-  IconButton,
+  styled,
+  InputBase,
 } from "@mui/material";
 import Login from "@mui/icons-material/Login";
-import { Search } from "@mui/icons-material";
 import { logOut } from "../../actions/userAction";
 import Alertbar from "../Alert/Alert";
+import SearchIcon from "@mui/icons-material/Search";
+import { alpha } from "@mui/material/styles";
+const Search = styled("div")(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  borderRadius: theme.shape.borderRadius,
+  backgroundColor: alpha(theme.palette.common.white, 0.15),
+  "&:hover": {
+    backgroundColor: alpha(theme.palette.common.white, 0.25),
+  },
+  marginLeft: theme.spacing(-50), // Adjusted spacing
+  marginRight: theme.spacing(1), // Adjusted spacing
+  width: "auto",
+  [theme.breakpoints.up("sm")]: {
+    width: "auto",
+  },
+}));
+
+const SearchIconWrapper = styled("div")(({ theme }) => ({
+  padding: theme.spacing(0, 1), // Adjusted padding
+  height: "100%",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+}));
+
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
+  color: "inherit",
+  backgroundColor: alpha(theme.palette.common.black, 0.1),
+  borderRadius: theme.shape.borderRadius, // Rounded edges
+  "& .MuiInputBase-input": {
+    padding: theme.spacing(1, 1, 1, 0),
+    paddingLeft: `calc(1em + ${theme.spacing(2)})`,
+    transition: theme.transitions.create("width"),
+    width: "100%",
+    [theme.breakpoints.up("md")]: {
+      width: "20ch",
+    },
+  },
+}));
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -47,31 +87,6 @@ const Navbar = () => {
     setOpen(true);
     navigate("/");
     dispatch(logOut());
-  };
-
-  const [keyword, setKeyword] = useState("");
-
-  const [showSearch, setShowSearch] = useState(false);
-  const [iconPosition, setIconPosition] = useState({ x: 0, y: 0 });
-
-  const toggleSearch = () => {
-    setShowSearch(!showSearch);
-  };
-
-  const handleIconClick = (e) => {
-    // Get icon position
-    const rect = e.target.getBoundingClientRect();
-    setIconPosition({ x: rect.x, y: rect.y });
-    toggleSearch();
-  };
-
-  const searchSubmitHandler = (e) => {
-    e.preventDefault();
-    if (keyword.trim()) {
-      navigate(`/allProducts/${keyword}`);
-    } else {
-      navigate("/allProducts");
-    }
   };
 
   return (
@@ -108,23 +123,18 @@ const Navbar = () => {
       </div>
       <div className="profile">
         {/* <BiSearchAlt2 style={{ fontSize: "25px" }} /> */}
-        <BiSearchAlt2
-          style={{ fontSize: "25px", cursor: "pointer" }}
-          onClick={handleIconClick}
-        />
-        <div
-          className={`search-popup ${showSearch ? "active" : ""}`}
-          style={{ left: iconPosition.x + "px", top: iconPosition.y + "px" }}
-        >
-          <input type="text" placeholder="Search..." />
-          {/* You can add additional elements or styling for your search popup */}
-        </div>
-        {showSearch && (
-          <div className="search-popup">
-            <input type="text" placeholder="Search..." />
-            {/* You can add additional elements or styling for your search popup */}
-          </div>
-        )}
+        {/* <BiSearchAlt2 style={{ fontSize: "25px", cursor: "pointer" }} /> */}
+        <Search>
+          <SearchIconWrapper>
+            <SearchIcon />
+          </SearchIconWrapper>
+          <StyledInputBase
+            placeholder="Search…"
+            // onChange={(e) => setKeyword(e.target.value)}
+            inputProps={{ "aria-label": "search" }}
+          />
+          <Button> Search</Button>
+        </Search>
 
         {/* <div className="icon-gap" /> */}
         <Link
