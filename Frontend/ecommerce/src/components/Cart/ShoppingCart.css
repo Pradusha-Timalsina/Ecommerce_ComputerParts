@@ -42,7 +42,7 @@
   font-weight: bold;
   padding: 10px 20px;
   border: none;
-  background-color: #333;
+  background-color: #f64b3c;
   color: #fff;
   border-radius: 30px;
   cursor: pointer;
@@ -50,8 +50,8 @@
 }
 
 .shopbutton:hover {
-  background-color: #fff;
-  color: #333;
+  background-color: #c81912;
+  color: #fff;
 }
 
 .checkOut {
@@ -179,7 +179,7 @@
   font-weight: bold;
   padding: 10px 20px;
   border: none;
-  background-color: #5175f7;
+  background-color: #f64b3c;
   color: #ffffff;
   cursor: pointer;
   border-radius: 30px;
@@ -187,6 +187,6 @@
 }
 
 .checkoutBTN button:hover {
-  background-color: #333;
+  background-color: #c81912;
   color: #fff;
 }

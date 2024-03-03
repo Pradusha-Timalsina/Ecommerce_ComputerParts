@@ -102,7 +102,7 @@ const Home = () => {
             {products &&
               products.map((product) => <ProductCard product={product} />)}
           </div>
-          <Link to="/productsPage" style={{ textDecoration: "none" }}>
+          <Link to="/products/page" style={{ textDecoration: "none" }}>
             <button type="button" className="view_more">
               View more
             </button>

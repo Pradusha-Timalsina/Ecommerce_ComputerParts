@@ -1,5 +1,6 @@
-.dashboard_product_list {
+.dashboard_order_list {
   display: grid;
+
   grid-template-columns: 260px 1fr 1fr 1fr;
   grid-template-rows: 0.2fr 3fr;
   grid-template-areas:
@@ -8,17 +9,18 @@
   height: 100vh;
 }
 /******************************************************************************************************************************************/
-.productcontainer {
+.productListContainer {
   width: 172vh;
+
   box-sizing: border-box;
   background-color: rgb(255, 255, 255);
   border-left: 1px solid rgba(0, 0, 0, 0.158);
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: 70vh;
 }
 
-.heading {
+#productListHeading {
   font: 400 2rem;
   padding: 0.5vmax;
   box-sizing: border-box;
@@ -28,28 +30,28 @@
   text-align: start;
 }
 
-.productTable {
+.productListTable {
   background-color: rgb(255, 255, 255);
   border: none !important;
 }
 
-.productTable div {
+.productListTable div {
   font: 300 1vmax "Roboto";
   color: rgba(0, 0, 0, 0.678);
   border: none !important;
 }
 
-.productTable a,
-.productTable button {
+.productListTable a,
+.productListTable button {
   color: rgba(0, 0, 0, 0.527);
   transition: all 0.5s;
 }
 
-.productTable a:hover {
+.productListTable a:hover {
   color: tomato;
 }
 
-.productTable button:hover {
+.productListTable button:hover {
   color: rgb(236, 30, 30);
 }
 
@@ -58,7 +60,7 @@
 }
 
 @media screen and (max-width: 600px) {
-  .productTable div {
+  .productListTable div {
     font: 300 4vw "Roboto";
   }
 }

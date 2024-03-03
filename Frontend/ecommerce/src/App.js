@@ -29,6 +29,9 @@ import UpdateProfile from "./components/User/UpdateProfile";
 import ComparePage from "./components/homepage/ComparePage/ComparePage";
 import AddStock from "./components/Admin/Stock/AddStock";
 import Shipping from "./components/Cart/Shipping/Shipping";
+import CategoryCard from "./components/homepage/CategoryCard";
+import { Search } from "./components/products/Search";
+import OrderDetails from "./components/Cart/Shipping/OrderDetails";
 
 function App() {
   const dispatch = useDispatch();
@@ -50,13 +53,15 @@ function App() {
         <Route path="/shopping/cart" element={<ShoppingCart />} />
         <Route path="/admin/dashboard" element={<Main />} />
         <Route path="/admin/products" element={<ProductList />} />
-        <Route path="/admin/stock/:id" element={<AddStock />} />
+        {/* <Route path="/admin/stock/:id" element={<AddStock />} /> */}
         <Route path="/admin/orders" element={<OrderList />} />
         <Route path="/admin/users" element={<UserList />} />
         <Route path="/admin/create/product" element={<CreateProduct />} />
         <Route path="/admin/product/:id" element={<UpdateProduct />} />
         <Route path="/admin/create/category" element={<Category />} />
         <Route path="/admin/category/all" element={<CategoryList />} />
+        <Route path="/category/:cat" element={<CategoryCard />} exact />
+        {/* <Route path="/me/update" element={<UpdateProfile />} /> */}
         <Route path="/password/update" element={<UpdatePassword />} />
         <Route path="/user/profile" element={<Userdetails />} />
         <Route path="/user/update/profile" element={<UpdateProfile />} />
@@ -64,6 +69,8 @@ function App() {
         <Route path="/forget/password" element={<ForgetPassword />} />
         <Route path="/password/reset/:token" element={<ResetPassword />} />
         <Route path="/shipping" element={<Shipping />} />
+        <Route path="/products/:search" element={<Search />} />
+        <Route path="/order/details" element={<OrderDetails />} />
       </Routes>
     </Router>
   );

@@ -17,11 +17,15 @@
 
 /* Category Card Image */
 .categoryCard img {
+  height: 80%;
   width: 100%;
-  height: 60%;
-  object-fit: cover;
-  border-radius: 10px;
-  margin-bottom: 10px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  transform: scale(0.8);
+  border-radius: 110px;
+}
+.categoryCard img :hover {
+  transform: scale(1);
 }
 
 /* Category Card Title */

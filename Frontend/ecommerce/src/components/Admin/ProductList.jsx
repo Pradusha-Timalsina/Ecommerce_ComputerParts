@@ -5,7 +5,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import { Button } from "@material-ui/core";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import AddBoxIcon from "@mui/icons-material/AddBox";
+// import AddBoxIcon from "@mui/icons-material/AddBox";
 import {
   clearErrors,
   getAdminProduct,
@@ -106,9 +106,7 @@ export const ProductList = () => {
               <DeleteIcon />
             </Button>
 
-            <Link to={`/admin/stock/${productId}`}>
-              <AddBoxIcon />
-            </Link>
+            <Link to={`/admin/stock/${productId}`}>{/* <AddBoxIcon /> */}</Link>
           </Fragment>
         );
       },

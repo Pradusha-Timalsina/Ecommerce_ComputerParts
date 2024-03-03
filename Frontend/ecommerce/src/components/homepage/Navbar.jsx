@@ -64,7 +64,7 @@ const Navbar = () => {
   const { cartItems } = useSelector((state) => state.cart);
   const fullName = `${user && user.name}`;
   const navigate = useNavigate();
-
+  const [keyword, setKeyword] = useState("");
   const [message, setMessage] = useState("");
   const [status, setStatus] = useState("");
   const [open, setOpen] = useState(false);
@@ -77,6 +77,15 @@ const Navbar = () => {
     }
 
     setOpen(false);
+  };
+
+  const searchSubmitHandler = (e) => {
+    e.preventDefault();
+    if (keyword.trim()) {
+      navigate(`/products/${keyword}`);
+    } else {
+      navigate("/products");
+    }
   };
 
   const logoutHand = async () => {
@@ -130,10 +139,10 @@ const Navbar = () => {
           </SearchIconWrapper>
           <StyledInputBase
             placeholder="Search…"
-            // onChange={(e) => setKeyword(e.target.value)}
+            onChange={(e) => setKeyword(e.target.value)}
             inputProps={{ "aria-label": "search" }}
           />
-          <Button> Search</Button>
+          <Button onClick={searchSubmitHandler}> Search</Button>
         </Search>
 
         {/* <div className="icon-gap" /> */}

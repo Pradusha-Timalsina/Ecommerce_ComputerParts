@@ -1,7 +1,7 @@
 import React, { useState, useEffect, Fragment } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import { ProductCard } from "../products/ProductCard";
+import ProductCard from "../products/ProductCard";
 import "./category.css";
 
 const CategoryCard = () => {

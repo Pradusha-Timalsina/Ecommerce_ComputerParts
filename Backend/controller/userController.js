@@ -271,29 +271,61 @@ exports.updatePassword = catchAsyncErrors(async (req, res, next) => {
   sendToken(user, 200, res);
 });
 
-//Update User Profile
+//update Profile
 exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
-  const newUserData = {};
+  const user = await User.findOne({ _id: req.user._id });
+  console.log(req.body);
+  if (!user) throw ErrorHandler("Cannot upload to cloudinary!", 400);
 
-  if (req.body.name) {
-    newUserData.name = req.body.name;
+  const { name, email, address, contact } = req.body;
+  user.name = name;
+  user.email = email;
+  user.address = address;
+  user.contact = contact;
+  // const avatar = req.body?.avatar;
+  // console.log(avatar);
+  const image = req.file;
+
+  console.log(image);
+  if (!image) {
+    console.error("Error: no avatar image provided");
+    return res.status(400).json({ message: "No avatar image provided" });
   }
 
-  if (req.body.email) {
-    newUserData.email = req.body.email;
+  const imageData = getDataUri(image);
+  if (imageData) {
+    const result = await cloudinary.v2.uploader.upload(imageData.content, {
+      folder: "register",
+      width: 150,
+      crop: "scale",
+    });
+    if (user.avatar.public_id) {
+      await cloudinary.v2.uploader.destroy(user.avatar.public_id);
+    }
+    user.avatar.public_id = result.public_id;
+    user.avatar.url = result.url;
+    await user.save();
+  } else {
+    await user.save();
   }
+  // if (avatar) {
+  //   const result = await cloudinary.v2.uploader.upload(avatar, {
+  //     folder: "register",
+  //     width: 150,
+  //     crop: "scale",
+  //   });
 
-  //We'll add cloudinary later
+  //   if (user.avatar.public_id) {
+  //     await cloudinary.v2.uploader.destroy(user.avatar.public_id);
+  //   }
+  //   user.avatar.public_id = result.public_id;
+  //   user.avatar.url = result.url;
+  //   await user.save();
+  // } else {
+  //   await user.save();
+  // }
 
-  const user = await User.findByIdAndUpdate(req.user.id, newUserData, {
-    new: true,
-    runValidators: true,
-    useFindAndModify: false,
-  });
-
-  res.status(200).json({
-    success: true,
-  });
+  return res.status(200).json({ success: true, user });
 });
 
 //Get all users (admin)
