@@ -4,7 +4,7 @@ import Heropage from "../homepage/HeroPage";
 import ProductCard from "../products/ProductCard";
 import "./home.css";
 import { Link } from "react-router-dom";
-import { getProduct } from "../../actions/productAction";
+import { getProductHome } from "../../actions/productAction";
 import { useSelector, useDispatch } from "react-redux";
 import { Loader } from "../../layout/Loader/Loader";
 import Promotions from "../homepage/Promotion";
@@ -24,7 +24,7 @@ const Home = () => {
   const { categories } = useSelector((state) => state.categories);
 
   useEffect(() => {
-    dispatch(getProduct());
+    dispatch(getProductHome());
   }, [dispatch]);
 
   const styles = {

@@ -1,6 +1,6 @@
 import React from "react";
 import { Fragment, useState, useEffect } from "react";
-import StorageIcon from "@mui/icons-material/Storage";
+
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import StockHistory from "./StockHistory";
@@ -46,7 +46,7 @@ const AddStock = () => {
             <h1>Add Stock</h1>
             <form onSubmit={productStockSummitHandler} className="stockForm">
               <div className="inputContainer">
-                <StorageIcon className="inputIcon" />
+
                 <input
                   type="number"
                   placeholder="Stock"

@@ -2,6 +2,10 @@ const mongoose = require("mongoose");
 
 const orderSchema = new mongoose.Schema({
   shippingInfo: {
+    FullName: {
+      type: String,
+      required: true,
+    },
     address: {
       type: String,
       required: true,
@@ -10,19 +14,13 @@ const orderSchema = new mongoose.Schema({
       type: String,
       required: true,
     },
-    state: {
+
+    province: {
       type: String,
       required: true,
     },
-    country: {
-      type: String,
-      required: true,
-    },
-    pinCode: {
-      type: Number,
-      required: true,
-    },
-    phoneNo: {
+
+    contact: {
       type: Number,
       required: true,
     },
@@ -34,16 +32,18 @@ const orderSchema = new mongoose.Schema({
         required: true,
       },
       price: {
-        type: String,
-        required: true,
-      },
-      quantity: {
         type: Number,
         required: true,
+      },
+      stock: {
+        type: Number,
       },
       image: {
         type: String,
         required: true,
+      },
+      productType: {
+        type: String,
       },
       product: {
         type: mongoose.Schema.ObjectId,

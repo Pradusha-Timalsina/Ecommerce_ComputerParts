@@ -3,7 +3,7 @@ import "./orderDetails.css";
 
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-
+import { PayButton } from "../../Khalti/PayButton";
 import CheckoutSteps from "./CheckoutStep";
 const OrderDetails = () => {
   const [order, setOrder] = useState("");
@@ -27,7 +27,7 @@ const OrderDetails = () => {
 
   useEffect(() => {
     const orderObject = {
-      firstName: shippingInfo.firstName,
+      FullName: shippingInfo.FullName,
       address: shippingInfo.address,
       city: shippingInfo.city,
       province: shippingInfo.province,
@@ -110,12 +110,14 @@ const OrderDetails = () => {
                 <span>Rs. {totalPrice}</span>
               </div>
               {/* <button onClick={handleOrder}>pay</button> */}
-              {/* <KhaltiPayment
+              <PayButton
                 order={order}
                 cartItems={cartItems}
                 totalPrice={totalPrice}
                 user={user}
-              /> */}
+              >
+                Proceed To Payment
+              </PayButton>
             </div>
           </div>
         </div>

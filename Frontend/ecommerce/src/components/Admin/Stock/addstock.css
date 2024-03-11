@@ -9,8 +9,12 @@
 }
 
 .stockContainer {
-  max-width: 400px;
-  margin: 0 auto;
+  width: 500px;
+  margin-left: 70%;
+}
+.stock-history-wrapper {
+  width: 500px;
+  margin-left: 70%;
 }
 
 .stockContainer h1 {
@@ -59,7 +63,7 @@
   padding: 0.5rem 1.5rem;
   font-size: 1.1rem;
   color: #fff;
-  background-color: #000000;
+  background-color: #f64b3c;
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -67,5 +71,5 @@
 }
 
 .stockForm button[type="submit"]:hover {
-  background-color: #424343;
+  background-color: #c81912;
 }

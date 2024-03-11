@@ -19,16 +19,24 @@ import {
   DELETE_PRODUCT_REQUEST,
   DELETE_PRODUCT_SUCCESS,
   DELETE_PRODUCT_FAIL,
+  ALL_PRODUCT_REQUEST_HOME,
+  ALL_PRODUCT_SUCCESS_HOME,
+  ALL_PRODUCT_FAIL_HOME,
   CLEAR_ERRORS,
 } from "../constants/productConstants";
 
 export const getProduct =
-  (keyword = "") =>
+  (keyword = "", currentPage = 1, price = [1000, 90000],category) =>
   async (dispatch) => {
     try {
       dispatch({ type: ALL_PRODUCT_REQUEST });
 
-      const { data } = await axios.get(`/api/v1/products?keyword=${keyword}`);
+      let link=`/api/v1/products?keyword=${keyword}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}`;
+
+      if (category){
+        link= `/api/v1/products?keyword=${keyword}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}&category=${category.title}`
+      }
+      const { data } = await axios.get(link);
 
       dispatch({
         type: ALL_PRODUCT_SUCCESS,
@@ -41,6 +49,28 @@ export const getProduct =
       });
     }
   };
+
+// get all product --Home
+export const getProductHome = () => async (dispatch) => {
+  try {
+    dispatch({
+      type: ALL_PRODUCT_REQUEST_HOME,
+    });
+    const { data } = await axios.get('/api/v1/product');
+
+    dispatch({
+      type: ALL_PRODUCT_SUCCESS_HOME,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: ALL_PRODUCT_FAIL_HOME,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+
 
 //Get All Products for Admin
 export const getAdminProduct = () => async (dispatch) => {

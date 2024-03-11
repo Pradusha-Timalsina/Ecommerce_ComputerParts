@@ -10,6 +10,7 @@ const {
   deleteReview,
   getAdminProducts,
   updateProductStock,
+  getAllProductHome,
 } = require("../controller/productController");
 const { isAuthenticatedUser, authorizeRoles } = require("../middleware/auth");
 
@@ -26,6 +27,7 @@ const upload = multer({
 });
 
 router.route("/products").get(getAllProducts);
+router.route("/product").get(getAllProductHome);
 
 router
   .route("/admin/products")

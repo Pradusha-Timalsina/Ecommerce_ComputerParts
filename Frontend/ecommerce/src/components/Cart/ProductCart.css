@@ -2,20 +2,24 @@
   display: flex;
   height: 8vmax;
   padding: 1vmax;
-  align-items: flex-start;
+  align-items: center;
   box-sizing: border-box;
-  flex-direction: column;
+}
+
+.productInfo {
+  display: flex;
+  align-items: center;
 }
 
 .productimage {
   width: 5vmax;
   height: 5vmax;
+  margin-right: 20px; /* Increase margin to create a larger gap */
 }
 
-.productCartdetails {
+.productNameWrapper {
   display: flex;
   flex-direction: column;
-  margin-left: 4%;
 }
 
 .productName {
@@ -27,4 +31,25 @@
 .productPrice {
   font: 300 0.9vmax;
   color: black;
+}
+
+.quantityAndRemove {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}
+
+.addDelete {
+  display: flex;
+  align-items: center;
+  margin-left: 350px; /* Increase margin to create a larger gap */
+}
+
+.addDelete button {
+  margin: 0 20px; /* Increase margin to create a larger gap between buttons */
+}
+
+.cartdeleteButton {
+  cursor: pointer;
+  margin-left: 600px; /* Increase margin to create a larger gap */
 }

@@ -5,3 +5,92 @@
   justify-content: center;
   min-height: 30vh;
 }
+.paginationBox {
+  display: flex;
+  justify-content: center;
+  margin: 6vmax;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  padding: 0;
+}
+.page-item {
+  list-style: none;
+  background-color: #f2f2f2;
+  border: 1px solid #d9d9d9;
+  padding: 1vmax 1.8vmax;
+  transition: all 0.3s;
+  cursor: pointer;
+  border-radius: 4px;
+  margin: 0 0.5vmax;
+}
+.page-item:first-child {
+  border-radius: 5px 0 0 5px;
+}
+.page-item:last-child {
+  border-radius: 0 5px 5px 0;
+}
+.page-link {
+  text-decoration: none;
+  font: 300 0.7vmax "Roboto";
+  color: rgb(80, 80, 80);
+  transition: all 0.3s;
+}
+
+.paginationBox .page-link {
+  font-size: 1rem; /* change this to adjust the font size */
+}
+
+.page-item:hover {
+  background-color: rgb(133, 124, 231);
+  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+.page-item:hover .page-link {
+  color: rgb(0, 0, 0);
+}
+
+.pageItemActive {
+  background-color: rgb(153, 168, 222);
+  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+.pageLinkActive {
+  color: white;
+}
+
+.filterBox {
+  width: 10vmax;
+  position: absolute;
+  top: 10vmax;
+  left: 4vmax;
+}
+
+.categoryfilter {
+  list-style-type: none;
+  padding: 0;
+}
+
+.category-li {
+  padding: 5px;
+  margin-bottom: 5px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 16px;
+  color: #333;
+}
+
+.category-li:hover {
+  background-color: #eaeaea;
+}
+
+.category-li:focus {
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+.category-li:active {
+  background-color: #d4d4d4;
+}
