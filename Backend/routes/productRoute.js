@@ -44,7 +44,7 @@ router
 
 router
   .route("/admin/product/:id")
-  .put(isAuthenticatedUser, authorizeRoles("admin"), updateProduct);
+  .put(isAuthenticatedUser, authorizeRoles("admin"),upload.array('images'), updateProduct);
 
 router
   .route("/stock/:id")

@@ -1,4 +1,4 @@
-import React from "react";
+import {React, useState} from "react";
 import { Link } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import { DataGrid } from "@mui/x-data-grid";
@@ -18,10 +18,12 @@ import { Fragment } from "react";
 
 import { useNavigate } from "react-router-dom";
 import { DELETE_PRODUCT_RESET } from "../../constants/productConstants";
-
+import Alertbar from "../Alert/Alert";
 export const ProductList = () => {
   const dispatch = useDispatch();
-
+  const [message, setMessage] = useState("");
+  const [status, setStatus] = useState("");
+  const [open, setOpen] = useState(false);
   const navigate = useNavigate();
 
   const { error, products } = useSelector((state) => state.products);
@@ -29,9 +31,17 @@ export const ProductList = () => {
   const { error: deleteError, isDeleted } = useSelector(
     (state) => state.product
   );
-
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
+  };
   const deleteProductHandler = (id) => {
     dispatch(deleteProduct(id));
+    setMessage("Product deleted Successfully");
+      setStatus("success");
+      setOpen(true);
   };
 
   useEffect(() => {
@@ -145,6 +155,12 @@ export const ProductList = () => {
             autoHeight
           />
         </div>
+        <Alertbar
+              message={message}
+              status={status}
+              open={open}
+              handleClose={handleClose}
+            />
       </div>
     </Fragment>
   );

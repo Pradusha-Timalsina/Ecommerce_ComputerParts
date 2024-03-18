@@ -6,8 +6,47 @@ import { Button } from "@material-ui/core";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Sidebar from "./Sidebar";
-
+import { useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { getAllUsers, clearErrors, deleteUser } from '../../actions/userAction';
+import { DELETE_USER_RESET } from "../../constants/userConstants";
 export const UserList = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const { error, users } = useSelector((state) => state.allUsers);
+
+  const {
+    error: deleteError,
+    isDeleted,
+    message,
+  } = useSelector((state) => state.profile);
+
+  const deleteUserHandler = (id) => {
+    dispatch(deleteUser(id));
+  };
+
+  useEffect(() => {
+    if (error) {
+      alert.error(error);
+      dispatch(clearErrors());
+    }
+
+    if (deleteError) {
+      alert.error(deleteError);
+      dispatch(clearErrors());
+    }
+
+    if (isDeleted) {
+      alert.success(message);
+      navigate('/admin/users');
+      dispatch({ type: DELETE_USER_RESET });
+    }
+
+    dispatch(getAllUsers());
+  }, [dispatch, alert, error, deleteError, navigate, isDeleted, message]);
+
+
   const columns = [
     {
       field: "id",
@@ -51,11 +90,13 @@ export const UserList = () => {
       renderCell: (params) => {
         return (
           <Fragment>
-            <Link>
+            <Link to={`/admin/user/${params.getValue(params.id, 'id')}`}>
               <EditIcon />
             </Link>
 
-            <Button>
+            <Button onClick={() =>
+                deleteUserHandler(params.getValue(params.id, 'id'))
+              }>
               <DeleteIcon />
             </Button>
           </Fragment>
@@ -65,6 +106,16 @@ export const UserList = () => {
   ];
 
   const rows = [];
+
+  users &&
+    users.forEach((item) => {
+      rows.push({
+        id: item._id,
+        role: item.role,
+        email: item.email,
+        name: item.name,
+      });
+    });
 
   return (
     <Fragment>

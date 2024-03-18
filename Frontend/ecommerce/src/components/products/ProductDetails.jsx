@@ -6,9 +6,12 @@ import { getProductDetails } from "../../actions/productAction";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addItemsToCart } from "../../actions/cartAction";
+import Alertbar from "../Alert/Alert";
 const ProductDetails = () => {
   const dispatch = useDispatch();
-
+  const [message, setMessage] = useState("");
+  const [status, setStatus] = useState("");
+  const [open, setOpen] = useState(false);
   const { product, loading, error } = useSelector(
     (state) => state.productDetails
   );
@@ -31,8 +34,19 @@ const ProductDetails = () => {
     setQuantity(qty);
   };
 
+   // for Alertbar of Snackbar
+
+   const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
+  };
   const addToCartHandler = () => {
     dispatch(addItemsToCart(params.id, quantity));
+    setMessage("Item Added to Cart");
+      setStatus("success");
+      setOpen(true);
   };
 
   useEffect(() => {
@@ -78,6 +92,12 @@ const ProductDetails = () => {
               Add to cart
             </button>
           </div>
+          <Alertbar
+              message={message}
+              status={status}
+              open={open}
+              handleClose={handleClose}
+            />
         </div>
       </div>
     </Fragment>

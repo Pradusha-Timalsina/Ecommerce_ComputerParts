@@ -49,7 +49,7 @@ const UpdateProduct = ({ navigate }) => {
       setPrice(product?.price);
       setCategory(product.category);
       setStock(product?.stock);
-      setOldImages(product.images);
+      setOldImages(product.oldImages);
     }
 
     if (error) {
@@ -68,6 +68,7 @@ const UpdateProduct = ({ navigate }) => {
 
   const productSummitHandler = (e) => {
     e.preventDefault();
+    console.log(images);
     const formData = new FormData();
 
     formData.set("name", name);
@@ -78,7 +79,10 @@ const UpdateProduct = ({ navigate }) => {
     formData.set("description", description);
     formData.set("category", category);
     formData.set("stock", stock);
-
+    console.log(images);
+    images.forEach((image) => {
+      formData.append("images", image);
+    });
     dispatch(updateProduct(productId, formData)); // Use formData instead of myForm
   };
 

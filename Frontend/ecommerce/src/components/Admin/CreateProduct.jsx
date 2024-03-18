@@ -12,10 +12,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { clearErrors, createProduct } from "../../actions/productAction";
 import { NEW_PRODUCT_RESET } from "../../constants/productConstants";
-
+import Alertbar from "../Alert/Alert";
 const CreateProduct = () => {
   const dispatch = useDispatch();
-
+  const [message, setMessage] = useState("");
+  const [status, setStatus] = useState("");
+  const [open, setOpen] = useState(false);
   const navigate = useNavigate();
 
   const { loading, error, success } = useSelector((state) => state.newProduct);
@@ -30,6 +32,13 @@ const CreateProduct = () => {
   const [images, setImages] = useState([]);
   const [imagesPreview, setImagesPreview] = useState([]);
 
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
+  };
+
   useEffect(() => {
     if (error) {
       dispatch(clearErrors());
@@ -38,8 +47,11 @@ const CreateProduct = () => {
     if (success) {
       navigate("/admin/dashboard");
       dispatch({ type: NEW_PRODUCT_RESET });
+      setMessage("Product Creates Successfully");
+      setStatus("success");
+      setOpen(true);
     }
-  }, [dispatch, error, navigate, success]);
+  }, [dispatch, error, navigate,setMessage, setStatus,setOpen,success]);
 
   const productSummitHandler = (e) => {
     e.preventDefault();
@@ -176,6 +188,12 @@ const CreateProduct = () => {
               Create
             </Button>
           </form>
+          <Alertbar
+              message={message}
+              status={status}
+              open={open}
+              handleClose={handleClose}
+            />
         </div>
       </div>
       ;

@@ -8,10 +8,13 @@ import { useNavigate } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import { NEW_CATEGORY_RESET } from "../../constants/categoryConstants";
 import { clearErrors, createCategory } from "../../actions/categoryAction";
-
+import Alertbar from "../Alert/Alert";
 const Category = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [message, setMessage] = useState("");
+  const [status, setStatus] = useState("");
+  const [open, setOpen] = useState(false);
 
   const { loading, error, success } = useSelector(
     (state) => state.createCategory
@@ -21,17 +24,26 @@ const Category = () => {
   const [image, setImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
 
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
+  };
+
   useEffect(() => {
     if (error) {
       dispatch(clearErrors());
     }
 
     if (success) {
-      console.log("Category Created Successfully");
-      navigate("/admin/categories");
+      setMessage("Category Created Successfully");
+      setStatus("success");
+      setOpen(true);
+      navigate("/admin/category/all");
       dispatch({ type: NEW_CATEGORY_RESET });
     }
-  }, [dispatch, alert, navigate, error, success]);
+  }, [dispatch, navigate, setMessage, setStatus, setOpen, error, success]);
 
   const productSummitHandler = (e) => {
     e.preventDefault();
@@ -110,6 +122,12 @@ const Category = () => {
               Add
             </Button>
           </form>
+          <Alertbar
+            message={message}
+            status={status}
+            open={open}
+            handleClose={handleClose}
+          />
         </div>
       </div>
       ;

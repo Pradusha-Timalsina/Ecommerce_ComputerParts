@@ -19,7 +19,14 @@ import {
   Line,
 } from "recharts";
 import "./dashboard.css";
+import { useSelector, useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 function Dashboard() {
+  const dispatch = useDispatch();
+  const { products } = useSelector((state) => state.products);
+  const { categories } = useSelector((state) => state.categories);
+  const { orders } = useSelector((state) => state.allOrders);
+  const { users } = useSelector((state) => state.allUsers);
   const data = [
     {
       name: "Page A",
@@ -77,28 +84,30 @@ function Dashboard() {
             <h3>PRODUCTS</h3>
             <BsFillArchiveFill className="card_icon" />
           </div>
-          <h1>300</h1>
+
+          <h1>{products && products.length}</h1>
         </div>
+
         <div className="card">
           <div className="card-inner">
             <h3>CATEGORIES</h3>
             <BsFillGrid3X3GapFill className="card_icon" />
           </div>
-          <h1>12</h1>
+          <h1>{categories && categories.length}</h1>
         </div>
         <div className="card">
           <div className="card-inner">
             <h3>CUSTOMERS</h3>
             <BsPeopleFill className="card_icon" />
           </div>
-          <h1>33</h1>
+          <h1>{users && users.length}</h1>
         </div>
         <div className="card">
           <div className="card-inner">
             <h3>ORDERS</h3>
             <BsFillBellFill className="card_icon" />
           </div>
-          <h1>42</h1>
+          <h1>{orders && orders.length}</h1>
         </div>
       </div>
 
