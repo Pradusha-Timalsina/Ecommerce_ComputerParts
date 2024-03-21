@@ -26,12 +26,13 @@ import UpdateProduct from "./components/Admin/UpdateProduct";
 import { CategoryList } from "./components/Admin/CategoryList";
 import { getAllCategory } from "./actions/categoryAction";
 import UpdateProfile from "./components/User/UpdateProfile";
-import ComparePage from "./components/homepage/ComparePage/ComparePage";
+
 import AddStock from "./components/Admin/Stock/AddStock";
 import Shipping from "./components/Cart/Shipping/Shipping";
 import CategoryCard from "./components/homepage/CategoryCard";
 import { Search } from "./components/products/Search";
 import OrderDetails from "./components/Cart/Shipping/OrderDetails";
+import { ComparePage } from "./components/homepage/ComparePage/ComparePage";
 
 function App() {
   const dispatch = useDispatch();

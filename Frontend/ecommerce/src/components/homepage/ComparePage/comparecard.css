@@ -1,11 +1,13 @@
 .compare-card-container {
-  flex: 1;
+  flex: 0.7;
+  height: 650px;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 10px;
   padding: 20px;
-  margin: 30px;
+  margin-top: 5vh;
+  margin-right: 5vh;
   box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
   border-radius: 20px;
   background-color: white;
@@ -65,17 +67,74 @@
   overflow: hidden;
 }
 
-.delete-btn {
-  width: 100%;
-  color: white;
-  background-color: red;
-  border: none;
-  padding: 10px;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+/* second container */
+
+.compare-second-card-container {
+  flex: 0.7;
+  height: 650px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 20px;
+  margin-top: 5vh;
+  margin-left: 5vh;
+  box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+  border-radius: 20px;
+  background-color: white;
 }
 
-.delete-btn:hover {
-  background-color: darkred;
+.image-second-container {
+  height: 200px;
+}
+
+.image-second {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  transform: scale(0.8);
+}
+
+.image-second:hover {
+  transform: scale(1);
+}
+
+.title-second {
+  font-weight: 500;
+  color: gray;
+}
+
+.product-second-info-container {
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+}
+
+.info-second {
+  display: flex;
+  justify-content: space-between;
+  color: gray;
+  font-weight: 500;
+  padding: 5px;
+}
+
+.value-second {
+  font-size: 18px;
+  font-weight: 600;
+  color: #0171b6;
+}
+
+.product-second-desc-container {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  height: 200px;
+}
+
+.desc-second {
+  padding: 10px;
+  font-weight: 400;
+  overflow: hidden;
 }

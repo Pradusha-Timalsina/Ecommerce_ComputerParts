@@ -27,14 +27,23 @@ const AddStock = () => {
     }
   }, [dispatch, productId, product]);
 
-  const productStockSummitHandler = (e) => {
+  const stockHistory = []; // Define stockHistory if needed
+
+  const productStockSubmitHandler = async (e) => {
     e.preventDefault();
-    const newStock = Number(stock);
 
-    const stockData = { stock: newStock };
+    // Dispatch action to update product stock
+    try {
+      const newStock = Number(stock);
+      const stockData = { stock: newStock };
 
-    dispatch(updateProductStock(productId, stockData));
-    dispatch(getProductDetails(productId));
+      await dispatch(updateProductStock(productId, stockData, stockHistory));
+      // If the dispatch is successful, reload the page
+      window.location.reload();
+    } catch (error) {
+      console.error("Error updating product stock:", error);
+      // Handle error
+    }
   };
 
   return (
@@ -44,7 +53,7 @@ const AddStock = () => {
         <div>
           <div className="stockContainer">
             <h1>Add Stock</h1>
-            <form onSubmit={productStockSummitHandler} className="stockForm">
+            <form onSubmit={productStockSubmitHandler} className="stockForm">
               <div className="inputContainer">
 
                 <input

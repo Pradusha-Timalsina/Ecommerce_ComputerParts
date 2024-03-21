@@ -124,7 +124,7 @@ const Navbar = () => {
             </Link>
           </li>
           <li>
-            <Link className="link" to="/category">
+            <Link className="link" to="/category/:cat">
               Category
             </Link>
           </li>

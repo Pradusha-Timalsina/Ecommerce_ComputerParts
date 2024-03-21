@@ -25,3 +25,55 @@
 .empty-button {
   margin-left: auto;
 }
+.first-product {
+  width: 200px; /* Set the width of the select box */
+  padding: 10px; /* Add padding */
+  margin-left: 30vh;
+  font-size: 16px; /* Set font size */
+  border: 1px solid #ccc; /* Add border */
+  border-radius: 5px; /* Add border radius */
+  outline: none; /* Remove default focus outline */
+  background-color: white; /* Set background color */
+  color: #333; /* Set text color */
+  cursor: pointer; /* Change cursor to pointer on hover */
+}
+
+/* Style for option elements */
+.first-product option {
+  background-color: white; /* Set background color */
+  color: #333; /* Set text color */
+  padding: 10px; /* Add padding */
+}
+
+/* Style for option elements on hover */
+.first-product option:hover {
+  background-color: #f0f0f0; /* Change background color on hover */
+}
+
+/* second option */
+
+.second-product {
+  width: 200px; /* Set the width of the select box */
+  padding: 10px; /* Add padding */
+  margin-top: -4.6%;
+  margin-left: 135vh;
+  font-size: 16px; /* Set font size */
+  border: 1px solid #ccc; /* Add border */
+  border-radius: 5px; /* Add border radius */
+  outline: none; /* Remove default focus outline */
+  background-color: white; /* Set background color */
+  color: #333; /* Set text color */
+  cursor: pointer; /* Change cursor to pointer on hover */
+}
+
+/* Style for option elements */
+.second-product option {
+  background-color: white; /* Set background color */
+  color: #333; /* Set text color */
+  padding: 10px; /* Add padding */
+}
+
+/* Style for option elements on hover */
+.second-product option:hover {
+  background-color: #f0f0f0; /* Change background color on hover */
+}

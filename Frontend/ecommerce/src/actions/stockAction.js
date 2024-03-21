@@ -16,12 +16,18 @@ export const updateProductStock =
       const response = await axios.put(
         `/api/v1/stock/${productId}`,
         stockData,
-        config
+        {config}
       );
+
+      console.log("Response:", response); // Log response object
+
+      if (!response || !response.data) {
+        throw new Error("Invalid response format");
+      }
 
       dispatch({
         type: STOCK_UPDATE_SUCCESS,
-        payload: response.data.success,
+        payload: response.data,
       });
 
       dispatch({
@@ -29,11 +35,13 @@ export const updateProductStock =
         payload: { stock: stockData.stock, stockHistory },
       });
     } catch (error) {
+      console.error("Update Product Stock Error:", error); // Log error
       dispatch({
         type: STOCK_UPDATE_FAIL,
-        payload: error.response.data.message,
+        payload: error.response ? error.response.data.message : "Unknown error",
       });
     }
+
   };
 
 export const errorClear = () => async (dispatch) => {
