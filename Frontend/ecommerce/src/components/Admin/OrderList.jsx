@@ -79,7 +79,7 @@ export const OrderList = () => {
       renderCell: (params) => {
         return (
           <Fragment>
-            <Link>
+            <Link to={`/admin/order/${params.getValue(params.id, 'id')}`}>
               <EditIcon />
             </Link>
 

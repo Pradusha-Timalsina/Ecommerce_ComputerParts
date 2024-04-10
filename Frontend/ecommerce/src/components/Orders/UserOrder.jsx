@@ -11,16 +11,22 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogActions from "@material-ui/core/DialogActions";
 import Button from "@material-ui/core/Button";
+import { useSelector, useDispatch } from 'react-redux';
+import { myOrders, cancelOrder, clearErrors } from "../../actions/orderAction";
 
 const UserOrder = () => {
+  const dispatch= useDispatch();
   const [openDialog, setOpenDialog] = useState(false);
+
+  const { loading, error, myorders } = useSelector((state) => state.myOrders);
 
   const handleCancelOrder = () => {
     setOpenDialog(true);
   };
 
-  const handleConfirmCancel = () => {
+  const handleConfirmCancel = (orderId) => {
     setOpenDialog(false);
+    dispatch(cancelOrder(orderId));
   };
 
   const handleCancel = () => {
@@ -71,15 +77,15 @@ const UserOrder = () => {
       type: "number",
       sortable: false,
       renderCell: (params) => {
-        // const orderId = params.getValue(params.id, 'id');
-        // const orderStatus = params.getValue(params.id, 'status');
+        const orderId = params.getValue(params.id, 'id');
+        const orderStatus = params.getValue(params.id, 'status');
 
         return (
           <div style={{ display: "flex", alignItems: "center" }}>
-            <Link to={`/myorder/details`}>
+            <Link to={`/myorder/details/${orderId}`}>
               <LaunchIcon />
             </Link>
-
+            {orderStatus !== 'Cancelled' && (
             <Fragment>
               <IconButton onClick={handleCancelOrder}>
                 <CancelIcon />
@@ -94,7 +100,7 @@ const UserOrder = () => {
                 <DialogActions>
                   <Button onClick={handleCancel}>Cancel</Button>
                   <Button
-                    //   onClick={() => handleConfirmCancel(orderId)}
+                      onClick={() => handleConfirmCancel(orderId)}
                     color="primary"
                   >
                     Confirm
@@ -102,6 +108,7 @@ const UserOrder = () => {
                 </DialogActions>
               </Dialog>
             </Fragment>
+             )}
           </div>
         );
       },
@@ -109,29 +116,29 @@ const UserOrder = () => {
   ];
   const rows = [];
 
-  //   myorders &&
-  //     myorders
-  //       .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-  //       .forEach((item, index) => {
-  //         const itemNames = item.orderItems.map((orderItem) => orderItem.name);
-  //         const nameString = itemNames.join(', ');
-  //         rows.push({
-  //           itemsQty: item.orderItems.length,
-  //           id: item._id,
-  //           name: nameString,
-  //           status: item.orderStatus,
-  //           amount: item.totalPrice,
-  //         });
-  //       });
+    myorders &&
+      myorders
+        .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+        .forEach((item, index) => {
+          const itemNames = item.orderItems.map((orderItem) => orderItem.name);
+          const nameString = itemNames.join(', ');
+          rows.push({
+            itemsQty: item.orderItems.length,
+            id: item._id,
+            name: nameString,
+            status: item.orderStatus,
+            amount: item.totalPrice,
+          });
+        });
 
-  //   useEffect(() => {
-  //     if (error) {
+    useEffect(() => {
+      if (error) {
 
-  //       dispatch(errorClear());
-  //     }
+        dispatch(clearErrors());
+      }
 
-  //     dispatch(myOrders());
-  //   }, [dispatch, alert, error]);
+      dispatch(myOrders());
+    }, [dispatch, alert, error]);
 
   return (
     <Fragment>

@@ -33,13 +33,20 @@ import CategoryCard from "./components/homepage/CategoryCard";
 import { Search } from "./components/products/Search";
 import OrderDetails from "./components/Cart/Shipping/OrderDetails";
 import { ComparePage } from "./components/homepage/ComparePage/ComparePage";
+import UserOrderDetails from "./components/Orders/UserOrderDetail";
+import {UpdateOrder} from "./components/Admin/UpdateOrder";
 
 function App() {
   const dispatch = useDispatch();
+
+ 
+
   React.useEffect(() => {
     dispatch(getAllCategory());
 
     store.dispatch(loadUser());
+
+    
   }, []);
   return (
     <Router>
@@ -72,6 +79,8 @@ function App() {
         <Route path="/shipping" element={<Shipping />} />
         <Route path="/products/:search" element={<Search />} />
         <Route path="/order/details" element={<OrderDetails />} />
+        <Route path="/myorder/details/:id" element={<UserOrderDetails />} />
+        <Route path="/admin/order/:id" element={<UpdateOrder/>} />
       </Routes>
     </Router>
   );

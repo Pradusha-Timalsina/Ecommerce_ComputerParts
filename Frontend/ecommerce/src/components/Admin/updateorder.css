@@ -1,0 +1,137 @@
+.updateOrderPage {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 30px;
+    margin: 30px auto;
+    padding: 20px;
+  }
+  
+  .updateshippingArea {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  }
+  
+  .orderDetailsContainerBox div {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .orderDetailsContainerBox p {
+    margin-right: 10px;
+  }
+  
+  .amountContainer {
+    display: flex;
+    align-items: center;
+  }
+  
+  .updateorderDetailsBox {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .updateorderDetailsBox > div {
+    display: flex;
+    align-items: center;
+  }
+  
+  .updateorderDetailsBox p {
+    font-weight: bold;
+    margin-right: 10px;
+  }
+  
+  .orderDetailsContainerBox {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  
+  .orderDetailsContainerBox p {
+    font-weight: bold;
+  }
+  
+  .orderDetailsContainerBox .greenColor {
+    color: green;
+  }
+  
+  .orderDetailsContainerBox .redColor {
+    color: red;
+  }
+  
+  .confirmCartItems {
+    background-color: #fff;
+    padding: 20px;
+    margin-top: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  }
+  
+  .confirmCartItems h2 {
+    margin-bottom: 10px;
+  }
+  
+  .confirmCartItemsContainer > div {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .confirmCartItemsContainer img {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+    margin-right: 10px;
+  }
+  
+  .confirmCartItemsContainer span {
+    margin-left: auto;
+  }
+  
+  .updateOrderForm {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  }
+  
+  .updateOrderForm h1 {
+    margin-bottom: 20px;
+  }
+  
+  .updateOrderForm div {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .updateOrderForm select {
+    flex-grow: 1;
+    margin-left: 10px;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background-color: #f4f4f4;
+  }
+  
+  #createProductBtn {
+    margin-top: 20px;
+    background-color: #3399ff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  #createProductBtn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  
+  #createProductBtn:hover {
+    background-color: #2288dd;
+  }

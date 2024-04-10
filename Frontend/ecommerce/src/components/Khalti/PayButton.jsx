@@ -1,7 +1,8 @@
 import KhaltiCheckout from "khalti-checkout-web";
 import axios from "axios";
-
+import { useSelector } from "react-redux";
 export const PayButton = ({ order, cartItems, totalPrice, user }) => {
+  const { shippingInfo } = useSelector((state) => state.cart);
   let config = {
     // replace this key with yours
     publicKey: "test_public_key_79437ac97c2d4d03a4715a76f10c4948",
@@ -12,11 +13,12 @@ export const PayButton = ({ order, cartItems, totalPrice, user }) => {
       async onSuccess(payload) {
         // hit merchant api for initiating verfication
 
-        order.orderItems = JSON.stringify(cartItems);
+        order.orderItems = cartItems;
         console.log(order.orderItems)
         console.log(cartItems)
         const ord = {
           ...order,
+          shippingInfo: shippingInfo,
 
           paymentInfo: { id: payload.idx, status: "succeeded" },
           type: "multipart/form-data",
@@ -61,7 +63,7 @@ export const PayButton = ({ order, cartItems, totalPrice, user }) => {
   let checkout = new KhaltiCheckout(config);
   // let btn = document.getElementById('payment-button');
 
-  const wholeTotal = totalPrice*100;
+  const wholeTotal = totalPrice;
 
   const handleCheckout = () => {
     if (user.role === "admin") {

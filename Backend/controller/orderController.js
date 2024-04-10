@@ -9,16 +9,18 @@ const ErrorHandler = require("../utils/errorhandler");
 exports.newOrder = catchAsyncErrors(async (req, res, next) => {
   const { shippingInfo, orderItems, paymentInfo, itemsPrice, totalPrice } =
     req.body;
+console.log("orderItems", orderItems)
+const tempOrder= {
+  shippingInfo,
+  orderItems,
+  paymentInfo,
+  itemsPrice,
+  totalPrice,
+  paidAt: Date.now(),
+  user: req.user?._id,
+}
 
-  const order = await Order.create({
-    shippingInfo,
-    orderItems,
-    paymentInfo,
-    itemsPrice,
-    totalPrice,
-    paidAt: Date.now(),
-    user: req.user?._id,
-  });
+  const order = await Order.create(tempOrder);
 
   res.status(201).json({
     success: true,
