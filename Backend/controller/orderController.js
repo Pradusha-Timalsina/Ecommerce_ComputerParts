@@ -111,3 +111,29 @@ exports.deleteOrder = catchAsyncErrors(async (req, res, next) => {
     success: true,
   });
 });
+
+
+//cancelled order
+exports.cancelOrder = catchAsyncErrors(async (req, res, next) => {
+  const order = await Order.findById(req.params.id);
+
+  if (!order) {
+    return next(new ErrorHandler('Order not found with this id', 404));
+  }
+
+  if (order.orderStatus === 'Cancelled') {
+    return next(new ErrorHandler('Order is already cancelled', 400));
+  }
+
+  if (order.orderStatus === 'Delivered') {
+    return next(new ErrorHandler('Cannot cancel a delivered order', 400));
+  }
+
+  order.orderStatus = 'Cancelled';
+
+  await order.save({ validateBeforeSave: false });
+
+  res.status(200).json({
+    success: true,
+  });
+});

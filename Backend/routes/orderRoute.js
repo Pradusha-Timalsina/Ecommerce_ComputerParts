@@ -7,7 +7,7 @@ const {
   myOrders,
   getAllOrders,
   updateOrder,
-  deleteOrder,
+  deleteOrder, cancelOrder,
 } = require("../controller/orderController");
 
 router.route("/order/new").post(isAuthenticatedUser, newOrder);
@@ -24,5 +24,7 @@ router
   .route("/admin/order/:id")
   .put(isAuthenticatedUser, authorizeRoles("admin"), updateOrder)
   .delete(isAuthenticatedUser, authorizeRoles("admin"), deleteOrder);
+
+  router.route('/order/cancel/:id').post(isAuthenticatedUser, cancelOrder);
 
 module.exports = router;

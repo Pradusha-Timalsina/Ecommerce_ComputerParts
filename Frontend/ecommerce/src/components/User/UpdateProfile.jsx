@@ -13,7 +13,7 @@ const UpdateProfile = () => {
   // const alert = useAlert();
 
   const { user } = useSelector((state) => state.user);
-  const [Fullname, setName] = useState("");
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [address, setAddress] = useState("");
   const [contact, setContact] = useState("");
@@ -21,13 +21,17 @@ const UpdateProfile = () => {
   const [avatar, setAvatar] = useState();
   const [avatarPreview, setAvatarPreview] = useState("/Profile.png");
 
+  const [message, setMessage] = useState("");
+  const [status, setStatus] = useState("");
+  const [open, setOpen] = useState(false);
+
   const { error, isUpdated, loading } = useSelector((state) => state.profile);
   const updateProfileSubmit = (e) => {
     e.preventDefault();
 
     const form = new FormData();
 
-    form.set("Fullname", Fullname);
+    form.set("name", name);
     form.set("email", email);
     form.set("address", address);
     form.set("contact", contact);
@@ -67,6 +71,15 @@ const UpdateProfile = () => {
   //     reader.readAsDataURL(e.target.files[0]);
   //   }
   // };
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
+  };
+
   useEffect(() => {
     if (user) {
       setName(user.name);
@@ -82,12 +95,15 @@ const UpdateProfile = () => {
     }
 
     if (isUpdated) {
-      // alert.success("Profile Updated Successfully");
+      setMessage("Profile Updated Successfully");
+      setStatus("success");
+      setOpen(true);
+
       dispatch(loadUser());
 
       dispatch({ type: UPDATE_PROFILE_RESET });
     }
-  }, [dispatch, error, user, isUpdated]);
+  }, [dispatch, error, user, setMessage, setStatus, setOpen, isUpdated]);
 
   return (
     <Fragment>
@@ -114,9 +130,9 @@ const UpdateProfile = () => {
               <input
                 type="text"
                 placeholder="Name"
-                value={Fullname}
+                value={name}
                 required
-                name="Fullname"
+                name="name"
                 onChange={(e) => setName(e.target.value)}
               />
             </div>

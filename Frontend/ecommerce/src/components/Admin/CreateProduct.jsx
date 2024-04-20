@@ -5,6 +5,8 @@ import { Button } from "@material-ui/core";
 import Sidebar from "./Sidebar";
 import StorageIcon from "@mui/icons-material/Storage";
 import AccountTreeIcon from "@mui/icons-material/AccountTree";
+import BrandingWatermarkIcon from '@mui/icons-material/BrandingWatermark';
+import PaletteIcon from '@mui/icons-material/Palette';
 import DescriptionIcon from "@mui/icons-material/Description";
 import SpellcheckIcon from "@mui/icons-material/Spellcheck";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
@@ -26,6 +28,8 @@ const CreateProduct = () => {
 
   const [name, setName] = useState("");
   const [price, setPrice] = useState(0);
+  const [brand, setBrand] = useState("");
+  const [color, setColor] = useState("");
   const [category, setCategory] = useState("");
   const [stock, setStock] = useState(0);
   const [description, setDescription] = useState("");
@@ -64,6 +68,8 @@ const CreateProduct = () => {
     });
     formData.set("description", description);
     formData.set("category", category);
+    formData.set("brand", brand);
+    formData.set("color", color);
     formData.set("stock", stock);
 
     dispatch(createProduct(formData));
@@ -128,12 +134,32 @@ const CreateProduct = () => {
             <div>
               <DescriptionIcon />
               <textarea
-                type="number"
+                type="text"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 placeholder="Product Description"
                 cols="30"
                 rows="1"
+              />
+            </div>
+            <div>
+              <BrandingWatermarkIcon />
+              <textarea
+                type="text"
+                value={brand}
+                onChange={(e) => setBrand(e.target.value)}
+                placeholder="Product Brand"
+                
+              />
+            </div>
+            <div>
+              <PaletteIcon />
+              <textarea
+                type="text"
+                value={color}
+                onChange={(e) => setColor(e.target.value)}
+                placeholder="Product Color"
+                
               />
             </div>
             <div>

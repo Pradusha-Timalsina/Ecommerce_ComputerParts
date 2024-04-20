@@ -66,11 +66,12 @@ export const ComparePage = () => {
           onChange={handleCategoryChange}
         >
           <option value="">Choose a category</option>
-          {categories.map((category) => (
-            <option key={category.id} value={category.title}>
-              {category.title}
-            </option>
-          ))}
+          {categories &&
+            categories.map((category) => (
+              <option key={category.id} value={category.title}>
+                {category.title}
+              </option>
+            ))}
         </select>
 
         <select
@@ -106,14 +107,16 @@ export const ComparePage = () => {
             </option>
           ))}
         </select>
-        <div className="main-wrapper">
-          {/* Pass filteredProducts as props */}
-          <CompareCard
-            firstProduct={firstProduct}
-            secondProduct={secondProduct}
-            products={filteredProducts}
-          />
-        </div>
+        {(firstProduct || secondProduct) && (
+          <div className="main-wrapper">
+            {/* Pass filteredProducts as props */}
+            <CompareCard
+              firstProduct={firstProduct}
+              secondProduct={secondProduct}
+              products={filteredProducts}
+            />
+          </div>
+        )}
       </>
     </div>
   );

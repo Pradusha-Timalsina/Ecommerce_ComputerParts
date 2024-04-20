@@ -25,10 +25,10 @@ export const UpdateOrder = () => {
       dispatch(updateOrder(params.id, formdata));
     };
   
-    const userName = `${order && order.firstName}`;
-    const userContact = `${order && order.contact}`;
-    const userAddress = `${order && order.address} ${order && order.city} ${
-      order && order.province
+    const userName = `${order && order.shippingInfo?.FullName}`;
+    const userContact = `${order && order.shippingInfo?.contact}`;
+    const userAddress = `${order && order.shippingInfo?.address} ${order && order.shippingInfo?.city} ${
+      order && order.shippingInfo?.province
     }`;
   
     useEffect(() => {
@@ -52,7 +52,7 @@ export const UpdateOrder = () => {
         <Fragment>
           <div className="dashboard">
             {/* <LeftSidebar /> */}
-            <div className="newProductContainer">
+            <div className="newProductContainer_order">
               {loading ? (
                 <Loader />
               ) : (

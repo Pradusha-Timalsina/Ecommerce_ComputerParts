@@ -10,6 +10,7 @@ import moment from "moment";
 import { useSelector } from "react-redux";
 import UserOrder from "../Orders/UserOrder";
 
+
 const Userdetails = () => {
   const { loading, isAuthenticated, user } = useSelector((state) => state.user);
   const date = moment(user?.createdAt);
@@ -29,7 +30,7 @@ const Userdetails = () => {
           <div className="profileContainer">
             <Avatar
               className="profileAvatar"
-              src="https://images.nvidia.com/aem-dam/Solutions/geforce/news/geforce-rtx-graphics-cards/geforce-rtx-2080-technical-photography-angled-003.png"
+              src={user.avatar?.url}
               style={{ width: "150px", height: "150px" }}
             />
             <div className="userWappper">
@@ -68,10 +69,12 @@ const Userdetails = () => {
 
           {/* verified profile end*/}
         </div>
-
-        <div className="second">
-          <UserOrder />
-        </div>
+        {user && user.role !== "admin" ? (
+  <div className="second">
+    <UserOrder />
+  </div>
+) : null}
+        
       </div>
     </Fragment>
   );

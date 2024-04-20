@@ -14,8 +14,8 @@ export const PayButton = ({ order, cartItems, totalPrice, user }) => {
         // hit merchant api for initiating verfication
 
         order.orderItems = cartItems;
-        console.log(order.orderItems)
-        console.log(cartItems)
+        console.log(order.orderItems);
+        console.log(cartItems);
         const ord = {
           ...order,
           shippingInfo: shippingInfo,
@@ -30,15 +30,27 @@ export const PayButton = ({ order, cartItems, totalPrice, user }) => {
           const { data } = await axios.post(`/api/v1/order/new`, ord, config);
           console.log(data);
 
-          cartItems.forEach((item, index) => {
-            if (item.productId === ord.orderItems[0].productId) {
-              item.stock -= order.orderItems[0].quantity;
+          // cartItems.forEach((item, index) => {
+          //   if (item.productId === ord.orderItems[0].productId) {
+          //     item.stock -= order.orderItems[0].quantity;
 
-              cartItems.splice(index, 1);
-            }
-          });
+          //     cartItems.splice(index, 1);
+          //   }
+          // });
 
-          localStorage.setItem("cartItems", JSON.stringify(cartItems));
+          // localStorage.setItem("cartItems", JSON.stringify(cartItems));
+
+          // Get the productId of the ordered item
+          const orderedProductId = ord.orderItems[0].productId;
+
+          // Filter out the cart items that match the ordered productId
+          const updatedCartItems = cartItems.filter(
+            (item) => item.productId !== orderedProductId
+          );
+
+          // Update the cart items in local storage
+          localStorage.setItem("cartItems", JSON.stringify(updatedCartItems));
+
           // redirect to success page
 
           window.location.href = "/order/success";
@@ -64,6 +76,7 @@ export const PayButton = ({ order, cartItems, totalPrice, user }) => {
   // let btn = document.getElementById('payment-button');
 
   const wholeTotal = totalPrice;
+  //khalti ley demo account ma 200 rupey vanda mathi ko transaction garna didaina so ailey paisa ma rakheko xam rupees ma haina
 
   const handleCheckout = () => {
     if (user.role === "admin") {

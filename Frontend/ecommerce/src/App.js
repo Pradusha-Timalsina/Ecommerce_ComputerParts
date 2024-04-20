@@ -35,6 +35,7 @@ import OrderDetails from "./components/Cart/Shipping/OrderDetails";
 import { ComparePage } from "./components/homepage/ComparePage/ComparePage";
 import UserOrderDetails from "./components/Orders/UserOrderDetail";
 import {UpdateOrder} from "./components/Admin/UpdateOrder";
+import Success from "./components/Orders/Success";
 
 function App() {
   const dispatch = useDispatch();
@@ -81,6 +82,7 @@ function App() {
         <Route path="/order/details" element={<OrderDetails />} />
         <Route path="/myorder/details/:id" element={<UserOrderDetails />} />
         <Route path="/admin/order/:id" element={<UpdateOrder/>} />
+        <Route path="/order/success" element={<Success/>} />
       </Routes>
     </Router>
   );

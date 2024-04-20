@@ -1,4 +1,4 @@
-import {React, useState} from "react";
+import { React, useState } from "react";
 import { Link } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import { DataGrid } from "@mui/x-data-grid";
@@ -40,8 +40,8 @@ export const ProductList = () => {
   const deleteProductHandler = (id) => {
     dispatch(deleteProduct(id));
     setMessage("Product deleted Successfully");
-      setStatus("success");
-      setOpen(true);
+    setStatus("success");
+    setOpen(true);
   };
 
   useEffect(() => {
@@ -116,7 +116,9 @@ export const ProductList = () => {
               <DeleteIcon />
             </Button>
 
-            <Link to={`/admin/stock/${productId}`}><AddBoxIcon /></Link>
+            <Link to={`/admin/stock/${productId}`}>
+              <AddBoxIcon />
+            </Link>
           </Fragment>
         );
       },
@@ -147,6 +149,7 @@ export const ProductList = () => {
           <h1 className="heading">All Products</h1>
 
           <DataGrid
+          
             rows={rows}
             columns={columns}
             pageSize={10}
@@ -156,11 +159,11 @@ export const ProductList = () => {
           />
         </div>
         <Alertbar
-              message={message}
-              status={status}
-              open={open}
-              handleClose={handleClose}
-            />
+          message={message}
+          status={status}
+          open={open}
+          handleClose={handleClose}
+        />
       </div>
     </Fragment>
   );

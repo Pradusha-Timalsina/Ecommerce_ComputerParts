@@ -15,6 +15,13 @@ const productSchema = new mongoose.Schema({
     type: Number,
     required: [true, "Please Enter product Price"],
   },
+  brand: {
+    type: String,
+    required: [true, "Please Enter brand Name"],
+  },
+  color: {
+    type: String,
+  },
   ratings: {
     type: Number,
     default: 0,
