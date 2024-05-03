@@ -18,7 +18,7 @@ const Login = () => {
   const [status, setStatus] = useState("");
   const [open, setOpen] = useState(false);
 
-  const { error, loading, isAuthenticated } = useSelector(
+  const { user,error, loading, isAuthenticated } = useSelector(
     (state) => state.user
   );
 
@@ -47,7 +47,11 @@ const Login = () => {
       dispatch(clearErrors());
     }
     if (isAuthenticated) {
-      navigate("/");
+      if (isAuthenticated && user.role === "admin") {
+        navigate("/admin/dashboard"); // Redirect to admin dashboard
+      } else {
+        navigate("/"); // Redirect to default dashboard or homepage
+      }
 
       setMessage("Login Successfully");
       setStatus("success");

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { BiSearchAlt2 } from "react-icons/bi";
 import { AiOutlineShoppingCart } from "react-icons/ai"; // Imported the cart icon
 import "./navbar.css";
 import logoImage from "../../components/LogoImage/logo.png";

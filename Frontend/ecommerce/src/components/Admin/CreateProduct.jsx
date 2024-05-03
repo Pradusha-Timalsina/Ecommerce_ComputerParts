@@ -5,8 +5,8 @@ import { Button } from "@material-ui/core";
 import Sidebar from "./Sidebar";
 import StorageIcon from "@mui/icons-material/Storage";
 import AccountTreeIcon from "@mui/icons-material/AccountTree";
-import BrandingWatermarkIcon from '@mui/icons-material/BrandingWatermark';
-import PaletteIcon from '@mui/icons-material/Palette';
+import BrandingWatermarkIcon from "@mui/icons-material/BrandingWatermark";
+import PaletteIcon from "@mui/icons-material/Palette";
 import DescriptionIcon from "@mui/icons-material/Description";
 import SpellcheckIcon from "@mui/icons-material/Spellcheck";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
@@ -55,10 +55,40 @@ const CreateProduct = () => {
       setStatus("success");
       setOpen(true);
     }
-  }, [dispatch, error, navigate,setMessage, setStatus,setOpen,success]);
+  }, [dispatch, error, navigate, setMessage, setStatus, setOpen, success]);
 
   const productSummitHandler = (e) => {
     e.preventDefault();
+    const newPrice = Number(price);
+    if (newPrice <= -1) {
+      setMessage("Price value must be a positive number.");
+      setStatus("error");
+      setOpen(true);
+      return;
+    } else if (newPrice <= 0) {
+      setMessage("Price value must not be 0");
+      setStatus("error");
+      setOpen(true);
+      return;
+    }
+
+    const newStock = Number(stock);
+    if (newStock <= -1) {
+      setMessage("Stock value must be a positive number.");
+      setStatus("error");
+      setOpen(true);
+      return;
+    } else if (newStock <= 0) {
+      setMessage("Stock value must not be 0");
+      setStatus("error");
+      setOpen(true);
+      return;
+    } else {
+      setMessage("Product Created Successfully");
+      setStatus("success");
+      setOpen(true);
+    }
+
     const formData = new FormData();
 
     formData.set("name", name);
@@ -149,7 +179,6 @@ const CreateProduct = () => {
                 value={brand}
                 onChange={(e) => setBrand(e.target.value)}
                 placeholder="Product Brand"
-                
               />
             </div>
             <div>
@@ -159,7 +188,6 @@ const CreateProduct = () => {
                 value={color}
                 onChange={(e) => setColor(e.target.value)}
                 placeholder="Product Color"
-                
               />
             </div>
             <div>
@@ -215,11 +243,11 @@ const CreateProduct = () => {
             </Button>
           </form>
           <Alertbar
-              message={message}
-              status={status}
-              open={open}
-              handleClose={handleClose}
-            />
+            message={message}
+            status={status}
+            open={open}
+            handleClose={handleClose}
+          />
         </div>
       </div>
       ;

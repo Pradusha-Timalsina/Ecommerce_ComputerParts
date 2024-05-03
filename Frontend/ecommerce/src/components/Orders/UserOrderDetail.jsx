@@ -1,15 +1,16 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect, useState, } from "react";
 // import "./userOrderDetails.css";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { Loader } from "../../layout/Loader/Loader";
-import { Box, Typography } from "@mui/material";
-
+import { Box, Typography,Button } from "@mui/material";
+import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
 import { getOrderDetails, clearErrors } from "../../actions/orderAction";
+import OrderPDFDocument from "./OrderPDFDocument";
 
 const UserOrderDetails = () => {
   const params = useParams();
-
+  const [pdfVisible, setPdfVisible] = useState(false);
   const { order, error, loading } = useSelector((state) => state.orderDetails);
 
   const dispatch = useDispatch();
@@ -62,7 +63,7 @@ const UserOrderDetails = () => {
                 color: order?.orderStatus === "Delivered" ? "green" : "red",
               }}
             >
-              {order?.orderStatus}
+             Product {order?.orderStatus}
             </Typography>
           </Box>
 
@@ -87,6 +88,26 @@ const UserOrderDetails = () => {
               </Box>
             )) || <Typography>No items in this order.</Typography>}
           </Box>
+          <Button onClick={() => setPdfVisible(!pdfVisible)}>
+            {pdfVisible ? "Hide PDF" : "Show PDF"}
+          </Button>
+          {/* PDF Download Link */}
+          <PDFDownloadLink
+            document={<OrderPDFDocument order={order} />}
+            fileName={`Order_${order?._id}.pdf`}
+          >
+            {({ blob, url, loading, error }) =>
+              loading ? "Loading document..." : "Download PDF"
+            }
+          </PDFDownloadLink>
+          {/* PDF Viewer */}
+          {pdfVisible && (
+            <Box style={{ width: "100%", height: "500px" }}>
+              <PDFViewer width="100%" height="100%">
+                <OrderPDFDocument order={order} />
+              </PDFViewer>
+            </Box>
+          )}
         </Box>
       )}
     </Fragment>

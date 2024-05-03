@@ -5,10 +5,14 @@ import UploadIcon from "@mui/icons-material/Upload";
 import "./signup.css";
 import { useDispatch, useSelector } from "react-redux";
 import { register, clearErrors } from "../../actions/userAction";
+import Alertbar from "../Alert/Alert";
 const Signup = () => {
   const dispatch = useDispatch();
   const [ss, setss] = useState();
   const navigate = useNavigate();
+  const [message, setMessage] = useState("");
+  const [status, setStatus] = useState("");
+  const [open, setOpen] = useState(false);
   const [user, setUser] = useState({
     name: "",
     email: "",
@@ -25,15 +29,38 @@ const Signup = () => {
   const [avatar, setAvatar] = useState("/Profile.png");
   const [avatarPreview, setAvatarPreview] = useState("/Profile.png");
   const [passwordError, setPasswordError] = useState("");
+
+  // for Alertbar of Snackbar
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
+  };
+
   const registerSubmit = (e) => {
     e.preventDefault();
-    if (password.length < 8) {
-      setPasswordError(" Password should be at least 8 Characters");
+
+    if (name.trim() === "" || !/\S/.test(name)) {
+      setMessage("Name cannot be empty or contain only spaces.");
+      setStatus("error");
+      setOpen(true);
+      return;
     }
+  
     if (password !== confirmPassword) {
       setPasswordError("Password does not match");
       return;
     }
+
+ // Password validation
+ const passwordRegex = /^(?=.*[A-Z])(?=.*[@!#$%^&*]).{8,}$/;
+ if (!passwordRegex.test(password)) {
+   setPasswordError("Password should be at least 8 characters with one uppercase letter and one special character from [@,!,#,$,%,^,&,*]");
+   return;
+ }
     const myForm = new FormData();
 
     myForm.set("name", name);
@@ -101,7 +128,7 @@ const Signup = () => {
 
               <div className="signUpName">
                 <input
-                  type="text"
+                  type="name"
                   placeholder="Name"
                   name="name"
                   onChange={registerDataChange}
@@ -245,6 +272,12 @@ const Signup = () => {
                 </span>
               </div>
             </form>
+            <Alertbar
+              message={message}
+              status={status}
+              open={open}
+              handleClose={handleClose}
+            />
           </div>
         </div>
       </div>
