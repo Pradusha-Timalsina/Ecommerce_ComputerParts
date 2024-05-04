@@ -20,17 +20,23 @@ const UpdatePassword = () => {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
-  const [confirmPasswordError, setConfirmPasswordError] = useState("");
 
   const { error, isUpdated, loading } = useSelector((state) => state.profile);
 
   const updatePasswordSubmit = (e) => {
     e.preventDefault();
-    if (newPassword.length < 8) {
-      setPasswordError(" Password should be at least 8 Characters");
+    if (newPassword !== confirmPassword) {
+      setPasswordError("Password does not match");
+      return;
     }
-    if (confirmPassword.length < 8) {
-      setConfirmPasswordError(" Password should be at least 8 Characters");
+
+    // Password validation
+    const passwordRegex = /^(?=.*[A-Z])(?=.*[@!#$%^&*]).{8,}$/;
+    if (!passwordRegex.test(newPassword)) {
+      setPasswordError(
+        "Password should be at least 8 characters with one uppercase letter and one special character from [@,!,#,$,%,^,&,*]"
+      );
+      return;
     }
 
     const myForm = new FormData();
@@ -90,6 +96,18 @@ const UpdatePassword = () => {
                       />
                     </div>
                   </div>
+                  {passwordError && (
+                    <div
+                      className="error_message"
+                      style={{
+                        fontSize: "0.5rem",
+                        alignItems: "flex-start",
+                        color: "red",
+                      }}
+                    >
+                      {passwordError}
+                    </div>
+                  )}
 
                   <div class="inputWrapper">
                     <div class="inputWithIcon">
@@ -102,6 +120,18 @@ const UpdatePassword = () => {
                       />
                     </div>
                   </div>
+                  {passwordError && (
+                    <div
+                      className="error_message"
+                      style={{
+                        fontSize: "0.5rem",
+                        alignItems: "flex-start",
+                        color: "red",
+                      }}
+                    >
+                      {passwordError}
+                    </div>
+                  )}
 
                   <input type="submit" value="Update" class="updatePassBtn" />
                 </form>

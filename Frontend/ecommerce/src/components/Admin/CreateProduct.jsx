@@ -59,6 +59,47 @@ const CreateProduct = () => {
 
   const productSummitHandler = (e) => {
     e.preventDefault();
+    if (name.trim() === "" || !/\S/.test(name)) {
+      setMessage("Name cannot be empty or contain only spaces.");
+      setStatus("error");
+      setOpen(true);
+      return;
+    }
+
+    if (description.trim() === "" || !/\S/.test(name)) {
+      setMessage("Description cannot be empty or contain only spaces.");
+      setStatus("error");
+      setOpen(true);
+      return;
+    }
+
+    if (brand.trim() === "" || !/\S/.test(name)) {
+      setMessage("Brand cannot be empty or contain only spaces.");
+      setStatus("error");
+      setOpen(true);
+      return;
+    }
+
+    if (color.trim() === "" || !/\S/.test(name)) {
+      setMessage("Color cannot be empty or contain only spaces.");
+      setStatus("error");
+      setOpen(true);
+      return;
+    }
+
+    if (!category) {
+      setMessage("Please select a category.");
+      setStatus("error");
+      setOpen(true);
+      return false;
+    }
+    if (images.length === 0) {
+      setMessage("Please select at least one image.");
+      setStatus("error");
+      setOpen(true);
+      return false;
+    }
+
     const newPrice = Number(price);
     if (newPrice <= -1) {
       setMessage("Price value must be a positive number.");
@@ -194,6 +235,7 @@ const CreateProduct = () => {
               <AccountTreeIcon />
               <select
                 value={category}
+                required
                 onChange={(e) => setCategory(e.target.value)}
               >
                 <option>Choose Category</option>
@@ -217,7 +259,7 @@ const CreateProduct = () => {
             </div>
 
             <label id="productformfile" htmlFor="fileInput">
-              Select File
+              Select Image
               <input
                 id="fileInput"
                 type="file"

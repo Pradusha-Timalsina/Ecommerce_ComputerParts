@@ -9,16 +9,29 @@ const ErrorHandler = require("../utils/errorhandler");
 exports.newOrder = catchAsyncErrors(async (req, res, next) => {
   const { shippingInfo, orderItems, paymentInfo, itemsPrice, totalPrice } =
     req.body;
-console.log("orderItems", orderItems)
-const tempOrder= {
-  shippingInfo,
-  orderItems,
-  paymentInfo,
-  itemsPrice,
-  totalPrice,
-  paidAt: Date.now(),
-  user: req.user?._id,
-}
+
+  // Decrease stock for each ordered item
+  for (const orderItem of orderItems) {
+    const product = await Product.findById(orderItem.product);
+
+    if (!product) {
+      return next(new ErrorHandler(`Product not found with id ${orderItem.product}`, 404));
+    }
+
+    product.stock -= orderItem.quantity;
+    await product.save({ validateBeforeSave: false });
+  }
+
+  // Create new order
+  const tempOrder= {
+    shippingInfo,
+    orderItems,
+    paymentInfo,
+    itemsPrice,
+    totalPrice,
+    paidAt: Date.now(),
+    user: req.user?._id,
+  };
 
   const order = await Order.create(tempOrder);
 
@@ -113,7 +126,7 @@ exports.deleteOrder = catchAsyncErrors(async (req, res, next) => {
 });
 
 
-//cancelled order
+// cancelled order
 exports.cancelOrder = catchAsyncErrors(async (req, res, next) => {
   const order = await Order.findById(req.params.id);
 
@@ -129,6 +142,18 @@ exports.cancelOrder = catchAsyncErrors(async (req, res, next) => {
     return next(new ErrorHandler('Cannot cancel a delivered order', 400));
   }
 
+  // Increment stock for each ordered item
+  for (const orderItem of order.orderItems) {
+    const product = await Product.findById(orderItem.product);
+
+    if (!product) {
+      return next(new ErrorHandler(`Product not found with id ${orderItem.product}`, 404));
+    }
+
+    product.stock += orderItem.quantity;
+    await product.save({ validateBeforeSave: false });
+  }
+
   order.orderStatus = 'Cancelled';
 
   await order.save({ validateBeforeSave: false });
@@ -137,3 +162,4 @@ exports.cancelOrder = catchAsyncErrors(async (req, res, next) => {
     success: true,
   });
 });
+

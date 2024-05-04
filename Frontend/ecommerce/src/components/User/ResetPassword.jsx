@@ -10,7 +10,7 @@ import { useNavigate, useParams } from "react-router-dom";
 
 const ResetPassword = ({ history, match }) => {
   const dispatch = useDispatch();
-
+  const [passwordError, setPasswordError] = useState("");
   const params = useParams();
   const navigate = useNavigate();
   const { error, success, loading } = useSelector(
@@ -22,6 +22,18 @@ const ResetPassword = ({ history, match }) => {
 
   const resetPasswordSubmit = (e) => {
     e.preventDefault();
+
+    if (password !== confirmPassword) {
+      setPasswordError("Password does not match");
+      return;
+    }
+
+     // Password validation
+ const passwordRegex = /^(?=.*[A-Z])(?=.*[@!#$%^&*]).{8,}$/;
+ if (!passwordRegex.test(password)) {
+   setPasswordError("Password should be at least 8 characters with one uppercase letter and one special character from [@,!,#,$,%,^,&,*]");
+   return;
+ }
 
     const myForm = new FormData();
 
