@@ -49,18 +49,20 @@ const Signup = () => {
       setOpen(true);
       return;
     }
-  
+
     if (password !== confirmPassword) {
       setPasswordError("Password does not match");
       return;
     }
 
- // Password validation
- const passwordRegex = /^(?=.*[A-Z])(?=.*[@!#$%^&*]).{8,}$/;
- if (!passwordRegex.test(password)) {
-   setPasswordError("Password should be at least 8 characters with one uppercase letter and one special character from [@,!,#,$,%,^,&,*]");
-   return;
- }
+    // Password validation
+    const passwordRegex = /^(?=.*[A-Z])(?=.*[@!#$%^&*]).{8,}$/;
+    if (!passwordRegex.test(password)) {
+      setPasswordError(
+        "Password should be at least 8 characters with one uppercase letter and one special character from [@,!,#,$,%,^,&,*]"
+      );
+      return;
+    }
     const myForm = new FormData();
 
     myForm.set("name", name);
@@ -228,7 +230,7 @@ const Signup = () => {
               >
                 <input
                   type="text"
-                  placeholder="Choose a file..."
+                  placeholder="Choose a profile picture..."
                   value={selectedFile ? selectedFile.name : ""}
                   readOnly
                   className="inputImg"

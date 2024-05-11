@@ -40,7 +40,7 @@ export const OrderList = () => {
     dispatch(getAllOrders());
   }, [dispatch, error, deleteError, navigate, isDeleted]);
   const columns = [
-    // { field: 'id', headerName: 'Order ID', minWidth: 300, flex: 0.3 },
+    { field: 'id', headerName: 'Order ID', minWidth: 300, flex: 0.3 },
 
     {
       field: "status",
@@ -53,12 +53,19 @@ export const OrderList = () => {
           : "reddColor";
       },
     },
+    
     {
       field: "itemsQty",
       headerName: "Items Qty",
       type: "number",
       minWidth: 150,
-      flex: 0.2,
+      flex: 0,
+    },
+    {
+    field: "user",
+      headerName: "User",
+      minWidth: 150,
+      flex: 0,
     },
 
     {
@@ -66,12 +73,19 @@ export const OrderList = () => {
       headerName: "Amount",
       type: "number",
       minWidth: 270,
-      flex: 0.3,
+      flex: 0,
+    },
+    {
+      field: "date",
+      headerName: "Date",
+      type: "number",
+      minWidth: 270,
+      flex: 0,
     },
 
     {
       field: "actions",
-      flex: 0.2,
+      flex: 0,
       headerName: "Actions",
       minWidth: 150,
       type: "number",
@@ -99,10 +113,19 @@ export const OrderList = () => {
   const rows = [];
 
   orders &&
-    orders.forEach((item) => {
+    orders
+    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).forEach((item) => {
+      
+      // Convert timestamp to Date object
+      const dateObj = new Date(item.createdAt);
+      // Extract only the date part
+      const dateOnly = dateObj.toISOString().split('T')[0];
       rows.push({
         id: item._id,
+
         itemsQty: item.orderItems.length,
+        user: item.shippingInfo.FullName,
+        date: dateOnly,
         amount: item.totalPrice,
         status: item.orderStatus,
       });

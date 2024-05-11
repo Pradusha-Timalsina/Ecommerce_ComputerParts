@@ -122,11 +122,6 @@ const Navbar = () => {
               Comparison
             </Link>
           </li>
-          <li>
-            <Link className="link" to="/category/:cat">
-              Category
-            </Link>
-          </li>
         </ul>
       </div>
       <div className="profile">
@@ -175,13 +170,7 @@ const Navbar = () => {
                 <h3>{fullName}</h3>
               </MenuItem>
               {user && user.role !== "admin" ? (
-                <Link
-                  to="/myorder"
-                  style={{ textDecoration: "none", color: "black" }}
-                >
-                  {" "}
-                  <MenuItem> My Orders</MenuItem>
-                </Link>
+                ""
               ) : (
                 <Link
                   to="/admin/dashboard"

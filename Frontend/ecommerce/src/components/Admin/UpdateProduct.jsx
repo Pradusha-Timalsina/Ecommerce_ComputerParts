@@ -7,7 +7,8 @@ import StorageIcon from "@mui/icons-material/Storage";
 import AccountTreeIcon from "@mui/icons-material/AccountTree";
 import DescriptionIcon from "@mui/icons-material/Description";
 import SpellcheckIcon from "@mui/icons-material/Spellcheck";
-import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
+
+import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import {
@@ -134,7 +135,7 @@ const UpdateProduct = ({ navigate }) => {
               />
             </div>
             <div>
-              <AttachMoneyIcon />
+              <CurrencyRupeeIcon />
               <input
                 type="number"
                 placeholder="Price"

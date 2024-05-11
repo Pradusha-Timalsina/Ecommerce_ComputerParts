@@ -128,12 +128,12 @@ const ProductDetails = () => {
   const userHasOrderedProduct = () => {
     if (!myorders || myorders.length === 0) return false;
   
-    console.log("myorders:", myorders);
-    console.log("params.id:", params.id);
+    // console.log("myorders:", myorders);
+    // console.log("params.id:", params.id);
   
     const orderedProduct = myorders.find(order => order.orderItems.some(item => item.product === params.id && order.orderStatus === "Delivered"));
     
-    console.log("orderedProduct:", orderedProduct);
+    // console.log("orderedProduct:", orderedProduct);
   
     return orderedProduct ? true : false;
   };
@@ -162,11 +162,17 @@ const ProductDetails = () => {
               <span>Rs.{product?.price}</span>
             </div>
             <p>{product?.description}</p>
+            <p>
+              Status: &nbsp;
+              <b className={product.stock < 1 ? 'redColor' : 'greenColor'}>
+                {product.stock < 1 ? 'OutOfStock' : 'InStock'}
+              </b>
+            </p>
             <p>({product.numOfReviews} Reviews)</p>
             <div className="increase_button">
               <div className="add_and_Delete">
                 <button onClick={decreaseQuantity}>-</button>
-                <input readOnly type="number" value={quantity} />
+                <input readOnly type="number" value={product.stock < 1 ? 0 : quantity}/>
                 <button onClick={increaseQuantity}>+</button>
               </div>
             </div>
@@ -233,6 +239,8 @@ const ProductDetails = () => {
       ) : (
         <p className="noReviews">No Reviews Yet</p>
       )}
+
+      <Alertbar/>
     </Fragment>
   );
 };

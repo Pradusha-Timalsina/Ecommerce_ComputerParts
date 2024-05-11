@@ -9,7 +9,7 @@ import BrandingWatermarkIcon from "@mui/icons-material/BrandingWatermark";
 import PaletteIcon from "@mui/icons-material/Palette";
 import DescriptionIcon from "@mui/icons-material/Description";
 import SpellcheckIcon from "@mui/icons-material/Spellcheck";
-import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
+import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { clearErrors, createProduct } from "../../actions/productAction";
@@ -194,7 +194,8 @@ const CreateProduct = () => {
               />
             </div>
             <div>
-              <AttachMoneyIcon />
+              <CurrencyRupeeIcon />
+              {/* Rs. */}
               <input
                 type="number"
                 placeholder="Price"

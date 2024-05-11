@@ -1,9 +1,9 @@
-import React, { Fragment, useEffect, useState, } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 // import "./userOrderDetails.css";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { Loader } from "../../layout/Loader/Loader";
-import { Box, Typography,Button } from "@mui/material";
+import { Box, Typography, Button } from "@mui/material";
 import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
 import { getOrderDetails, clearErrors } from "../../actions/orderAction";
 import OrderPDFDocument from "./OrderPDFDocument";
@@ -63,7 +63,7 @@ const UserOrderDetails = () => {
                 color: order?.orderStatus === "Delivered" ? "green" : "red",
               }}
             >
-             Product {order?.orderStatus}
+              Order {order?.orderStatus}
             </Typography>
           </Box>
 

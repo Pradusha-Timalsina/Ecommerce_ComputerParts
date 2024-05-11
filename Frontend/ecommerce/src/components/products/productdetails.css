@@ -193,6 +193,13 @@
   text-align: center;
   color: rgba(0, 0, 0, 0.548);
 }
+.redColor {
+  color: red;
+}
+
+.greenColor {
+  color: rgb(57, 176, 57);
+}
 @media (max-width: 500px) {
   .thumb {
     height: 50px;
