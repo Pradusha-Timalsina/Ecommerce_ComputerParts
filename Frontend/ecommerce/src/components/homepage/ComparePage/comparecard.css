@@ -1,6 +1,6 @@
 .compare-card-container {
   flex: 0.7;
-  height: 650px;
+  height: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -71,7 +71,7 @@
 
 .compare-second-card-container {
   flex: 0.7;
-  height: 650px;
+  height: auto;
   display: flex;
   flex-direction: column;
   align-items: center;

@@ -14,7 +14,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import PostAddIcon from "@mui/icons-material/PostAdd";
 import AddIcon from "@mui/icons-material/Add";
 import ImportExportIcon from "@mui/icons-material/ImportExport";
-
+import RateReviewIcon from '@mui/icons-material/RateReview';
 import { Link } from "react-router-dom";
 function Sidebar({ openSidebarToggle, OpenSidebar }) {
   return (
@@ -142,6 +142,11 @@ function Sidebar({ openSidebarToggle, OpenSidebar }) {
         <li className="sidebar-list-item">
           <Link to="/admin/orders">
             <BsListCheck /> Orders
+          </Link>
+        </li>
+        <li className="sidebar-list-item">
+          <Link to="/admin/review">
+            <RateReviewIcon /> Reviews
           </Link>
         </li>
       </ul>

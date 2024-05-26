@@ -47,6 +47,7 @@ exports.registerUser = catchAsyncErrors(async (req, res, next) => {
   //   return next(new ErrorHandler("Password does not match", 404));
   // }
 
+  
   const user = await User.create({
     name,
     email,

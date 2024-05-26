@@ -13,7 +13,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import Button from "@material-ui/core/Button";
 import { useSelector, useDispatch } from 'react-redux';
 import { myOrders, cancelOrder, clearErrors } from "../../actions/orderAction";
-
+import Footer from "../Footer/Footer"
 const UserOrder = () => {
   const dispatch= useDispatch();
   const [openDialog, setOpenDialog] = useState(false);
@@ -157,6 +157,7 @@ const UserOrder = () => {
           autoWidth
         />
       </div>
+
     </Fragment>
   );
 };

@@ -7,7 +7,7 @@ import {
   newReview,
   clearErrors,
 } from "../../actions/productAction";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addItemsToCart } from "../../actions/cartAction";
 import Alertbar from "../Alert/Alert";
@@ -23,8 +23,10 @@ import { Rating } from "@material-ui/lab";
 import { NEW_REVIEW_RESET } from "../../constants/productConstants.js";
 import { Loader } from "../../layout/Loader/Loader.jsx";
 import { myOrders } from "../../actions/orderAction.js";
+import Footer from "../Footer/Footer.jsx";
 const ProductDetails = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [message, setMessage] = useState("");
   const [status, setStatus] = useState("");
   const [open, setOpen] = useState(false);
@@ -75,10 +77,14 @@ const ProductDetails = () => {
     setOpen(false);
   };
   const addToCartHandler = () => {
-    dispatch(addItemsToCart(params.id, quantity));
-    setMessage("Item Added to Cart");
-    setStatus("success");
-    setOpen(true);
+    if (user) {
+      dispatch(addItemsToCart(params.id, quantity));
+      setMessage("Item Added to Cart");
+      setStatus("success");
+      setOpen(true);
+    } else {
+      navigate("/login");
+    }
   };
   const submitReviewToggle = () => {
     openn ? setOpenn(false) : setOpenn(true);
@@ -120,21 +126,24 @@ const ProductDetails = () => {
       setOrdersLoading(false);
     }
   }, [ordersLoading, myorders]);
-  
+
   const isAdmin = user && user.role === "admin";
-
-
 
   const userHasOrderedProduct = () => {
     if (!myorders || myorders.length === 0) return false;
-  
+
     // console.log("myorders:", myorders);
     // console.log("params.id:", params.id);
-  
-    const orderedProduct = myorders.find(order => order.orderItems.some(item => item.product === params.id && order.orderStatus === "Delivered"));
-    
+
+    const orderedProduct = myorders.find((order) =>
+      order.orderItems.some(
+        (item) =>
+          item.product === params.id && order.orderStatus === "Delivered"
+      )
+    );
+
     // console.log("orderedProduct:", orderedProduct);
-  
+
     return orderedProduct ? true : false;
   };
   // console.log("userHasOrderedProduct():", userHasOrderedProduct());
@@ -164,15 +173,31 @@ const ProductDetails = () => {
             <p>{product?.description}</p>
             <p>
               Status: &nbsp;
-              <b className={product.stock < 1 ? 'redColor' : 'greenColor'}>
-                {product.stock < 1 ? 'OutOfStock' : 'InStock'}
+              <b
+                className={
+                  product.stock < 1
+                    ? "redColor"
+                    : product.stock < 3
+                    ? "orangeColor"
+                    : "greenColor"
+                }
+              >
+                {product.stock < 1
+                  ? "OutOfStock"
+                  : product.stock < 3
+                  ? "Low in stock"
+                  : "InStock"}
               </b>
             </p>
             <p>({product.numOfReviews} Reviews)</p>
             <div className="increase_button">
               <div className="add_and_Delete">
                 <button onClick={decreaseQuantity}>-</button>
-                <input readOnly type="number" value={product.stock < 1 ? 0 : quantity}/>
+                <input
+                  readOnly
+                  type="number"
+                  value={product.stock < 1 ? 0 : quantity}
+                />
                 <button onClick={increaseQuantity}>+</button>
               </div>
             </div>
@@ -183,6 +208,9 @@ const ProductDetails = () => {
             >
               Add to cart
             </button>
+            {/* if hamle jun case ma ni review dekhauna paryo vane chai !isAdmin
+            wala line ma cmnt handina parda along with that teshko closing
+            brackets pani */}
             {!isAdmin && userHasOrderedProduct() && (
               <button onClick={submitReviewToggle} className="submitReview">
                 Give Review
@@ -239,8 +267,8 @@ const ProductDetails = () => {
       ) : (
         <p className="noReviews">No Reviews Yet</p>
       )}
-
-      <Alertbar/>
+      <Footer />
+      <Alertbar />
     </Fragment>
   );
 };

@@ -87,7 +87,11 @@ export const PayButton = ({ order, cartItems, totalPrice, user }) => {
   };
 
   return (
-    <button id="payment-button" onClick={handleCheckout}>
+    <button
+      id="payment-button"
+      style={{ backgroundColor: "#f64b3c" }}
+      onClick={handleCheckout}
+    >
       Pay
     </button>
   );

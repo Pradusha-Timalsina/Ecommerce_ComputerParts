@@ -11,7 +11,7 @@ import { clearErrors, updatePassword } from "../../actions/userAction";
 import { UPDATE_PASSWORD_RESET } from "../../constants/userConstants";
 import { useNavigate } from "react-router-dom";
 import PasswordInput from "../LoginSignup/PasswordInput";
-
+import Footer from "../Footer/Footer"
 const UpdatePassword = () => {
   const dispatch = useDispatch();
   //   const alert = useAlert();
@@ -140,6 +140,7 @@ const UpdatePassword = () => {
           </div>
         </Fragment>
       )}
+      <Footer/>
     </Fragment>
   );
 };

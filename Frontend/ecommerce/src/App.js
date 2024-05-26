@@ -1,5 +1,6 @@
 import React from "react";
-import { Route, Routes, BrowserRouter as Router } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+
 import Home from "./components/mainpage/home";
 import ProductDetails from "./components/products/ProductDetails";
 import Login from "./components/LoginSignup/Login";
@@ -34,20 +35,17 @@ import { Search } from "./components/products/Search";
 import OrderDetails from "./components/Cart/Shipping/OrderDetails";
 import { ComparePage } from "./components/homepage/ComparePage/ComparePage";
 import UserOrderDetails from "./components/Orders/UserOrderDetail";
-import {UpdateOrder} from "./components/Admin/UpdateOrder";
+import { UpdateOrder } from "./components/Admin/UpdateOrder";
 import Success from "./components/Orders/Success";
+import ProductReviews from "./components/Admin/ProductReviews";
 
 function App() {
   const dispatch = useDispatch();
-
- 
 
   React.useEffect(() => {
     dispatch(getAllCategory());
 
     store.dispatch(loadUser());
-
-    
   }, []);
   return (
     <Router>
@@ -70,6 +68,7 @@ function App() {
         <Route path="/admin/create/category" element={<Category />} />
         <Route path="/admin/category/all" element={<CategoryList />} />
         <Route path="/category/:cat" element={<CategoryCard />} exact />
+        <Route path="/admin/review" element={<ProductReviews />} />
         {/* <Route path="/me/update" element={<UpdateProfile />} /> */}
         <Route path="/password/update" element={<UpdatePassword />} />
         <Route path="/user/profile" element={<Userdetails />} />
@@ -81,8 +80,8 @@ function App() {
         <Route path="/products/:search" element={<Search />} />
         <Route path="/order/details" element={<OrderDetails />} />
         <Route path="/myorder/details/:id" element={<UserOrderDetails />} />
-        <Route path="/admin/order/:id" element={<UpdateOrder/>} />
-        <Route path="/order/success" element={<Success/>} />
+        <Route path="/admin/order/:id" element={<UpdateOrder />} />
+        <Route path="/order/success" element={<Success />} />
       </Routes>
     </Router>
   );

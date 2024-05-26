@@ -59,15 +59,16 @@ exports.createCategory = catchAsyncErrors(async (req, res, next) => {
 exports.deleteCategory = catchAsyncErrors(async (req, res, next) => {
   try {
     const category = await Category.findById(req.params.id);
-    if (category == null) {
+    if (!category) {
       return res.status(404).send({ message: "Category not found" });
     }
-    await category.remove();
+    await Category.deleteOne({ _id: req.params.id });
     res.send({ message: "Category deleted" });
   } catch (error) {
     res.status(500).send({ message: error.message });
   }
 });
+
 
 exports.getAllCategory = catchAsyncErrors(async (req, res, next) => {
   try {

@@ -75,6 +75,18 @@ const ResetPassword = ({ history, match }) => {
                   />
                 </div>
               </div>
+              {passwordError && (
+                <div
+                  className="error_message"
+                  style={{
+                    fontSize: "0.5rem",
+                    alignItems: "flex-start",
+                    color: "red",
+                  }}
+                >
+                  {passwordError}
+                </div>
+              )}
 
               <div class="inputWrapper">
                 <div class="inputWithIcon">
@@ -87,6 +99,18 @@ const ResetPassword = ({ history, match }) => {
                   />
                 </div>
               </div>
+              {passwordError && (
+                <div
+                  className="error_message"
+                  style={{
+                    fontSize: "0.5rem",
+                    alignItems: "flex-start",
+                    color: "red",
+                  }}
+                >
+                  {passwordError}
+                </div>
+              )}
 
               <input type="submit" value="Update" class="updatePassBtn" />
             </form>

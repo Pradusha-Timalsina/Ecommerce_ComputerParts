@@ -242,7 +242,7 @@ exports.getProductReviews = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
-//Delete Reviews
+// Delete Review of a Product
 exports.deleteReview = catchAsyncErrors(async (req, res, next) => {
   const product = await Product.findById(req.query.productId);
 
@@ -260,7 +260,7 @@ exports.deleteReview = catchAsyncErrors(async (req, res, next) => {
     avg += rev.rating;
   });
 
-  const ratings = avg / reviews.length;
+  const ratings = reviews.length === 0 ? 0 : avg / reviews.length;
 
   const numOfReviews = reviews.length;
 
@@ -328,3 +328,9 @@ exports.updateProductStock = catchAsyncErrors(async (req, res, next) => {
     res.status(500).send("Server error");
   }
 });
+
+
+
+{/* <Link to="/products/page" style={{ textDecoration: "none" }}>
+              <button type="submit">Shop More</button>
+            </Link> */}

@@ -7,7 +7,7 @@ import { Box, Typography, Button } from "@mui/material";
 import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
 import { getOrderDetails, clearErrors } from "../../actions/orderAction";
 import OrderPDFDocument from "./OrderPDFDocument";
-
+import Footer from "../Footer/Footer"
 const UserOrderDetails = () => {
   const params = useParams();
   const [pdfVisible, setPdfVisible] = useState(false);
@@ -110,6 +110,7 @@ const UserOrderDetails = () => {
           )}
         </Box>
       )}
+      <Footer/>
     </Fragment>
   );
 };

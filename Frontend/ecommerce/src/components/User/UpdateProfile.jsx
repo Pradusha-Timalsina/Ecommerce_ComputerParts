@@ -8,6 +8,8 @@ import SmartphoneIcon from "@mui/icons-material/Smartphone";
 import "./updateprofile.css";
 import { loadUser, clearErrors, updateProfile } from "../../actions/userAction";
 import { UPDATE_PROFILE_RESET } from "../../constants/userConstants";
+import Footer from "../Footer/Footer"
+import Alertbar from "../Alert/Alert";
 const UpdateProfile = () => {
   const dispatch = useDispatch();
   // const alert = useAlert();
@@ -172,8 +174,15 @@ const UpdateProfile = () => {
             </div>
             <input type="submit" value="Update" className="updateProfileBtn" />
           </form>
+          <Alertbar
+            message={message}
+            status={status}
+            open={open}
+            handleClose={handleClose}
+          />
         </div>
       </div>
+      <Footer/>
     </Fragment>
   );
 };

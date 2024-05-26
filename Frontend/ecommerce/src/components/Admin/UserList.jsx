@@ -80,29 +80,29 @@ export const UserList = () => {
       },
     },
 
-    {
-      field: "actions",
-      flex: 0.3,
-      headerName: "Actions",
-      minWidth: 150,
-      type: "number",
-      sortable: false,
-      renderCell: (params) => {
-        return (
-          <Fragment>
-            <Link to={`/admin/user/${params.getValue(params.id, 'id')}`}>
-              <EditIcon />
-            </Link>
+    // {
+    //   field: "actions",
+    //   flex: 0.3,
+    //   headerName: "Actions",
+    //   minWidth: 150,
+    //   type: "number",
+    //   sortable: false,
+    //   renderCell: (params) => {
+    //     return (
+    //       <Fragment>
+    //         {/* <Link to={`/admin/user/${params.getValue(params.id, 'id')}`}>
+    //           <EditIcon />
+    //         </Link> */}
 
-            <Button onClick={() =>
-                deleteUserHandler(params.getValue(params.id, 'id'))
-              }>
-              <DeleteIcon />
-            </Button>
-          </Fragment>
-        );
-      },
-    },
+    //         {/* <Button onClick={() =>
+    //             deleteUserHandler(params.getValue(params.id, 'id'))
+    //           }>
+    //           <DeleteIcon />
+    //         </Button> */}
+    //       </Fragment>
+    //     );
+    //   },
+    // },
   ];
 
   const rows = [];

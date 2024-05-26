@@ -20,6 +20,7 @@ const categorySchema = new mongoose.Schema({
   slug: {
     type: String,
     slug: "title", // generate a slug based on the title field
+    //Slugs are usually created by converting a string to lowercase, replacing spaces with hyphens, and removing special characters.
   },
   createdAt: {
     type: Date,

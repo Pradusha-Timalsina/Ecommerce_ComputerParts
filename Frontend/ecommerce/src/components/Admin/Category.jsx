@@ -37,6 +37,7 @@ const Category = () => {
     }
 
     if (success) {
+      console.log("Category Created Successfully");
       setMessage("Category Created Successfully");
       setStatus("success");
       setOpen(true);
@@ -49,6 +50,19 @@ const Category = () => {
     e.preventDefault();
     const formData = new FormData();
 
+    const trimmedTitle = title.trim();
+
+    // Regular expression to match a string that is made up of one or more dots
+    const isDotsOnly = /^\.+$/.test(trimmedTitle);
+
+    if (!trimmedTitle || !/\S/.test(trimmedTitle) || isDotsOnly) {
+      setMessage(
+        "Category cannot be empty, contain only spaces, or consist solely of dots."
+      );
+      setStatus("error");
+      setOpen(true);
+      return;
+    }
     formData.set("title", title);
     formData.append("image", image);
 
@@ -115,7 +129,7 @@ const Category = () => {
             </div>
 
             <Button
-              id="createProductBtn"
+              id="createProductBtncategory"
               type="submit"
               disabled={loading ? true : false}
             >

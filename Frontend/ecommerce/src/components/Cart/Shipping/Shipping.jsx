@@ -9,7 +9,7 @@ import PhoneIcon from "@mui/icons-material/Phone";
 import { useAlert } from "react-alert";
 import CheckoutSteps from "./CheckoutStep";
 import { saveShippingInfo } from "../../../actions/cartAction";
-
+import Footer from "../../Footer/Footer"
 const Shipping = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -124,6 +124,7 @@ const Shipping = () => {
           </form>
         </div>
       </div>
+  
     </Fragment>
   );
 };

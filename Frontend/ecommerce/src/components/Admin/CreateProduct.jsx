@@ -59,28 +59,30 @@ const CreateProduct = () => {
 
   const productSummitHandler = (e) => {
     e.preventDefault();
-    if (name.trim() === "" || !/\S/.test(name)) {
+
+    const isDotsOnlyname = /^\.+$/.test(name);
+    if (name.trim() === "" || !/\S/.test(name) || isDotsOnlyname) {
       setMessage("Name cannot be empty or contain only spaces.");
       setStatus("error");
       setOpen(true);
       return;
     }
-
-    if (description.trim() === "" || !/\S/.test(name)) {
+    const isDotsOnlydescription = /^\.+$/.test(description);
+    if (description.trim() === "" || !/\S/.test(name) || isDotsOnlydescription) {
       setMessage("Description cannot be empty or contain only spaces.");
       setStatus("error");
       setOpen(true);
       return;
     }
-
-    if (brand.trim() === "" || !/\S/.test(name)) {
+    const isDotsOnlybrand = /^\.+$/.test(brand);
+    if (brand.trim() === "" || !/\S/.test(name)|| isDotsOnlybrand) {
       setMessage("Brand cannot be empty or contain only spaces.");
       setStatus("error");
       setOpen(true);
       return;
     }
-
-    if (color.trim() === "" || !/\S/.test(name)) {
+    const isDotsOnlycolor = /^\.+$/.test(color);
+    if (color.trim() === "" || !/\S/.test(isDotsOnlycolor)) {
       setMessage("Color cannot be empty or contain only spaces.");
       setStatus("error");
       setOpen(true);

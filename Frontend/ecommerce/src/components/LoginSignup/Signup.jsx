@@ -42,14 +42,20 @@ const Signup = () => {
 
   const registerSubmit = (e) => {
     e.preventDefault();
-
-    if (name.trim() === "" || !/\S/.test(name)) {
+    const isDotsOnlyname = /^\.+$/.test(name);
+    if (name.trim() === "" || !/\S/.test(name) || isDotsOnlyname) {
       setMessage("Name cannot be empty or contain only spaces.");
       setStatus("error");
       setOpen(true);
       return;
     }
 
+    if (!/^[a-zA-Z0-9 ]+$/.test(name)) {
+      setMessage("Name cannot contain special characters.");
+      setStatus("error");
+      setOpen(true);
+      return;
+    }
     if (password !== confirmPassword) {
       setPasswordError("Password does not match");
       return;
@@ -101,9 +107,12 @@ const Signup = () => {
       dispatch(clearErrors());
     }
     if (isAuthenticated) {
+      setMessage("Click the link on the email to verify.");
+      setStatus("error");
+      setOpen(true);
       navigate("/login");
     }
-  }, [dispatch, error, navigate, isAuthenticated]);
+  }, [dispatch, error, isAuthenticated]);
 
   const [selectedFile, setSelectedFile] = useState(null);
 

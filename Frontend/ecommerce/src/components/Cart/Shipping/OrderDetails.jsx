@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useEffect } from "react";
 import "./orderDetails.css";
-
+import Footer from "../../Footer/Footer"
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { PayButton } from "../../Khalti/PayButton";
@@ -116,12 +116,13 @@ const OrderDetails = () => {
                 totalPrice={totalPrice}
                 user={user}
               >
-                Proceed To Payment
+                
               </PayButton>
             </div>
           </div>
         </div>
       </div>
+      <Footer/>
     </Fragment>
   );
 };

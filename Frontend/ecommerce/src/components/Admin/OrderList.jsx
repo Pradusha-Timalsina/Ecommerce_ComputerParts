@@ -40,7 +40,9 @@ export const OrderList = () => {
     dispatch(getAllOrders());
   }, [dispatch, error, deleteError, navigate, isDeleted]);
   const columns = [
-    { field: 'id', headerName: 'Order ID', minWidth: 300, flex: 0.3 },
+    { field: "id", headerName: "Order ID", minWidth: 300, flex: 0.3 },
+
+    { field: "name", headerName: "Product Name", minWidth: 300, flex: 0.4 },
 
     {
       field: "status",
@@ -53,7 +55,7 @@ export const OrderList = () => {
           : "reddColor";
       },
     },
-    
+
     {
       field: "itemsQty",
       headerName: "Items Qty",
@@ -62,7 +64,7 @@ export const OrderList = () => {
       flex: 0,
     },
     {
-    field: "user",
+      field: "user",
       headerName: "User",
       minWidth: 150,
       flex: 0,
@@ -93,7 +95,7 @@ export const OrderList = () => {
       renderCell: (params) => {
         return (
           <Fragment>
-            <Link to={`/admin/order/${params.getValue(params.id, 'id')}`}>
+            <Link to={`/admin/order/${params.getValue(params.id, "id")}`}>
               <EditIcon />
             </Link>
 
@@ -114,22 +116,28 @@ export const OrderList = () => {
 
   orders &&
     orders
-    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).forEach((item) => {
-      
-      // Convert timestamp to Date object
-      const dateObj = new Date(item.createdAt);
-      // Extract only the date part
-      const dateOnly = dateObj.toISOString().split('T')[0];
-      rows.push({
-        id: item._id,
+      .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+      .forEach((item) => {
+        // Convert timestamp to Date object
+        const dateObj = new Date(item.createdAt);
+        // Extract only the date part
+        const dateOnly = dateObj.toISOString().split("T")[0];
 
-        itemsQty: item.orderItems.length,
-        user: item.shippingInfo.FullName,
-        date: dateOnly,
-        amount: item.totalPrice,
-        status: item.orderStatus,
+        // Extract names from orderItems
+        const itemNames = item.orderItems
+          .map((orderItem) => orderItem.name)
+          .join(", ");
+
+        rows.push({
+          id: item._id,
+          name: itemNames, // Use the extracted names
+          itemsQty: item.orderItems.length,
+          user: item.shippingInfo.FullName,
+          date: dateOnly,
+          amount: item.totalPrice,
+          status: item.orderStatus,
+        });
       });
-    });
 
   return (
     <Fragment>

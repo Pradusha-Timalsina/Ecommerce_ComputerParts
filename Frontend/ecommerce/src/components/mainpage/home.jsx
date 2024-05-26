@@ -10,7 +10,7 @@ import { Loader } from "../../layout/Loader/Loader";
 import Promotions from "../homepage/Promotion";
 import { styled } from "@mui/system";
 import Category from "../homepage/Category";
-
+import Footer from "../Footer/Footer";
 const StyledContainer = styled(Container)`
   width: 100%;
 `;
@@ -109,6 +109,7 @@ const Home = () => {
           </Link>
         </Fragment>
       )}
+      <Footer/>
     </Fragment>
   );
 };

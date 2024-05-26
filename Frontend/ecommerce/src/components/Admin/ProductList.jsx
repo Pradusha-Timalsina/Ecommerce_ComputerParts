@@ -71,7 +71,7 @@ export const ProductList = () => {
   const columns = [
     {
       field: "id",
-      headerName: "S. N.",
+      headerName: "Product ID",
       minWidth: 190,
       flex: 0.3,
     },
@@ -133,7 +133,7 @@ export const ProductList = () => {
       .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
       .forEach((prod) => {
         rows.push({
-          id: counter++,
+          id: prod._id,
           stock: prod.stock,
           price: prod.price,
           name: prod.name,

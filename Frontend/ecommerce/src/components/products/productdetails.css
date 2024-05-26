@@ -200,6 +200,9 @@
 .greenColor {
   color: rgb(57, 176, 57);
 }
+.orangeColor{
+  color: orange
+}
 @media (max-width: 500px) {
   .thumb {
     height: 50px;

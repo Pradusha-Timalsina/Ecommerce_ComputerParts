@@ -25,6 +25,7 @@ export const CategoryList = () => {
 
   const deleteCategoryHandler = (id) => {
     dispatch(deleteCategory(id));
+    window.location.reload();
   };
 
   useEffect(() => {

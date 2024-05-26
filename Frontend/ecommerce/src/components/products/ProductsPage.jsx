@@ -8,6 +8,7 @@ import { useParams } from "react-router-dom";
 import Slider from "@mui/material/Slider";
 import Rating from "@mui/material/Rating";
 import Pagination from "react-js-pagination";
+import Footer from "../Footer/Footer";
 import "./productpage.css";
 const ProductsPage = () => {
   const dispatch = useDispatch();
@@ -56,7 +57,7 @@ const ProductsPage = () => {
           valueLabelDisplay="auto"
           aria-labelledby="range-slider"
           min={1000}
-          max={90000}
+          max={60000}
         />
         <h3>Categories</h3>
         <ul className="categoryfilter">
@@ -100,6 +101,7 @@ const ProductsPage = () => {
           />
         </div>
       )}
+      <Footer />
     </Fragment>
   );
 };

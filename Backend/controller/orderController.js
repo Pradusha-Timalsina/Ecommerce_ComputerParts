@@ -15,15 +15,18 @@ exports.newOrder = catchAsyncErrors(async (req, res, next) => {
     const product = await Product.findById(orderItem.product);
 
     if (!product) {
-      return next(new ErrorHandler(`Product not found with id ${orderItem.product}`, 404));
+      return next(
+        new ErrorHandler(`Product not found with id ${orderItem.product}`, 404)
+      );
     }
 
+    //Stock decrease when order is placed
     product.stock -= orderItem.quantity;
     await product.save({ validateBeforeSave: false });
   }
 
   // Create new order
-  const tempOrder= {
+  const tempOrder = {
     shippingInfo,
     orderItems,
     paymentInfo,
@@ -125,21 +128,20 @@ exports.deleteOrder = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
-
 // cancelled order
 exports.cancelOrder = catchAsyncErrors(async (req, res, next) => {
   const order = await Order.findById(req.params.id);
 
   if (!order) {
-    return next(new ErrorHandler('Order not found with this id', 404));
+    return next(new ErrorHandler("Order not found with this id", 404));
   }
 
-  if (order.orderStatus === 'Cancelled') {
-    return next(new ErrorHandler('Order is already cancelled', 400));
+  if (order.orderStatus === "Cancelled") {
+    return next(new ErrorHandler("Order is already cancelled", 400));
   }
 
-  if (order.orderStatus === 'Delivered') {
-    return next(new ErrorHandler('Cannot cancel a delivered order', 400));
+  if (order.orderStatus === "Delivered") {
+    return next(new ErrorHandler("Cannot cancel a delivered order", 400));
   }
 
   // Increment stock for each ordered item
@@ -147,14 +149,16 @@ exports.cancelOrder = catchAsyncErrors(async (req, res, next) => {
     const product = await Product.findById(orderItem.product);
 
     if (!product) {
-      return next(new ErrorHandler(`Product not found with id ${orderItem.product}`, 404));
+      return next(
+        new ErrorHandler(`Product not found with id ${orderItem.product}`, 404)
+      );
     }
-
+    //Stock is increased when the order is cancelled
     product.stock += orderItem.quantity;
     await product.save({ validateBeforeSave: false });
   }
 
-  order.orderStatus = 'Cancelled';
+  order.orderStatus = "Cancelled";
 
   await order.save({ validateBeforeSave: false });
 
@@ -162,4 +166,3 @@ exports.cancelOrder = catchAsyncErrors(async (req, res, next) => {
     success: true,
   });
 });
-

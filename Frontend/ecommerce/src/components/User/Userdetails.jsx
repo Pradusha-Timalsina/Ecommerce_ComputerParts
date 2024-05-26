@@ -9,7 +9,7 @@ import SmartphoneIcon from "@mui/icons-material/Smartphone";
 import moment from "moment";
 import { useSelector } from "react-redux";
 import UserOrder from "../Orders/UserOrder";
-
+import Footer from "../Footer/Footer";
 const Userdetails = () => {
   const { loading, isAuthenticated, user } = useSelector((state) => state.user);
 
@@ -81,6 +81,7 @@ const Userdetails = () => {
           </div>
         ) : null}
       </div>
+      <Footer />
     </Fragment>
   );
 };

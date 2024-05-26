@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 import "./ShoppingCart.css";
-
+import Footer from "../Footer/Footer"
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
@@ -120,6 +120,7 @@ const ShoppingCart = () => {
           </div>
         </Fragment>
       )}
+      <Footer/>
     </Fragment>
   );
 };
